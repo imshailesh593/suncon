@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-sand: #F2EDE4;
+  --color-sand-light: #FAF7F3;
+  --color-sand-dark: #E8E0D4;
+  --color-terracotta: #B5451B;
+  --color-forest: #2D5016;
+  --color-charcoal: #1C1C1C;
+  --color-stone: #8B8275;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: var(--color-sand-light);
+  color: var(--color-charcoal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Custom cursor ──────────────────────────────── */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+/* ─── Selection ─────────────────────────────────── */
+::selection {
+  background-color: var(--color-terracotta);
+  color: white;
+}
+
+/* ─── Focus ─────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 3px;
+}
+
+/* ─── Word split animation helper ───────────────── */
+.word-wrapper {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* Clip the word reveal without disrupting line layout */
+}
+.word-inner {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ─── Image reveal clip-path ─────────────────────── */
+.img-reveal-wrap {
+  clip-path: inset(100% 0 0 0);
+  will-change: clip-path;
+}
+
+/* ─── Project card hover ─────────────────────────── */
+.project-card-img {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.project-card:hover .project-card-img {
+  transform: scale(1.06);
+}
+
+/* ─── Link underline slide ───────────────────────── */
+.link-line {
+  position: relative;
+}
+.link-line::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-line:hover::after { width: 100%; }
+
+/* ─── Scroll indicator ───────────────────────────── */
+@keyframes scrollLine {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(220%); }
+}
+.animate-scroll-line {
+  animation: scrollLine 1.8s ease-in-out infinite;
+}
+
+/* ─── Horizontal scroll sections ────────────────── */
+.gsap-pin-spacer { overflow: visible !important; }
+
+/* ─── Scrollbar hide ─────────────────────────────── */
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+}
