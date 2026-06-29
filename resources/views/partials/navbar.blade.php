@@ -1,0 +1,44 @@
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 flex items-center justify-between h-[60px]">
+
+    {{-- Logo --}}
+    <a href="{{ url('/') }}" class="font-display text-lg tracking-[0.28em] uppercase text-[#1C1C1C] z-10" id="nav-logo">
+      SUN<span class="text-[#B5451B]">C</span>ON
+    </a>
+
+    {{-- Desktop nav --}}
+    <nav class="hidden md:flex items-center gap-8">
+      @foreach([['Projects','/projects'],['About','/about'],['Services','/services'],['Journal','/journal']] as $item)
+        <a href="{{ url($item[1]) }}"
+           class="text-[10px] uppercase tracking-[0.2em] text-[#1C1C1C] hover:text-[#B5451B] transition-colors duration-200 {{ request()->is(ltrim($item[1],'/')) || request()->is(ltrim($item[1],'/').'/*') ? 'text-[#B5451B]' : '' }}">
+          {{ $item[0] }}
+        </a>
+      @endforeach
+    </nav>
+
+    {{-- CTA --}}
+    <a href="{{ url('/contact') }}"
+       class="hidden md:flex text-[10px] uppercase tracking-[0.18em] items-center gap-2 border-b border-[#1C1C1C]/30 pb-0.5 hover:border-[#B5451B] hover:text-[#B5451B] transition-all duration-300">
+      Start a Project <span>→</span>
+    </a>
+
+    {{-- Hamburger --}}
+    <button id="menu-toggle" class="md:hidden flex flex-col gap-1.5 z-10" aria-label="Toggle menu">
+      <span class="menu-bar w-6 h-px bg-[#1C1C1C] block transition-all duration-300"></span>
+      <span class="menu-bar w-6 h-px bg-[#1C1C1C] block transition-all duration-300"></span>
+    </button>
+  </div>
+
+  {{-- Mobile menu --}}
+  <div id="mobile-menu" class="fixed inset-0 bg-[#FAF7F3] flex flex-col justify-between px-6 pt-24 pb-12 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden">
+    <nav class="flex flex-col gap-6">
+      @foreach([['Projects','/projects'],['About','/about'],['Services','/services'],['Journal','/journal'],['Contact','/contact']] as $item)
+        <a href="{{ url($item[1]) }}" class="font-display text-display-md text-[#1C1C1C] leading-none">{{ $item[0] }}</a>
+      @endforeach
+    </nav>
+    <div>
+      <a href="{{ url('/contact') }}" class="text-[10px] uppercase tracking-[0.28em] border border-[#1C1C1C]/20 px-7 py-3.5 hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300 inline-block">Start a Project →</a>
+      <p class="text-[#8B8275] text-xs tracking-wide mt-5">bd@sunconengineers.com</p>
+    </div>
+  </div>
+</header>

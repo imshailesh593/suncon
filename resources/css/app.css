@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/* ---- Design tokens (mirrors Next.js tailwind.config.ts) ---- */
+@theme {
+    /* Fonts */
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Outfit', system-ui, sans-serif;
+
+    /* Colors */
+    --color-sand:          #F2EDE4;
+    --color-sand-light:    #FAF7F3;
+    --color-sand-dark:     #E8E0D4;
+    --color-terracotta:    #B5451B;
+    --color-terracotta-light: #CC5A2A;
+    --color-terracotta-dark:  #8B3414;
+    --color-forest:        #2D5016;
+    --color-forest-light:  #3D6B1F;
+    --color-charcoal:      #1C1C1C;
+    --color-charcoal-light: #2A2A2A;
+    --color-charcoal-muted: #5C5652;
+    --color-stone:         #8B8275;
+
+    /* Fluid display sizes */
+    --font-size-display-xl: clamp(3.8rem, 10vw, 9rem);
+    --font-size-display-lg: clamp(2.8rem, 6.5vw, 6rem);
+    --font-size-display-md: clamp(2.2rem, 4.5vw, 4rem);
+
+    --line-height-display-xl: 0.88;
+    --line-height-display-lg: 0.92;
+    --line-height-display-md: 1.0;
+
+    --letter-spacing-display-xl: -0.03em;
+    --letter-spacing-display-lg: -0.025em;
+    --letter-spacing-display-md: -0.02em;
+
+    /* Easing */
+    --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---- Base ---- */
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--color-sand-light);
+    color: var(--color-charcoal);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Display size utilities ---- */
+.text-display-xl {
+    font-size: var(--font-size-display-xl);
+    line-height: var(--line-height-display-xl);
+    letter-spacing: var(--letter-spacing-display-xl);
+}
+.text-display-lg {
+    font-size: var(--font-size-display-lg);
+    line-height: var(--line-height-display-lg);
+    letter-spacing: var(--letter-spacing-display-lg);
+}
+.text-display-md {
+    font-size: var(--font-size-display-md);
+    line-height: var(--line-height-display-md);
+    letter-spacing: var(--letter-spacing-display-md);
+}
+
+/* ---- Cursor ---- */
+* { cursor: none; }
+a, button { cursor: none; }
+
+/* ---- Navbar dark-section inversion ---- */
+#navbar.invert-nav #nav-logo,
+#navbar.invert-nav nav a,
+#navbar.invert-nav > div > a {
+    color: #FAF7F3;
+}
+#navbar.invert-nav .menu-bar {
+    background-color: #FAF7F3;
+}
+
+/* ---- Hero scroll indicator animation ---- */
+@keyframes scrollLine {
+    0%   { transform: scaleY(0); opacity: 1; transform-origin: top; }
+    50%  { transform: scaleY(1); opacity: 1; transform-origin: top; }
+    51%  { transform: scaleY(1); opacity: 1; transform-origin: bottom; }
+    100% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+}
+
+/* ---- Horizontal scroll — hide scrollbar on mobile strip ---- */
+#projects-track::-webkit-scrollbar { display: none; }
+#projects-track { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* ---- Marquee rows — prevent text wrapping ---- */
+#marquee-row1, #marquee-row2 { will-change: transform; }
+
+/* ---- Prose overrides for article body ---- */
+.prose { color: #1C1C1C; }
+.prose h2, .prose h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 300; }
+.prose a { color: #B5451B; }
+
