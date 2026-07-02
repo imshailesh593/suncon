@@ -104,6 +104,7 @@
     {{-- Bottom bar --}}
     <div class="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between gap-4 text-[#8B8275] text-xs">
       <p>© {{ date('Y') }} {{ $siteName }}. All rights reserved.</p>
+        <p>Developed by <a href="https://mavericinfotech.in" target="_blank" rel="noopener" class="hover:text-[#FAF7F3] transition-colors duration-200">Maveric Infotech</a></p>
       <div class="flex gap-6">
         <a href="{{ url('/privacy') }}" class="hover:text-[#FAF7F3] transition-colors duration-200">Privacy Policy</a>
         <a href="{{ url('/terms') }}"   class="hover:text-[#FAF7F3] transition-colors duration-200">Terms</a>
