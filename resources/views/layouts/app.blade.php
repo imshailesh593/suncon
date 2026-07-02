@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>@yield('title', $globalSettings['site.seo_title'] ?? 'Suncon Engineers | Architecture, Landscape & Interior Design')</title>
   <meta name="description" content="@yield('description', $globalSettings['site.seo_description'] ?? 'Suncon Engineers Pvt. Ltd. — ISO-certified multidisciplinary consultancy delivering architecture, landscape, interior design, BIM, PMC and infrastructure across India since 1999.')">
+  <link rel="canonical" href="{{ url()->current() }}" />
+  <link rel="alternate" hreflang="en"    href="{{ url()->current() }}" />
+  <link rel="alternate" hreflang="en-in" href="{{ url()->current() }}" />
+  <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}" />
   @if(!empty($globalSettings['site.ga_id']))
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ $globalSettings['site.ga_id'] }}"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ $globalSettings['site.ga_id'] }}');</script>
