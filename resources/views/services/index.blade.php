@@ -53,9 +53,9 @@
 
         {{-- Image --}}
         <div class="{{ $isEven ? 'order-first' : 'order-first md:order-last' }} overflow-hidden aspect-[4/3] bg-[#E8E0D4]" data-reveal>
-          @if(!empty($svc['image']) || (!is_array($svc) && $svc->image))
-            <img src="{{ asset($svc->image) }}"
-                 alt="{{ is_array($svc) ? $svc['title'] : $svc->title }}"
+          @if(!is_array($svc) && $svc->imageUrl)
+            <img src="{{ $svc->imageUrl }}"
+                 alt="{{ $svc->title }}"
                  class="w-full h-full object-cover"
                  loading="lazy">
           @else
@@ -79,7 +79,7 @@
             {{ is_array($svc) ? $svc['description'] : $svc->description }}
           </p>
 
-          @php $features = is_array($svc) ? $svc['features'] : (json_decode($svc->features ?? '[]', true) ?? []); @endphp
+          @php $features = is_array($svc) ? ($svc['features'] ?? []) : ($svc->features ?? []); @endphp
           @if(count($features))
             <ul class="flex flex-col gap-2.5">
               @foreach($features as $feat)
@@ -95,6 +95,34 @@
     </div>
   @endforeach
 </section>
+
+{{-- ─── FAQs ───────────────────────────────────────────────────────────── --}}
+@if(isset($faqs) && $faqs->count())
+<section class="bg-[#F2EDE4] py-24 px-6 lg:px-12">
+  <div class="max-w-screen-xl mx-auto">
+    <div class="mb-16 max-w-lg" data-reveal>
+      <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-4">Common Questions</p>
+      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">Frequently Asked</h2>
+    </div>
+    <div class="max-w-3xl flex flex-col divide-y divide-[#E8E0D4]">
+      @foreach($faqs as $faq)
+        <details class="group py-6" data-reveal>
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <h3 class="font-display font-light text-lg text-[#1C1C1C] group-open:text-[#B5451B] transition-colors duration-200 pr-8">
+              {{ $faq->question }}
+            </h3>
+            <span class="shrink-0 w-6 h-6 border border-[#1C1C1C]/20 flex items-center justify-center text-[#8B8275] group-open:border-[#B5451B] group-open:text-[#B5451B] transition-all duration-200">
+              <span class="group-open:hidden">+</span>
+              <span class="hidden group-open:block">−</span>
+            </span>
+          </summary>
+          <p class="mt-5 text-[#8B8275] text-sm leading-relaxed font-light">{{ $faq->answer }}</p>
+        </details>
+      @endforeach
+    </div>
+  </div>
+</section>
+@endif
 
 {{-- CTA --}}
 <section class="bg-[#FAF7F3] py-24 px-6 lg:px-12 text-center" data-reveal>

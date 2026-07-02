@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactSubmission;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -9,7 +11,12 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return view('contact.index');
+        $settings = array_merge(
+            Setting::getGroup('contact.'),
+            Setting::getGroup('site.'),
+        );
+
+        return view('contact.index', compact('settings'));
     }
 
     public function submit(Request $request)
@@ -22,7 +29,8 @@ class ContactController extends Controller
             'message'      => ['required', 'string', 'min:10', 'max:3000'],
         ]);
 
-        // Send notification email to the studio
+        ContactSubmission::create($validated);
+
         try {
             Mail::raw(
                 implode("\n", [
@@ -37,18 +45,17 @@ class ContactController extends Controller
                     $validated['message'],
                 ]),
                 function ($mail) use ($validated) {
-                    $mail->to('bd@sunconengineers.com')
+                    $mail->to(Setting::get('site.email', 'bd@sunconengineers.com'))
                          ->replyTo($validated['email'], $validated['name'])
                          ->subject("Project Enquiry — {$validated['name']}");
                 }
             );
         } catch (\Exception $e) {
-            // Log but don't expose the error to the user
-            logger()->error('Contact mail failed: '.$e->getMessage());
+            logger()->error('Contact mail failed: ' . $e->getMessage());
         }
 
         return redirect()
             ->route('contact.index')
-            ->with('success', 'Thank you, '.$validated['name'].'. We\'ve received your message and will be in touch shortly.');
+            ->with('success', 'Thank you, ' . $validated['name'] . '. We\'ve received your message and will be in touch shortly.');
     }
 }

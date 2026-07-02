@@ -24,7 +24,7 @@
       <a href="{{ url('/journal/'.$first->slug) }}" class="group grid md:grid-cols-2 gap-10 mb-16 pb-16 border-b border-[#E8E0D4]" data-reveal>
         <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4]">
           @if($first->image)
-            <img src="{{ asset($first->image) }}"
+            <img src="{{ $first->imageUrl }}"
                  alt="{{ $first->title }}"
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                  loading="lazy">
@@ -55,7 +55,7 @@
           <a href="{{ url('/journal/'.$article->slug) }}" class="group block" data-reveal>
             <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4] mb-5">
               @if($article->image)
-                <img src="{{ asset($article->image) }}"
+                <img src="{{ $article->imageUrl }}"
                      alt="{{ $article->title }}"
                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                      loading="lazy">

@@ -64,17 +64,52 @@ if (cursorDot && cursorRing) {
   }
 }
 
-// ─── 3. NAVBAR ───────────────────────────────────────────────────────────────
+// ─── 3. HERO PARALLAX ────────────────────────────────────────────────────────
+const heroBg = document.getElementById('hero-bg');
+if (heroBg) {
+  gsap.to(heroBg, {
+    yPercent: 20,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: heroBg.closest('section'),
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+    },
+  });
+}
+
+// ─── 4. NAVBAR ───────────────────────────────────────────────────────────────
 const navbar = document.getElementById('navbar');
 
 if (navbar) {
+  const navCta = document.getElementById('nav-cta');
+
   ScrollTrigger.create({
     start: 'top -50',
     onEnter: () => {
-      navbar.classList.add('bg-[#FAF7F3]/95', 'backdrop-blur-sm', 'shadow-sm');
+      navbar.classList.add('bg-[#B5451B]', 'shadow-sm');
+      navbar.classList.remove('bg-[#FAF7F3]/95', 'backdrop-blur-sm');
+      navbar.querySelectorAll('a:not(#nav-cta), button').forEach(el => el.classList.add('!text-white'));
+      // CTA flips: white bg, orange text
+      if (navCta) {
+        navCta.classList.remove('bg-[#B5451B]', 'text-white');
+        navCta.classList.add('bg-white', '!text-[#B5451B]');
+      }
+      // O accent on dark bg
+      const accent = navbar.querySelector('#nav-logo span');
+      if (accent) { accent.classList.add('!text-white/60'); accent.classList.remove('text-[#B5451B]'); }
     },
     onLeaveBack: () => {
-      navbar.classList.remove('bg-[#FAF7F3]/95', 'backdrop-blur-sm', 'shadow-sm');
+      navbar.classList.remove('bg-[#B5451B]', 'shadow-sm');
+      navbar.querySelectorAll('a:not(#nav-cta), button').forEach(el => el.classList.remove('!text-white'));
+      // CTA flips back: orange bg, white text
+      if (navCta) {
+        navCta.classList.add('bg-[#B5451B]', 'text-white');
+        navCta.classList.remove('bg-white', '!text-[#B5451B]');
+      }
+      const accent = navbar.querySelector('#nav-logo span');
+      if (accent) { accent.classList.remove('!text-white/60'); accent.classList.add('text-[#B5451B]'); }
     },
   });
 
@@ -116,21 +151,21 @@ const projectsSection = document.getElementById('projects-section');
 const projectsTrack   = document.getElementById('projects-track');
 
 if (projectsSection && projectsTrack && window.innerWidth >= 768) {
-  // Remove mobile scroll styles so GSAP takes over
   projectsTrack.style.overflow = 'visible';
   projectsTrack.style.width    = 'max-content';
 
-  const totalScroll = projectsTrack.scrollWidth - projectsSection.offsetWidth + 96; // 96 = padding
+  // Distance to scroll = track full width minus one viewport width
+  const getTotal = () => projectsTrack.scrollWidth - window.innerWidth;
 
   gsap.to(projectsTrack, {
-    x: -totalScroll,
+    x: () => -getTotal(),
     ease: 'none',
     scrollTrigger: {
       trigger: projectsSection,
       start: 'top top',
-      end: () => `+=${totalScroll}`,
+      end: () => `+=${getTotal()}`,
       pin: true,
-      scrub: 1,
+      scrub: 1.2,
       anticipatePin: 1,
       invalidateOnRefresh: true,
     },

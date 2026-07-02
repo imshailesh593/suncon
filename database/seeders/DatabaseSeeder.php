@@ -3,23 +3,32 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Admin user — skip if already exists
+        if (!User::where('email', 'admin@sunconengineers.com')->exists()) {
+            User::create([
+                'name'     => 'Suncon Admin',
+                'email'    => 'admin@sunconengineers.com',
+                'password' => Hash::make('Suncon@Admin2025!'),
+            ]);
+        }
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Settings defaults (uses firstOrCreate — safe to re-run)
+        $this->call(SettingsSeeder::class);
+
+        // Main content — only seed if tables are empty
+        if (\App\Models\Project::count() === 0) {
+            $this->call(SunconSeeder::class);
+        }
+
+        // Real company data: overwrites settings with production values,
+        // updates service descriptions, adds team member, resets stats
+        $this->call(RealContentSeeder::class);
     }
 }

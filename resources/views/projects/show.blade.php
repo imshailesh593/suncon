@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($project->title ?? 'Project').' | Suncon Engineers')
+@section('title', ($project->title ?? 'Project').' | '.($globalSettings['site.name'] ?? 'Suncon Engineers'))
 @section('description', $project->description ? Str::limit($project->description, 155) : 'Project by Suncon Engineers.')
 
 @section('content')
@@ -20,7 +20,7 @@
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="overflow-hidden aspect-[16/7] bg-[#E8E0D4]">
       @if($project->image)
-        <img src="{{ asset($project->image) }}"
+        <img src="{{ $project->imageUrl }}"
              alt="{{ $project->title }}"
              class="w-full h-full object-cover"
              loading="lazy">
@@ -95,7 +95,7 @@
           <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-5">
             @foreach($project->gallery as $img)
               <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4]">
-                <img src="{{ asset($img) }}"
+                <img src="{{ \App\Models\Project::resolveUrl($img) }}"
                      alt="{{ $project->title }} — gallery"
                      class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                      loading="lazy">
@@ -120,7 +120,7 @@
         <a href="{{ url('/projects/'.$rel->slug) }}" class="group block" data-reveal>
           <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4] mb-4">
             @if($rel->image)
-              <img src="{{ asset($rel->image) }}"
+              <img src="{{ $rel->imageUrl }}"
                    alt="{{ $rel->title }}"
                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                    loading="lazy">

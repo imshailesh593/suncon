@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($article->title ?? 'Article').' | Suncon Journal')
+@section('title', ($article->title ?? 'Article').' | '.($globalSettings['site.name'] ?? 'Suncon Engineers'))
 @section('description', $article->excerpt ? Str::limit($article->excerpt, 155) : 'Read more at the Suncon Engineers journal.')
 
 @section('content')
@@ -36,7 +36,7 @@
 
     @if($article->image)
       <div class="overflow-hidden aspect-[16/7] bg-[#E8E0D4] mb-16" data-reveal>
-        <img src="{{ asset($article->image) }}"
+        <img src="{{ $article->imageUrl }}"
              alt="{{ $article->title }}"
              class="w-full h-full object-cover"
              loading="lazy">
@@ -100,7 +100,7 @@
         <a href="{{ url('/journal/'.$rel->slug) }}" class="group block" data-reveal>
           <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4] mb-5">
             @if($rel->image)
-              <img src="{{ asset($rel->image) }}"
+              <img src="{{ $rel->imageUrl }}"
                    alt="{{ $rel->title }}"
                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                    loading="lazy">

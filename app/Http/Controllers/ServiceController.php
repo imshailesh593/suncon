@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
 use App\Models\Service;
 
 class ServiceController extends Controller
@@ -10,6 +11,10 @@ class ServiceController extends Controller
     {
         $services = Service::orderBy('sort_order')->get();
 
-        return view('services.index', compact('services'));
+        $faqs = Faq::where('published', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('services.index', compact('services', 'faqs'));
     }
 }

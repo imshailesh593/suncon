@@ -2,23 +2,23 @@
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12 flex items-center justify-between h-[60px]">
 
     {{-- Logo --}}
-    <a href="{{ url('/') }}" class="font-display text-lg tracking-[0.28em] uppercase text-[#1C1C1C] z-10" id="nav-logo">
-      SUN<span class="text-[#B5451B]">C</span>ON
+    <a href="{{ url('/') }}" class="font-body font-light text-[15px] tracking-[0.5em] uppercase text-[#1C1C1C] z-10" id="nav-logo">
+      SUNC<span class="text-[#B5451B]">O</span>N
     </a>
 
     {{-- Desktop nav --}}
     <nav class="hidden md:flex items-center gap-8">
       @foreach([['Projects','/projects'],['About','/about'],['Services','/services'],['Journal','/journal']] as $item)
         <a href="{{ url($item[1]) }}"
-           class="text-[10px] uppercase tracking-[0.2em] text-[#1C1C1C] hover:text-[#B5451B] transition-colors duration-200 {{ request()->is(ltrim($item[1],'/')) || request()->is(ltrim($item[1],'/').'/*') ? 'text-[#B5451B]' : '' }}">
+           class="font-body font-light text-[10px] uppercase tracking-[0.22em] text-[#1C1C1C] hover:text-[#B5451B] transition-colors duration-200 {{ request()->is(ltrim($item[1],'/')) || request()->is(ltrim($item[1],'/').'/*') ? 'text-[#B5451B]' : '' }}">
           {{ $item[0] }}
         </a>
       @endforeach
     </nav>
 
     {{-- CTA --}}
-    <a href="{{ url('/contact') }}"
-       class="hidden md:flex text-[10px] uppercase tracking-[0.18em] items-center gap-2 border-b border-[#1C1C1C]/30 pb-0.5 hover:border-[#B5451B] hover:text-[#B5451B] transition-all duration-300">
+    <a href="{{ url('/contact') }}" id="nav-cta"
+       class="hidden md:flex font-body font-light text-[10px] uppercase tracking-[0.22em] items-center gap-2 px-5 py-2.5 bg-[#B5451B] text-white hover:opacity-90 transition-all duration-300">
       Start a Project <span>→</span>
     </a>
 
@@ -38,7 +38,7 @@
     </nav>
     <div>
       <a href="{{ url('/contact') }}" class="text-[10px] uppercase tracking-[0.28em] border border-[#1C1C1C]/20 px-7 py-3.5 hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300 inline-block">Start a Project →</a>
-      <p class="text-[#8B8275] text-xs tracking-wide mt-5">bd@sunconengineers.com</p>
+      <p class="text-[#8B8275] text-xs tracking-wide mt-5">{{ $globalSettings['site.email'] ?? 'bd@sunconengineers.com' }}</p>
     </div>
   </div>
 </header>

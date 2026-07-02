@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Award;
 use App\Models\Client;
+use App\Models\Setting;
 use App\Models\Statistic;
 use App\Models\TeamMember;
+use App\Models\Testimonial;
 
 class AboutController extends Controller
 {
@@ -20,7 +23,6 @@ class AboutController extends Controller
             ])
             ->toArray();
 
-        // Two rows of client names for the marquee
         $allClients = Client::orderBy('sort_order')->pluck('name')->toArray();
         $half       = (int) ceil(count($allClients) / 2);
         $clients    = [
@@ -28,6 +30,26 @@ class AboutController extends Controller
             'row2' => array_slice($allClients, $half)    ?: null,
         ];
 
-        return view('about.index', compact('team', 'statistics', 'clients'));
+        $testimonials = Testimonial::where('published', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $awards = Award::where('published', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $settings = array_merge(
+            Setting::getGroup('about.'),
+            Setting::getGroup('site.'),
+        );
+
+        return view('about.index', compact(
+            'team',
+            'statistics',
+            'clients',
+            'testimonials',
+            'awards',
+            'settings',
+        ));
     }
 }

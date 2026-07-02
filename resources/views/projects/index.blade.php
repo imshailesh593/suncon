@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Projects | Suncon Engineers')
-@section('description', 'Explore our portfolio of architecture, interior design, landscape and infrastructure projects across India.')
+@section('description', 'Explore our portfolio of architecture, interior design, landscape and urban projects across India.')
 
 @section('content')
 
@@ -19,11 +19,11 @@
     <div class="flex items-center gap-0 overflow-x-auto">
       @php
         $disciplines = [
-          '' => 'All',
+          ''             => 'All',
           'architecture' => 'Architecture',
-          'interior' => 'Interior Design',
-          'landscape' => 'Landscape',
-          'urban' => 'Infrastructure',
+          'interior'     => 'Interior Design',
+          'landscape'    => 'Landscape',
+          'urban'        => 'Urban & Mixed-Use',
         ];
         $active = request('discipline', '');
       @endphp
@@ -57,7 +57,7 @@
             {{-- Image --}}
             <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4] mb-5 relative">
               @if($project->image)
-                <img src="{{ asset($project->image) }}"
+                <img src="{{ $project->imageUrl }}"
                      alt="{{ $project->title }}"
                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                      loading="lazy">
