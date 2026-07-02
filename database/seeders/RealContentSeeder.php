@@ -91,7 +91,7 @@ class RealContentSeeder extends Seeder
                 'slug'        => 'urban-design',
                 'title'       => 'Urban Design',
                 'tagline'     => 'Shaping cities, neighbourhoods, and public spaces.',
-                'description' => 'Suncon's urban design practice works at the intersection of planning, architecture, and infrastructure — delivering master plans, streetscape strategies, and DPRs for municipalities and civic bodies across India. We translate complex urban data into built environments that are efficient, equitable, and resilient.',
+                'description' => "Suncon's urban design practice works at the intersection of planning, architecture, and infrastructure — delivering master plans, streetscape strategies, and DPRs for municipalities and civic bodies across India. We translate complex urban data into built environments that are efficient, equitable, and resilient.",
                 'features'    => [
                     'Urban Master Planning',
                     'Integrated Storm Water Drainage (SWD) DPRs',
@@ -123,7 +123,7 @@ class RealContentSeeder extends Seeder
                 'slug'        => 'pmc',
                 'title'       => 'Project Management Consultancy',
                 'tagline'     => 'From tender to handover — accountability at every stage.',
-                'description' => 'Suncon's PMC division provides end-to-end project management for construction and infrastructure projects — covering tender preparation, contractor supervision, quality assurance, billing, and final documentation. Our structured seven-phase process ensures that projects are delivered on time, within budget, and to the specified quality standard.',
+                'description' => "Suncon's PMC division provides end-to-end project management for construction and infrastructure projects — covering tender preparation, contractor supervision, quality assurance, billing, and final documentation. Our structured seven-phase process ensures that projects are delivered on time, within budget, and to the specified quality standard.",
                 'features'    => [
                     'Tender Document Preparation & Review',
                     'Design & Cost Analysis',
