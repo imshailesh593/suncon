@@ -47,8 +47,8 @@
 
 <section class="bg-[#FAF7F3] py-0">
   @foreach($serviceList as $i => $svc)
-    @php $isEven = $i % 2 === 0; @endphp
-    <div class="border-b border-[#E8E0D4] {{ $isEven ? 'bg-[#FAF7F3]' : 'bg-[#F2EDE4]' }}">
+    @php $isEven = $i % 2 === 0; $svcSlug = is_array($svc) ? \Illuminate\Support\Str::slug($svc['title']) : $svc->slug; @endphp
+    <div id="{{ $svcSlug }}" class="border-b border-[#E8E0D4] {{ $isEven ? 'bg-[#FAF7F3]' : 'bg-[#F2EDE4]' }}" style="scroll-margin-top:70px">
       <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-20 grid md:grid-cols-2 gap-16 items-center">
 
         {{-- Image --}}
