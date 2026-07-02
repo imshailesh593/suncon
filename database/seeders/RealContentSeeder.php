@@ -85,10 +85,68 @@ class RealContentSeeder extends Seeder
             ],
         ];
 
+        // New services: create if not yet in DB, otherwise update
+        $newServices = [
+            [
+                'slug'        => 'urban-design',
+                'title'       => 'Urban Design',
+                'tagline'     => 'Shaping cities, neighbourhoods, and public spaces.',
+                'description' => 'Suncon's urban design practice works at the intersection of planning, architecture, and infrastructure — delivering master plans, streetscape strategies, and DPRs for municipalities and civic bodies across India. We translate complex urban data into built environments that are efficient, equitable, and resilient.',
+                'features'    => [
+                    'Urban Master Planning',
+                    'Integrated Storm Water Drainage (SWD) DPRs',
+                    'Topographic Survey & Hydrological Modelling',
+                    'Streetscape & Public Realm Design',
+                    'Environmental Impact Analysis',
+                    'Municipal & Civic Infrastructure',
+                ],
+                'image'      => 'https://www.sunconengineers.com/wp-content/uploads/2025/08/Picture5-min.png',
+                'sort_order' => 4,
+            ],
+            [
+                'slug'        => 'architectural-bim',
+                'title'       => 'Architectural BIM',
+                'tagline'     => 'Intelligent 3D models that reduce risk and improve delivery.',
+                'description' => 'Our BIM practice creates, manages, and co-ordinates intelligent digital representations of buildings and infrastructure — embedding geometry, material data, cost, and schedule information into a single federated model. We provide BIM services from LOD 100 concept through to LOD 500 as-built, supporting architects, structural engineers, MEP consultants, and facility managers.',
+                'features'    => [
+                    '3D Architectural & Structural Modelling (Revit)',
+                    'Clash Detection & Multi-disciplinary Coordination',
+                    '4D Construction Sequencing',
+                    '5D Cost Estimation & BOQ Extraction',
+                    'Scan to BIM (Laser Survey to Digital Twin)',
+                    'BIM Drafting & Construction-Ready Shop Drawings',
+                ],
+                'image'      => 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
+                'sort_order' => 5,
+            ],
+            [
+                'slug'        => 'pmc',
+                'title'       => 'Project Management Consultancy',
+                'tagline'     => 'From tender to handover — accountability at every stage.',
+                'description' => 'Suncon's PMC division provides end-to-end project management for construction and infrastructure projects — covering tender preparation, contractor supervision, quality assurance, billing, and final documentation. Our structured seven-phase process ensures that projects are delivered on time, within budget, and to the specified quality standard.',
+                'features'    => [
+                    'Tender Document Preparation & Review',
+                    'Design & Cost Analysis',
+                    'Layout Survey & Lineout',
+                    'Contract Administration',
+                    'Quality Assurance & Site Monitoring',
+                    'Running Bills, Final Bills & As-Built Drawings',
+                ],
+                'image'      => 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&q=80',
+                'sort_order' => 6,
+            ],
+        ];
+
         foreach ($services as $data) {
             $slug = $data['slug'];
             unset($data['slug']);
             \App\Models\Service::where('slug', $slug)->update($data);
+        }
+
+        foreach ($newServices as $data) {
+            $slug = $data['slug'];
+            unset($data['slug']);
+            \App\Models\Service::updateOrCreate(['slug' => $slug], $data);
         }
 
         // ── 3. TEAM MEMBER — Ramdas Mohite ────────────────────────────────────
@@ -109,7 +167,7 @@ class RealContentSeeder extends Seeder
             ['value' => '26',  'suffix' => '+', 'label' => 'Years of Excellence', 'sort_order' => 2],
             ['value' => '12',  'suffix' => '+', 'label' => 'States Covered',      'sort_order' => 3],
             ['value' => '150', 'suffix' => '+', 'label' => 'Clients Served',      'sort_order' => 4],
-            ['value' => '3',   'suffix' => '',  'label' => 'Design Disciplines',  'sort_order' => 5],
+            ['value' => '6',   'suffix' => '',  'label' => 'Service Disciplines',  'sort_order' => 5],
             ['value' => '2',   'suffix' => '',  'label' => 'Offices in India',    'sort_order' => 6],
         ];
         foreach ($stats as $s) {

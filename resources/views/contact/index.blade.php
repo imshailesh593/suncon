@@ -132,7 +132,7 @@
           <select id="project_type" name="project_type"
                   class="w-full bg-transparent border-b border-[#E8E0D4] py-3 text-sm text-[#1C1C1C] focus:outline-none focus:border-[#B5451B] transition-colors duration-200 font-light appearance-none cursor-pointer">
             <option value="" class="bg-[#FAF7F3]">Select a service…</option>
-            @foreach(['Architecture','Interior Design','Landscape','Infrastructure / PMC','BIM Services','Other'] as $opt)
+            @foreach(['Architecture Design','Landscape Design','Interior Design','Urban Design','Architectural BIM','PMC','Other'] as $opt)
               <option value="{{ $opt }}" {{ old('project_type') === $opt ? 'selected' : '' }} class="bg-[#FAF7F3]">{{ $opt }}</option>
             @endforeach
           </select>

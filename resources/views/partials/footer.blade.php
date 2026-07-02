@@ -61,7 +61,7 @@
       <div>
         <p class="text-[#8B8275] text-[10px] uppercase tracking-[0.2em] mb-5">Work</p>
         <ul class="flex flex-col gap-3">
-          @foreach([['All Projects','/projects'],['Architecture','/projects?discipline=architecture'],['Interior Design','/projects?discipline=interior'],['Landscape','/projects?discipline=landscape'],['Urban','/projects?discipline=urban']] as $l)
+          @foreach([['All Projects','/projects'],['Architecture Design','/projects?discipline=architecture'],['Landscape Design','/projects?discipline=landscape'],['Interior Design','/projects?discipline=interior'],['Urban','/projects?discipline=urban'],['Architectural BIM','/projects?discipline=bim'],['PMC','/projects?discipline=pmc']] as $l)
             <li><a href="{{ url($l[1]) }}" class="text-[#E8E0D4] text-sm hover:text-[#FAF7F3] transition-colors duration-200">{{ $l[0] }}</a></li>
           @endforeach
         </ul>

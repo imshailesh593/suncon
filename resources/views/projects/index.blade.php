@@ -20,10 +20,12 @@
       @php
         $disciplines = [
           ''             => 'All',
-          'architecture' => 'Architecture',
+          'architecture' => 'Architecture Design',
+          'landscape'    => 'Landscape Design',
           'interior'     => 'Interior Design',
-          'landscape'    => 'Landscape',
-          'urban'        => 'Urban & Mixed-Use',
+          'urban'        => 'Urban',
+          'bim'          => 'Architectural BIM',
+          'pmc'          => 'PMC',
         ];
         $active = request('discipline', '');
       @endphp
