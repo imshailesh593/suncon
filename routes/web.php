@@ -16,6 +16,7 @@ Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projec
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
 
 Route::get('/journal', [ArticleController::class, 'index'])->name('journal.index');
 Route::get('/journal/{slug}', [ArticleController::class, 'show'])->name('journal.show');

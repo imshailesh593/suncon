@@ -108,7 +108,7 @@
 
           @php $features = is_array($svc) ? ($svc['features'] ?? []) : ($svc->features ?? []); @endphp
           @if(count($features))
-            <ul class="flex flex-col gap-2.5">
+            <ul class="flex flex-col gap-2.5 mb-8">
               @foreach($features as $feat)
                 <li class="flex items-center gap-3 text-[10px] uppercase tracking-[0.15em] text-[#1C1C1C]">
                   <span class="w-4 h-px bg-[#B5451B] shrink-0"></span>
@@ -116,6 +116,12 @@
                 </li>
               @endforeach
             </ul>
+          @endif
+          @if(!is_array($svc))
+            <a href="{{ route('services.show', $svc->slug) }}"
+               class="inline-block text-[9px] uppercase tracking-[0.22em] border border-[#1C1C1C]/20 text-[#1C1C1C] px-6 py-3 hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+              View Details →
+            </a>
           @endif
         </div>
       </div>

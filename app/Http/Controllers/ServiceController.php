@@ -17,4 +17,12 @@ class ServiceController extends Controller
 
         return view('services.index', compact('services', 'faqs'));
     }
+
+    public function show(string $slug)
+    {
+        $service = Service::where('slug', $slug)->firstOrFail();
+        $others  = Service::where('slug', '!=', $slug)->orderBy('sort_order')->get();
+
+        return view('services.show', compact('service', 'others'));
+    }
 }

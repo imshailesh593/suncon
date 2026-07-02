@@ -27,14 +27,14 @@
         <div id="services-menu" class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible transition-opacity duration-200 z-50">
           <div class="bg-[#FAF7F3] border border-[#E8E0D4] shadow-lg min-w-[220px] py-2">
             @foreach([
-              ['Architecture Design',  '/services#architectural-design'],
-              ['Landscape Design',     '/services#landscape-design'],
-              ['Interior Design',      '/services#interior-design'],
-              ['Urban Design',         '/services#urban-design'],
-              ['Architectural BIM',    '/services#architectural-bim'],
-              ['PMC',                  '/services#pmc'],
+              ['Architecture Design', 'architectural-design'],
+              ['Landscape Design',    'landscape-design'],
+              ['Interior Design',     'interior-design'],
+              ['Urban Design',        'urban-design'],
+              ['Architectural BIM',   'architectural-bim'],
+              ['PMC',                 'pmc'],
             ] as $svc)
-              <a href="{{ url($svc[1]) }}"
+              <a href="{{ route('services.show', $svc[1]) }}"
                  class="block px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] text-[#1C1C1C] hover:text-[#B5451B] hover:bg-[#F2EDE4] transition-colors duration-150">
                 {{ $svc[0] }}
               </a>
@@ -67,14 +67,14 @@
         <a href="{{ url('/services') }}" class="font-display text-display-md text-[#1C1C1C] leading-none block mb-4">Services</a>
         <div class="flex flex-col gap-3 pl-4 border-l border-[#E8E0D4]">
           @foreach([
-            ['Architecture Design', '/services#architectural-design'],
-            ['Landscape Design',    '/services#landscape-design'],
-            ['Interior Design',     '/services#interior-design'],
-            ['Urban Design',        '/services#urban-design'],
-            ['Architectural BIM',   '/services#architectural-bim'],
-            ['PMC',                 '/services#pmc'],
+            ['Architecture Design', 'architectural-design'],
+            ['Landscape Design',    'landscape-design'],
+            ['Interior Design',     'interior-design'],
+            ['Urban Design',        'urban-design'],
+            ['Architectural BIM',   'architectural-bim'],
+            ['PMC',                 'pmc'],
           ] as $svc)
-            <a href="{{ url($svc[1]) }}"
+            <a href="{{ route('services.show', $svc[1]) }}"
                class="text-[10px] uppercase tracking-[0.2em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-200">
               {{ $svc[0] }}
             </a>
