@@ -19,36 +19,31 @@ class HomepageSettings extends Page implements HasForms {
 
     public array $data = [];
 
-    public function mount(): void { $this->form->fill(Setting::getGroup('home.')); }
+    public function mount(): void { $this->form->fill(Setting::getGroup('homepage.')); }
 
     public function form(Form $form): Form {
         return $form->schema([
             Section::make('Hero Section')->schema([
-                TextInput::make('home.hero_line1')->label('Headline Line 1')->default('Architecture'),
-                TextInput::make('home.hero_line2')->label('Headline Line 2 (italic)')->default('& Design.'),
-                Textarea::make('home.hero_subtitle')->label('Subtitle text')->rows(2)->columnSpanFull()
+                TextInput::make('homepage.hero_line1')->label('Headline Line 1')->default('Architecture'),
+                TextInput::make('homepage.hero_line2')->label('Headline Line 2 (italic)')->default('& Design.'),
+                Textarea::make('homepage.hero_subtitle')->label('Subtitle text')->rows(2)->columnSpanFull()
                     ->default('A multidisciplinary consultancy delivering architecture, landscape & interior design across India since 1999.'),
                 Grid::make(2)->schema([
-                    TextInput::make('home.hero_cta_primary')->label('Primary CTA label')->default('VIEW OUR WORK'),
-                    TextInput::make('home.hero_cta_secondary')->label('Secondary CTA label')->default('OUR SERVICES'),
+                    TextInput::make('homepage.cta_primary')->label('Primary CTA label')->default('View Our Work'),
+                    TextInput::make('homepage.cta_secondary')->label('Secondary CTA label')->default('Our Services'),
                 ]),
             ]),
             Section::make('Recent Projects Section')->schema([
-                TextInput::make('home.projects_title')->label('Section Title')->default('Recent Projects'),
-                TextInput::make('home.projects_cta')->label('CTA Label')->default('VIEW ALL PROJECTS'),
+                TextInput::make('homepage.projects_eyebrow')->label('Eyebrow text')->default('Selected Work'),
+                TextInput::make('homepage.projects_title')->label('Section Title')->default('Recent Projects'),
             ]),
             Section::make('Services Section')->schema([
-                TextInput::make('home.services_eyebrow')->label('Eyebrow text')->default('What We Do'),
-                TextInput::make('home.services_title')->label('Section Headline')->default('Our Services'),
-            ]),
-            Section::make('About / Stats Strip')->schema([
-                TextInput::make('home.about_eyebrow')->label('Eyebrow text')->default('About Suncon'),
-                Textarea::make('home.about_paragraph')->label('Intro paragraph')->rows(3)->columnSpanFull()
-                    ->default('Founded in 1999, Suncon Engineers Pvt. Ltd. is an ISO-certified multidisciplinary design consultancy headquartered in Pune, India.'),
+                TextInput::make('homepage.services_eyebrow')->label('Eyebrow text')->default('What We Do'),
+                TextInput::make('homepage.services_title')->label('Section Headline')->default('Our Disciplines'),
             ]),
             Section::make('Journal Section')->schema([
-                TextInput::make('home.journal_eyebrow')->label('Eyebrow text')->default('From the Studio'),
-                TextInput::make('home.journal_title')->label('Section Headline')->default('Journal'),
+                TextInput::make('homepage.journal_eyebrow')->label('Eyebrow text')->default('From the Studio'),
+                TextInput::make('homepage.journal_title')->label('Section Headline')->default('Latest Insights'),
             ]),
         ])->statePath('data');
     }

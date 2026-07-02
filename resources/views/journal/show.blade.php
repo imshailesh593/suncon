@@ -67,11 +67,11 @@ $artBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
         <div class="w-12 h-px bg-[#B5451B] mb-8"></div>
       @endif
 
-      @if($article->body)
+      @if($article->content)
         <div class="prose prose-stone prose-lg max-w-none font-light leading-relaxed text-[#1C1C1C]
                     prose-headings:font-display prose-headings:font-light
                     prose-a:text-[#B5451B] prose-a:no-underline hover:prose-a:underline">
-          {!! $article->body !!}
+          {!! $article->content !!}
         </div>
       @else
         <p class="text-[#8B8275] text-base leading-relaxed">Content coming soon.</p>

@@ -25,18 +25,15 @@ class ContactSettings extends Page implements HasForms {
         return $form->schema([
             Section::make('Office Information')->schema([
                 Textarea::make('contact.address')->label('Full Address')->rows(3)->columnSpanFull()
-                    ->default('123, XYZ Complex, Koregaon Park, Pune – 411 001, Maharashtra, India'),
-                Grid::make(2)->schema([
-                    TextInput::make('contact.phone')->label('Phone')->default('+91 20 2567 XXXX'),
-                    TextInput::make('contact.email')->label('Email')->default('bd@sunconengineers.com'),
-                ]),
+                    ->default('P1/9, Sai Palace, Near Lohia-Jain IT Park, Bhusari Colony (Right Side), Paud Road, Kothrud, Pune – 411038, Maharashtra, India.'),
                 TextInput::make('contact.office_hours')->label('Office Hours')
                     ->default('Mon – Sat: 9:30 AM – 6:30 PM'),
+                Textarea::make('contact.address2')->label('Second Office Address (optional)')->rows(2)->columnSpanFull(),
             ]),
             Section::make('Map')->schema([
-                TextInput::make('contact.map_embed_url')->label('Google Maps Embed URL')
+                TextInput::make('contact.map_embed')->label('Google Maps Embed URL')
                     ->url()->columnSpanFull()
-                    ->helperText('Paste the src URL from the Google Maps embed code'),
+                    ->helperText('Paste the src URL from the Google Maps embed <iframe> — not the share link'),
             ]),
             Section::make('Contact Hero')->schema([
                 TextInput::make('contact.hero_title')->label('Page Title')->default('Start a Project'),

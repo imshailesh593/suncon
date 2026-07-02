@@ -30,10 +30,12 @@ class ProjectResource extends Resource
                 TextInput::make('slug')->required()->unique(ignoreRecord: true)->columnSpanFull(),
                 Grid::make(3)->schema([
                     Select::make('discipline')->options([
-                        'architecture' => 'Architecture',
+                        'architecture' => 'Architecture Design',
+                        'landscape'    => 'Landscape Design',
                         'interior'     => 'Interior Design',
-                        'landscape'    => 'Landscape',
-                        'urban'        => 'Urban / Infrastructure',
+                        'urban'        => 'Urban Design',
+                        'bim'          => 'Architectural BIM',
+                        'pmc'          => 'PMC',
                     ])->required(),
                     TextInput::make('year')->required()->maxLength(4),
                     Select::make('status')->options(['published'=>'Published','draft'=>'Draft'])->default('published'),
@@ -78,7 +80,7 @@ class ProjectResource extends Resource
                 ImageColumn::make('image')->width(80)->height(55)->label(''),
                 TextColumn::make('title')->searchable()->sortable()->limit(35)->weight('medium'),
                 TextColumn::make('discipline')->badge()->color(fn($state)=>match($state){
-                    'architecture'=>'success','interior'=>'warning','landscape'=>'info','urban'=>'primary',default=>'gray'
+                    'architecture'=>'success','landscape'=>'info','interior'=>'warning','urban'=>'primary','bim'=>'danger','pmc'=>'gray',default=>'gray'
                 }),
                 TextColumn::make('location')->limit(20)->color('gray'),
                 TextColumn::make('year')->sortable(),
@@ -87,8 +89,9 @@ class ProjectResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('discipline')->options([
-                    'architecture'=>'Architecture','interior'=>'Interior Design',
-                    'landscape'=>'Landscape','urban'=>'Urban / Infrastructure',
+                    'architecture'=>'Architecture Design','landscape'=>'Landscape Design',
+                    'interior'=>'Interior Design','urban'=>'Urban Design',
+                    'bim'=>'Architectural BIM','pmc'=>'PMC',
                 ]),
                 SelectFilter::make('status')->options(['published'=>'Published','draft'=>'Draft']),
             ])
