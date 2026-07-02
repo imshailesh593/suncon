@@ -89,11 +89,8 @@
       <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-4">The People</p>
       <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">Our Team</h2>
     </div>
-    @php $leaders = $team->take(3); $rest = $team->skip(3); @endphp
-
-    {{-- Leadership: larger portrait cards --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14 {{ $rest->isNotEmpty() ? 'mb-16' : '' }}">
-      @forelse($leaders as $member)
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+      @forelse($team as $member)
         <div class="group" data-reveal>
           <div class="overflow-hidden aspect-[3/4] bg-[#E8E0D4] mb-5">
             @if($member->imageUrl)
@@ -128,34 +125,6 @@
         @endforeach
       @endforelse
     </div>
-
-    {{-- Rest of team: smaller square cards --}}
-    @if($rest->isNotEmpty())
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
-        @foreach($rest as $member)
-          <div class="group" data-reveal>
-            <div class="overflow-hidden aspect-square bg-[#E8E0D4] mb-4">
-              @if($member->imageUrl)
-                <img src="{{ $member->imageUrl }}" alt="{{ $member->name }}"
-                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
-              @else
-                <div class="w-full h-full bg-gradient-to-b from-[#E8E0D4] to-[#c8bcad] flex items-end p-4">
-                  <span class="font-display font-light text-2xl text-[#8B8275] opacity-30">{{ substr($member->name, 0, 1) }}</span>
-                </div>
-              @endif
-            </div>
-            <h3 class="font-display font-light text-base text-[#1C1C1C] mb-1 leading-snug">{{ $member->name }}</h3>
-            <p class="text-[9px] uppercase tracking-[0.18em] text-[#B5451B]">{{ $member->role }}</p>
-            @if($member->linkedin)
-              <a href="{{ $member->linkedin }}" target="_blank" rel="noopener noreferrer"
-                 class="inline-block mt-2 text-[8px] uppercase tracking-[0.18em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-200">
-                LinkedIn →
-              </a>
-            @endif
-          </div>
-        @endforeach
-      </div>
-    @endif
   </div>
 </section>
 
