@@ -20,27 +20,54 @@
 
 {{-- Services --}}
 @php
-  $serviceList = $services ?? [
+  $serviceList = ($services && $services->count()) ? $services : [
     [
-      'title' => 'Architecture',
-      'tagline' => 'Buildings that respond to context, climate and community.',
-      'image' => null,
-      'description' => 'Our architectural practice spans residential, commercial, hospitality, institutional and mixed-use typologies. We deliver from pre-design feasibility and concept design through to construction documentation, tender assistance and site supervision. Our ISO-certified quality management system ensures consistency across every stage.',
-      'features' => ['Concept & Schematic Design','Design Development','Construction Documentation','Regulatory Approvals','Tender & Contract Administration','Site Supervision'],
+      'title'    => 'Architectural Design',
+      'slug'     => 'architectural-design',
+      'tagline'  => 'Functional, aesthetic structures built to last.',
+      'image'    => null,
+      'description' => 'Suncon Architecture is an independent consultancy firm providing architectural design services across residential, commercial, hospitality, healthcare, industrial, and educational typologies. We balance client vision, safety codes, structural rigour, and environmental responsiveness at every stage of the design process.',
+      'features' => ['Concept & Schematic Design','Working Drawings & Detailed Documentation','Town Planning & Layout Approvals','Structural Coordination','Construction Administration & Site Supervision','Project Types: Residential, Commercial, Hospitality, Healthcare, Industrial, Educational'],
     ],
     [
-      'title' => 'Interior Design',
-      'tagline' => 'Spaces that are functional, beautiful and deeply human.',
-      'image' => null,
-      'description' => 'We design interiors that go beyond aesthetics — every spatial decision is grounded in how people live, work and experience a room. Our interiors team works across residential apartments, corporate offices, hospitality suites, retail environments and public institutions.',
-      'features' => ['Space Planning','Concept & Mood Development','Material & Finish Selection','Furniture Design & Procurement','Lighting Design','FF&E Coordination'],
+      'title'    => 'Landscape Design',
+      'slug'     => 'landscape-design',
+      'tagline'  => 'Outdoor spaces as thoughtful as the buildings they surround.',
+      'image'    => null,
+      'description' => 'Our landscape design practice integrates outdoor planning with architecture to enhance aesthetics, ecology, and functionality in a unified environment. We design landscapes for townships, campuses, resorts, industrial premises, and public spaces — creating outdoor environments that are site-responsive and resilient.',
+      'features' => ['Landscape Master Planning','Site Analysis & Ecological Assessment','Planting Design & Species Selection','Hardscape, Water Features & Pathways','Township & Campus Landscapes','Resort & Hospitality Grounds'],
     ],
     [
-      'title' => 'Landscape & Infrastructure',
-      'tagline' => 'Connecting people to place through thoughtful design.',
-      'image' => null,
-      'description' => 'Our landscape team designs outdoor environments at every scale — from private gardens and residential amenity decks to urban parks, streetscapes and large civic infrastructure. We integrate ecological thinking, stormwater management and community activation into every scheme.',
-      'features' => ['Landscape Masterplanning','Planting Design','Hardscape & Paving','Urban Streetscapes','BIM Coordination','Project Management Consultancy'],
+      'title'    => 'Interior Design',
+      'slug'     => 'interior-design',
+      'tagline'  => 'Environments shaped for how people really live and work.',
+      'image'    => null,
+      'description' => 'Our interior design studio enhances indoor spaces through strategic arrangement of furnishings, colour palettes, and materials to achieve both utility and visual appeal. From healthcare imaging centres to luxury resorts and corporate offices, we begin with a careful reading of how a space will actually be occupied.',
+      'features' => ['Interior Architecture & Space Planning','Furniture, Joinery & Fixture Design','Material & Finish Specification','Lighting Design & Mood','Healthcare & Specialised Interiors','Hospitality, Resort & Residential Interiors'],
+    ],
+    [
+      'title'    => 'Urban Design',
+      'slug'     => 'urban-design',
+      'tagline'  => 'Shaping cities, neighbourhoods, and public spaces.',
+      'image'    => null,
+      'description' => 'Suncon's urban design practice works at the intersection of planning, architecture, and infrastructure — delivering master plans, streetscape strategies, and DPRs for municipalities and civic bodies across India. We translate complex urban data into built environments that are efficient, equitable, and resilient.',
+      'features' => ['Urban Master Planning','Integrated Storm Water Drainage (SWD) DPRs','Topographic Survey & Hydrological Modelling','Streetscape & Public Realm Design','Environmental Impact Analysis','Municipal & Civic Infrastructure'],
+    ],
+    [
+      'title'    => 'Architectural BIM',
+      'slug'     => 'architectural-bim',
+      'tagline'  => 'Intelligent 3D models that reduce risk and improve delivery.',
+      'image'    => null,
+      'description' => 'Our BIM practice creates, manages, and co-ordinates intelligent digital representations of buildings and infrastructure — embedding geometry, material data, cost, and schedule information into a single federated model. We provide BIM services from LOD 100 concept through to LOD 500 as-built.',
+      'features' => ['3D Architectural & Structural Modelling (Revit)','Clash Detection & Multi-disciplinary Coordination','4D Construction Sequencing','5D Cost Estimation & BOQ Extraction','Scan to BIM (Laser Survey to Digital Twin)','BIM Drafting & Construction-Ready Shop Drawings'],
+    ],
+    [
+      'title'    => 'Project Management Consultancy',
+      'slug'     => 'pmc',
+      'tagline'  => 'From tender to handover — accountability at every stage.',
+      'image'    => null,
+      'description' => 'Suncon's PMC division provides end-to-end project management for construction and infrastructure projects — covering tender preparation, contractor supervision, quality assurance, billing, and final documentation. Our structured seven-phase process ensures projects are delivered on time, within budget, and to specification.',
+      'features' => ['Tender Document Preparation & Review','Design & Cost Analysis','Layout Survey & Lineout','Contract Administration','Quality Assurance & Site Monitoring','Running Bills, Final Bills & As-Built Drawings'],
     ],
   ];
 @endphp

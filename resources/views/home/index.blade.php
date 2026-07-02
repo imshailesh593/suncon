@@ -129,7 +129,7 @@
 {{-- ─── STATISTICS ──────────────────────────────────────────────────────── --}}
 <section class="bg-[#1C1C1C] py-24 px-6 lg:px-12" data-dark>
   <div class="max-w-screen-xl mx-auto">
-    <h2 class="font-display font-light text-display-md text-[#FAF7F3] mb-16 leading-none max-w-lg" data-reveal>
+    <h2 class="font-display font-light text-xl text-[#FAF7F3] mb-16 leading-relaxed max-w-lg" data-reveal>
       {{ $settings['site.footer_tagline'] ?? "Shaping India's Built Environment" }}<br>
       <em class="italic text-[#B5451B]">Since {{ $settings['site.founded'] ?? '1999' }}</em>
     </h2>

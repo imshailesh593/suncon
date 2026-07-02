@@ -270,3 +270,4 @@ if (wordSplitEls.length) {
 
 // ─── 10. PAGE LOAD — fade in body ────────────────────────────────────────────
 gsap.from('body', { opacity: 0, duration: 0.4, ease: 'power1.out' });
+

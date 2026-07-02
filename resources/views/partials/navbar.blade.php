@@ -16,15 +16,15 @@
       @endforeach
 
       {{-- Services dropdown --}}
-      <div class="relative group">
+      <div class="relative" id="services-dropdown">
         <a href="{{ url('/services') }}"
            class="font-body font-light text-[10px] uppercase tracking-[0.22em] text-[#1C1C1C] hover:text-[#B5451B] transition-colors duration-200 flex items-center gap-1.5 {{ request()->is('services') || request()->is('services/*') ? 'text-[#B5451B]' : '' }}">
           Services
-          <svg class="w-2.5 h-2.5 opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 10 6" fill="none">
+          <svg class="w-2.5 h-2.5 opacity-50" viewBox="0 0 10 6" fill="none">
             <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
           </svg>
         </a>
-        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-200 z-50">
+        <div id="services-menu" class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible transition-opacity duration-200 z-50">
           <div class="bg-[#FAF7F3] border border-[#E8E0D4] shadow-lg min-w-[220px] py-2">
             @foreach([
               ['Architecture Design',  '/services#architectural-design'],
@@ -88,3 +88,22 @@
     </div>
   </div>
 </header>
+<script>
+(function(){
+  var wrap = document.getElementById('services-dropdown');
+  var menu = document.getElementById('services-menu');
+  if (!wrap || !menu) return;
+  var t;
+  wrap.addEventListener('mouseenter', function(){
+    clearTimeout(t);
+    menu.style.opacity = '1';
+    menu.style.visibility = 'visible';
+  });
+  wrap.addEventListener('mouseleave', function(){
+    t = setTimeout(function(){
+      menu.style.opacity = '0';
+      menu.style.visibility = 'hidden';
+    }, 100);
+  });
+})();
+</script>
