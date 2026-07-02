@@ -31,7 +31,7 @@
       @endphp
       @foreach($disciplines as $slug => $label)
         <a href="{{ url('/projects') }}{{ $slug ? '?discipline='.$slug : '' }}"
-           class="shrink-0 text-[10px] uppercase tracking-[0.18em] px-6 py-4 border-b-2 transition-all duration-200
+           class="shrink-0 whitespace-nowrap text-[10px] uppercase tracking-[0.18em] px-6 py-4 border-b-2 transition-all duration-200
                   {{ $active === $slug
                       ? 'border-[#B5451B] text-[#B5451B]'
                       : 'border-transparent text-[#8B8275] hover:text-[#1C1C1C]' }}">

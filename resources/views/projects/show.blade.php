@@ -3,6 +3,15 @@
 @section('title', ($project->title ?? 'Project').' | '.($globalSettings['site.name'] ?? 'Suncon Engineers'))
 @section('description', $project->description ? Str::limit($project->description, 155) : 'Project by Suncon Engineers.')
 
+@push('schema')
+@php
+$projSchema = ['@context'=>'https://schema.org','@type'=>'CreativeWork','name'=>$project->title,'description'=>$project->description??'','url'=>url()->current(),'image'=>$project->image?$project->imageUrl:null,'creator'=>['@id'=>url('/').'/#organization'],'locationCreated'=>$project->location??'India','dateCreated'=>$project->year??null];
+$projBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','itemListElement'=>[['@type'=>'ListItem','position'=>1,'name'=>'Home','item'=>url('/')],['@type'=>'ListItem','position'=>2,'name'=>'Projects','item'=>url('/projects')],['@type'=>'ListItem','position'=>3,'name'=>$project->title,'item'=>url()->current()]]];
+@endphp
+<script type="application/ld+json">{!! json_encode($projSchema,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+<script type="application/ld+json">{!! json_encode($projBreadcrumb,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+@endpush
+
 @section('content')
 
 {{-- Back link --}}

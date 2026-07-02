@@ -3,6 +3,15 @@
 @section('title', ($article->title ?? 'Article').' | '.($globalSettings['site.name'] ?? 'Suncon Engineers'))
 @section('description', $article->excerpt ? Str::limit($article->excerpt, 155) : 'Read more at the Suncon Engineers journal.')
 
+@push('schema')
+@php
+$artSchema = ['@context'=>'https://schema.org','@type'=>'Article','headline'=>$article->title,'description'=>$article->excerpt??'','url'=>url()->current(),'image'=>$article->image?$article->imageUrl:null,'datePublished'=>$article->published_at?$article->published_at->toIso8601String():null,'author'=>['@type'=>'Person','name'=>$article->author??'Suncon Engineers'],'publisher'=>['@id'=>url('/').'/#organization']];
+$artBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','itemListElement'=>[['@type'=>'ListItem','position'=>1,'name'=>'Home','item'=>url('/')],['@type'=>'ListItem','position'=>2,'name'=>'Journal','item'=>url('/journal')],['@type'=>'ListItem','position'=>3,'name'=>$article->title,'item'=>url()->current()]]];
+@endphp
+<script type="application/ld+json">{!! json_encode($artSchema,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+<script type="application/ld+json">{!! json_encode($artBreadcrumb,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+@endpush
+
 @section('content')
 
 {{-- Back --}}

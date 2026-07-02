@@ -3,6 +3,15 @@
 @section('title', $service->title.' | Suncon Engineers')
 @section('description', $service->tagline ?? $service->description)
 
+@push('schema')
+@php
+$svcSchema = ['@context'=>'https://schema.org','@type'=>'Service','name'=>$service->title,'description'=>$service->description,'url'=>url()->current(),'provider'=>['@id'=>url('/').'/#organization'],'areaServed'=>'India','serviceType'=>$service->title];
+$svcBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','itemListElement'=>[['@type'=>'ListItem','position'=>1,'name'=>'Home','item'=>url('/')],['@type'=>'ListItem','position'=>2,'name'=>'Services','item'=>url('/services')],['@type'=>'ListItem','position'=>3,'name'=>$service->title,'item'=>url()->current()]]];
+@endphp
+<script type="application/ld+json">{!! json_encode($svcSchema,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+<script type="application/ld+json">{!! json_encode($svcBreadcrumb,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+@endpush
+
 @section('content')
 
 {{-- Hero --}}

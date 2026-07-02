@@ -3,6 +3,11 @@
 @section('title', ($settings['site.seo_title'] ?? 'Suncon Engineers | Architecture, Landscape & Interior Design'))
 @section('description', ($settings['site.seo_description'] ?? 'A multidisciplinary consultancy delivering architecture, landscape & interior design across India since 1999.'))
 
+@push('schema')
+@php $homeSchema = ['@context'=>'https://schema.org','@type'=>'WebPage','@id'=>url('/').'/#webpage','url'=>url('/'),'name'=>$settings['site.seo_title']??'Suncon Engineers','description'=>$settings['site.seo_description']??'','isPartOf'=>['@id'=>url('/').'/#website'],'about'=>['@id'=>url('/').'/#organization']]; @endphp
+<script type="application/ld+json">{!! json_encode($homeSchema,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+@endpush
+
 @section('content')
 
 {{-- ─── HERO ─────────────────────────────────────────────────────────────── --}}
@@ -176,7 +181,7 @@
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       @forelse($services->take(3) as $svc)
-        <a href="{{ url('/services') }}" class="group block" data-reveal>
+        <a href="{{ route('services.show', $svc->slug) }}" class="group block" data-reveal>
           <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4] mb-5 rounded-lg">
             @if($svc->imageUrl)
               <img src="{{ $svc->imageUrl }}" alt="{{ $svc->title }}"

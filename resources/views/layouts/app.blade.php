@@ -18,6 +18,46 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,200;1,9..144,300;1,9..144,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   @stack('head')
+  @php
+    $orgSchema = [
+      '@context' => 'https://schema.org',
+      '@graph'   => [
+        [
+          '@type' => 'WebSite',
+          '@id'   => url('/') . '/#website',
+          'name'  => $globalSettings['site.name'] ?? 'Suncon Engineers',
+          'url'   => url('/'),
+        ],
+        [
+          '@type'         => 'ProfessionalService',
+          '@id'           => url('/') . '/#organization',
+          'name'          => $globalSettings['site.name'] ?? 'Suncon Engineers Pvt. Ltd.',
+          'url'           => url('/'),
+          'logo'          => url('/images/hero-bg.jpg'),
+          'foundingDate'  => $globalSettings['site.founded'] ?? '1999',
+          'email'         => $globalSettings['site.email'] ?? 'bd@sunconengineers.com',
+          'telephone'     => $globalSettings['site.phone'] ?? '+91 93716 54387',
+          'areaServed'    => 'India',
+          'address'       => [
+            '@type'           => 'PostalAddress',
+            'streetAddress'   => 'P1/9, Sai Palace, Bhusari Colony (Right), Paud Road, Kothrud',
+            'addressLocality' => 'Pune',
+            'addressRegion'   => 'Maharashtra',
+            'postalCode'      => '411038',
+            'addressCountry'  => 'IN',
+          ],
+          'sameAs' => array_values(array_filter([
+            $globalSettings['site.social_instagram'] ?? '',
+            $globalSettings['site.social_linkedin']  ?? '',
+            $globalSettings['site.social_facebook']  ?? '',
+            $globalSettings['site.social_youtube']   ?? '',
+          ])),
+        ],
+      ],
+    ];
+  @endphp
+  <script type="application/ld+json">{!! json_encode($orgSchema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+  @stack('schema')
 </head>
 <body class="bg-[#FAF7F3] text-[#1C1C1C] font-body antialiased overflow-x-hidden">
 
