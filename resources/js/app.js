@@ -129,7 +129,6 @@ function initCarousel(trackId, prevId, nextId) {
 }
 
 initCarousel('projects-track', 'projects-prev', 'projects-next');
-initCarousel('services-track', 'services-prev', 'services-next');
 
 // ─── 7. STAT COUNTERS ────────────────────────────────────────────────────────
 document.querySelectorAll('[data-counter]').forEach((el) => {
