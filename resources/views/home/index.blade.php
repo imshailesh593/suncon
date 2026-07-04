@@ -53,6 +53,9 @@
   </div>
 </section>
 
+{{-- spacer --}}
+<div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
+
 {{-- ─── RECENT PROJECTS ─────────────────────────────────────────────────── --}}
 @php
   $disciplineMap = ['architecture'=>'Architecture','interior'=>'Interior Design','landscape'=>'Landscape Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC'];
@@ -155,6 +158,9 @@
 
 </section>
 
+{{-- spacer --}}
+<div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
+
 {{-- ─── STATISTICS ──────────────────────────────────────────────────────── --}}
 <section class="bg-[#1C1C1C] py-24 px-6 lg:px-12" data-dark>
   <div class="max-w-screen-xl mx-auto">
@@ -185,6 +191,9 @@
     </div>
   </div>
 </section>
+
+{{-- spacer --}}
+<div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
 
 {{-- ─── SERVICES GRID ────────────────────────────────────────────────────── --}}
 @php
@@ -279,6 +288,9 @@
   </div>
 </section>
 
+{{-- spacer --}}
+<div aria-hidden="true" class="h-2 bg-[#D4C9BB]"></div>
+
 {{-- ─── FEATURED PROJECT ────────────────────────────────────────────────── --}}
 @if($featuredProject ?? null)
 <section class="bg-[#F2EDE4] py-0 overflow-hidden">
@@ -308,6 +320,9 @@
   </div>
 </section>
 @endif
+
+{{-- spacer --}}
+<div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
 
 {{-- ─── JOURNAL TEASER ──────────────────────────────────────────────────── --}}
 <section class="py-24 bg-[#FAF7F3] px-6 lg:px-12">
