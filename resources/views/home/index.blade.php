@@ -210,7 +210,7 @@
     </div>
 
     {{-- Cards grid — 1px gaps act as dividers --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#D4C9BB]">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#D4C9BB]">
       @foreach($svcList as $svc)
         @php
           $isArr   = is_array($svc);
