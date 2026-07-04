@@ -30,7 +30,7 @@ class HomeController extends Controller
             ])
             ->toArray();
 
-        $services = Service::orderBy('sort_order')->take(3)->get();
+        $services = Service::orderBy('sort_order')->get();
 
         $settings = array_merge(
             Setting::getGroup('homepage.'),
