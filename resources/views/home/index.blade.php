@@ -217,27 +217,44 @@
           $title   = $isArr ? $svc['title']   : $svc->title;
           $tagline = $isArr ? $svc['tagline']  : ($svc->tagline ?? '');
           $slug    = $isArr ? $svc['slug']    : $svc->slug;
+          $imgUrl  = $isArr ? null            : ($svc->imageUrl ?? null);
           $index   = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
         @endphp
         <a href="{{ route('services.show', $slug) }}"
-           class="group bg-[#FAF7F3] hover:bg-[#1C1C1C] transition-colors duration-500 p-10 flex flex-col gap-5 min-h-[260px]"
+           class="group bg-[#FAF7F3] hover:bg-[#1C1C1C] transition-colors duration-500 flex flex-col"
            data-reveal>
-          <div class="flex items-start justify-between">
-            <span class="font-display font-light leading-none" style="font-size:2.8rem;color:#D4C9BB;transition:color 0.5s;" onmouseenter="this.style.color='rgba(255,255,255,0.15)'" onmouseleave="this.style.color='#D4C9BB'">{{ $index }}</span>
-            <span class="text-[#1C1C1C]/20 group-hover:text-white/60 transition-all duration-500 text-xl leading-none mt-1">→</span>
+
+          {{-- Image --}}
+          <div class="overflow-hidden bg-[#E8E0D4]" style="height:280px;">
+            @if($imgUrl)
+              <img src="{{ $imgUrl }}" alt="{{ $title }}"
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy">
+            @else
+              <div class="w-full h-full flex items-end p-8" style="background:linear-gradient(135deg,#E8E0D4,#C8BCAD);">
+                <span class="font-display font-light select-none" style="font-size:6rem;line-height:1;color:rgba(28,28,28,0.06);">{{ $index }}</span>
+              </div>
+            @endif
           </div>
-          <div class="w-8 h-px bg-[#B5451B] group-hover:w-14 transition-all duration-500"></div>
-          <h3 class="font-display font-light text-[1.25rem] leading-snug text-[#1C1C1C] group-hover:text-white transition-colors duration-500 flex-1">
-            {{ $title }}
-          </h3>
-          @if($tagline)
-            <p class="text-[12px] leading-relaxed font-light text-[#8B8275] group-hover:text-white/55 transition-colors duration-500">
-              {{ $tagline }}
-            </p>
-          @endif
-          <span class="text-[9px] uppercase tracking-[0.2em] text-[#B5451B] group-hover:text-[#E8846A] transition-colors duration-500 self-start" style="border-bottom:1px solid rgba(181,69,27,0.35);padding-bottom:2px;">
-            Explore →
-          </span>
+
+          {{-- Content --}}
+          <div class="p-8 lg:p-10 flex flex-col gap-4 flex-1">
+            <div class="flex items-start justify-between">
+              <span class="font-display font-light text-[#D4C9BB] group-hover:text-white/15 transition-colors duration-500 leading-none" style="font-size:2.4rem;">{{ $index }}</span>
+              <span class="text-[#1C1C1C]/20 group-hover:text-white/50 transition-all duration-500 text-lg leading-none mt-1">→</span>
+            </div>
+            <div class="w-8 h-px bg-[#B5451B] group-hover:w-14 transition-all duration-500"></div>
+            <h3 class="font-display font-light text-[1.2rem] leading-snug text-[#1C1C1C] group-hover:text-white transition-colors duration-500 flex-1">
+              {{ $title }}
+            </h3>
+            @if($tagline)
+              <p class="text-[12px] leading-relaxed font-light text-[#8B8275] group-hover:text-white/50 transition-colors duration-500">
+                {{ $tagline }}
+              </p>
+            @endif
+            <span class="text-[9px] uppercase tracking-[0.2em] text-[#B5451B] group-hover:text-[#E8846A] transition-colors duration-500 self-start" style="border-bottom:1px solid rgba(181,69,27,0.35);padding-bottom:2px;">
+              Explore →
+            </span>
+          </div>
         </a>
       @endforeach
     </div>
