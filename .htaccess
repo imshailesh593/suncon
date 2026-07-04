@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Static assets — map to public/
+    RewriteRule ^(images|build|storage|vendor|favicon\.ico|robots\.txt)(.*) public/$1$2 [L,QSA]
+
+    # Everything else → Laravel
+    RewriteRule ^ public/index.php [L,QSA]
+</IfModule>
