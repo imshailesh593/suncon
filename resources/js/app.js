@@ -47,8 +47,8 @@ if (cursorDot && cursorRing) {
 
     // Ring lerps toward mouse on every frame
     gsap.ticker.add(() => {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
+      ringX += (mouseX - ringX) * 0.25;
+      ringY += (mouseY - ringY) * 0.25;
       gsap.set(cursorRing, { x: ringX, y: ringY });
     });
 
