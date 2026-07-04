@@ -163,52 +163,83 @@
 </section>
 
 {{-- ─── SERVICES TEASER ─────────────────────────────────────────────────── --}}
-<section class="py-24 bg-[#FAF7F3] px-6 lg:px-12">
-  <div class="max-w-screen-xl mx-auto">
-    <div class="flex items-end justify-between mb-16" data-reveal>
-      <div>
-        <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-4">
-          {{ $settings['homepage.services_eyebrow'] ?? 'What We Do' }}
-        </p>
-        <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
-          {{ $settings['homepage.services_title'] ?? 'Our Disciplines' }}
-        </h2>
-      </div>
-      <a href="{{ url('/services') }}"
-         class="text-[10px] uppercase tracking-[0.2em] text-[#8B8275] border-b border-[#8B8275]/40 pb-0.5 hover:text-[#B5451B] hover:border-[#B5451B] transition-all duration-300 hidden md:block">
-        All Services
-      </a>
+<section id="services-section" class="bg-[#F2EDE4] overflow-hidden">
+
+  <div class="px-6 lg:px-12 pt-20 pb-12 flex items-end justify-between">
+    <div data-reveal>
+      <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
+        {{ $settings['homepage.services_eyebrow'] ?? 'What We Do' }}
+      </p>
+      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
+        {{ $settings['homepage.services_title'] ?? 'Our Disciplines' }}
+      </h2>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      @forelse($services->take(3) as $svc)
-        <a href="{{ route('services.show', $svc->slug) }}" class="group block" data-reveal>
-          <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4] mb-5 rounded-lg">
-            @if($svc->imageUrl)
-              <img src="{{ $svc->imageUrl }}" alt="{{ $svc->title }}"
-                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+    <a href="{{ url('/services') }}"
+       class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1">
+      <span>All Services</span>
+      <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
+    </a>
+  </div>
+
+  <div class="overflow-hidden pb-20">
+    <div id="services-track"
+         class="flex gap-4 pl-6 lg:pl-12 overflow-x-auto md:overflow-visible"
+         style="width: max-content; padding-right: 3rem">
+
+      @php
+        $fallbackServices = [
+          ['title'=>'Architecture Design','tagline'=>'From concept to completion — buildings that endure.','slug'=>'architectural-design'],
+          ['title'=>'Landscape Design','tagline'=>'Connecting people to place through thoughtful design.','slug'=>'landscape-design'],
+          ['title'=>'Interior Design','tagline'=>'Spaces that breathe — functional, material, human.','slug'=>'interior-design'],
+          ['title'=>'Urban Design','tagline'=>'Shaping cities, neighbourhoods, and public spaces.','slug'=>'urban-design'],
+          ['title'=>'Architectural BIM','tagline'=>'Intelligent 3D models that cut cost and error.','slug'=>'architectural-bim'],
+          ['title'=>'PMC','tagline'=>'From tender to handover — delivering on time.','slug'=>'pmc'],
+        ];
+        $svcList = $services->isNotEmpty() ? $services : collect($fallbackServices);
+      @endphp
+
+      @foreach($svcList as $svc)
+        @php
+          $isArr  = is_array($svc);
+          $title  = $isArr ? $svc['title']  : $svc->title;
+          $tagline= $isArr ? $svc['tagline'] : ($svc->tagline ?? $svc->description ?? '');
+          $slug   = $isArr ? $svc['slug']   : $svc->slug;
+          $imgUrl = $isArr ? null : ($svc->imageUrl ?? null);
+          $cardW  = $loop->first ? 'w-[78vw] sm:w-[56vw] lg:w-[42vw]' : 'w-[68vw] sm:w-[44vw] lg:w-[30vw]';
+          $index  = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
+        @endphp
+        <a href="{{ route('services.show', $slug) }}" class="group shrink-0 {{ $cardW }}">
+          <div class="relative overflow-hidden w-full mb-5 rounded-xl" style="height: clamp(220px, 34vw, 480px)">
+            @if($imgUrl)
+              <img src="{{ $imgUrl }}" alt="{{ $title }}"
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                   loading="lazy">
             @else
-              <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#d4c9b8] flex items-center justify-center">
-                <span class="font-display font-light text-5xl text-[#8B8275]/30">0{{ $loop->iteration }}</span>
+              <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad] flex items-end p-8">
+                <span class="font-display font-light text-[5rem] leading-none text-[#1C1C1C]/10 select-none">{{ $index }}</span>
               </div>
             @endif
+            <span class="absolute bottom-4 left-5 font-display font-light text-[3.5rem] leading-none text-white/[0.12] select-none pointer-events-none">{{ $index }}</span>
           </div>
-          <h3 class="font-display font-light text-xl text-[#1C1C1C] mb-2 group-hover:text-[#B5451B] transition-colors duration-300">
-            {{ $svc->title }}
-          </h3>
-          <p class="text-[#8B8275] text-sm leading-relaxed mb-4">{{ Str::limit($svc->tagline ?? $svc->description ?? '', 100) }}</p>
-          <span class="text-[10px] uppercase tracking-[0.2em] text-[#B5451B]">Explore →</span>
+          <div class="px-1">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[9px] uppercase tracking-[0.22em] text-[#8B8275]">{{ $index }} — What We Do</span>
+            </div>
+            <div class="w-full h-px bg-[#1C1C1C]/15 mb-4 group-hover:bg-[#B5451B]/60 transition-colors duration-500"></div>
+            <h3 class="font-display font-light text-[1.2rem] leading-snug text-[#1C1C1C] group-hover:text-[#B5451B] transition-colors duration-300 mb-2">
+              {{ $title }}
+            </h3>
+            <p class="text-[9px] uppercase tracking-[0.16em] text-[#8B8275]">{{ Str::limit($tagline, 70) }}</p>
+          </div>
         </a>
-      @empty
-        @foreach([['Architecture','From concept to completion, buildings that endure.'],['Interior Design','Spaces that breathe — functional, material, human.'],['Landscape','Connecting people to place through thoughtful design.']] as [$t,$d])
-          <div class="block" data-reveal>
-            <div class="aspect-[4/3] bg-[#E8E0D4] mb-5 rounded-lg"></div>
-            <h3 class="font-display font-light text-xl text-[#1C1C1C] mb-2">{{ $t }}</h3>
-            <p class="text-[#8B8275] text-sm leading-relaxed mb-4">{{ $d }}</p>
-            <span class="text-[10px] uppercase tracking-[0.2em] text-[#B5451B]">Explore →</span>
-          </div>
-        @endforeach
-      @endforelse
+      @endforeach
     </div>
+  </div>
+
+  <div class="px-6 pb-6 md:hidden">
+    <a href="{{ url('/services') }}" class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275]">
+      All Services →
+    </a>
   </div>
 </section>
 

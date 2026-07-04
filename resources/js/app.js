@@ -172,7 +172,32 @@ if (projectsSection && projectsTrack && window.innerWidth >= 768) {
   });
 }
 
-// ─── 6. STAT COUNTERS ────────────────────────────────────────────────────────
+// ─── 6. HORIZONTAL SERVICES SCROLL (desktop) ─────────────────────────────────
+const servicesSection = document.getElementById('services-section');
+const servicesTrack   = document.getElementById('services-track');
+
+if (servicesSection && servicesTrack && window.innerWidth >= 768) {
+  servicesTrack.style.overflow = 'visible';
+  servicesTrack.style.width    = 'max-content';
+
+  const getSvcTotal = () => servicesTrack.scrollWidth - window.innerWidth;
+
+  gsap.to(servicesTrack, {
+    x: () => -getSvcTotal(),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: servicesSection,
+      start: 'top top',
+      end: () => `+=${getSvcTotal()}`,
+      pin: true,
+      scrub: 1.2,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+    },
+  });
+}
+
+// ─── 7. STAT COUNTERS ────────────────────────────────────────────────────────
 document.querySelectorAll('[data-counter]').forEach((el) => {
   const target = parseFloat(el.dataset.target) || 0;
   const obj    = { value: 0 };
