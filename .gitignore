@@ -1,22 +1,20 @@
-# Dependencies
-node_modules/
-
-# Next.js build output
-.next/
-out/
-
-# Env files
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
 .env
-.env.local
-.env*.local
-
-# Build artifacts
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
 *.zip
-tsconfig.tsbuildinfo
-
-# OS
 .DS_Store
-Thumbs.db
-
-# Logs
-npm-debug.log*
+.gitignore.bak
