@@ -65,17 +65,27 @@
         {{ $settings['homepage.projects_title'] ?? 'Recent Projects' }}
       </h2>
     </div>
-    <a href="{{ url('/projects') }}"
-       class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1">
-      <span>View All Projects</span>
-      <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
-    </a>
+    <div class="flex items-center gap-4">
+      <a href="{{ url('/projects') }}"
+         class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1 mr-4">
+        <span>View All</span>
+        <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
+      </a>
+      <button id="projects-prev" aria-label="Previous"
+              class="w-10 h-10 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+        ←
+      </button>
+      <button id="projects-next" aria-label="Next"
+              class="w-10 h-10 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+        →
+      </button>
+    </div>
   </div>
 
-  <div class="overflow-hidden pb-20">
+  <div class="pb-20">
     <div id="projects-track"
-         class="flex gap-4 pl-6 lg:pl-12 overflow-x-auto md:overflow-visible"
-         style="width: max-content; padding-right: 3rem">
+         class="flex gap-4 pl-6 lg:pl-12"
+         style="padding-right: 3rem; overflow-x: auto; scroll-snap-type: x mandatory;">
 
       @php
         $disciplineMap = ['architecture'=>'Architecture','interior'=>'Interior Design','landscape'=>'Landscape','urban'=>'Infrastructure'];
@@ -87,7 +97,7 @@
           $discipline = $disciplineMap[$project->discipline] ?? ucfirst($project->discipline ?? 'Architecture');
           $index      = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
         @endphp
-        <a href="{{ url('/projects/'.$project->slug) }}" class="group shrink-0 {{ $cardW }}">
+        <a href="{{ url('/projects/'.$project->slug) }}" class="group shrink-0 {{ $cardW }}" style="scroll-snap-align: start;">
           <div class="relative overflow-hidden w-full mb-5 rounded-xl" style="height: clamp(220px, 34vw, 480px)">
             @if($project->imageUrl)
               <img src="{{ $project->imageUrl }}" alt="{{ $project->title }}"
@@ -124,10 +134,14 @@
     </div>
   </div>
 
-  <div class="px-6 pb-6 md:hidden">
-    <a href="{{ url('/projects') }}" class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275]">
-      View All Projects →
-    </a>
+  <div class="px-6 pb-8 flex items-center justify-between md:hidden">
+    <a href="{{ url('/projects') }}" class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275]">View All →</a>
+    <div class="flex items-center gap-3">
+      <button onclick="document.getElementById('projects-prev').click()"
+              class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm">←</button>
+      <button onclick="document.getElementById('projects-next').click()"
+              class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm">→</button>
+    </div>
   </div>
 </section>
 
@@ -174,17 +188,27 @@
         {{ $settings['homepage.services_title'] ?? 'Our Disciplines' }}
       </h2>
     </div>
-    <a href="{{ url('/services') }}"
-       class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1">
-      <span>All Services</span>
-      <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
-    </a>
+    <div class="flex items-center gap-4">
+      <a href="{{ url('/services') }}"
+         class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1 mr-4">
+        <span>All Services</span>
+        <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
+      </a>
+      <button id="services-prev" aria-label="Previous"
+              class="w-10 h-10 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+        ←
+      </button>
+      <button id="services-next" aria-label="Next"
+              class="w-10 h-10 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+        →
+      </button>
+    </div>
   </div>
 
-  <div class="overflow-hidden pb-20">
+  <div class="pb-20">
     <div id="services-track"
-         class="flex gap-4 pl-6 lg:pl-12 overflow-x-auto md:overflow-visible"
-         style="width: max-content; padding-right: 3rem">
+         class="flex gap-4 pl-6 lg:pl-12"
+         style="padding-right: 3rem; overflow-x: auto; scroll-snap-type: x mandatory;">
 
       @php
         $fallbackServices = [
@@ -208,7 +232,7 @@
           $cardW  = $loop->first ? 'w-[78vw] sm:w-[56vw] lg:w-[42vw]' : 'w-[68vw] sm:w-[44vw] lg:w-[30vw]';
           $index  = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
         @endphp
-        <a href="{{ route('services.show', $slug) }}" class="group shrink-0 {{ $cardW }}">
+        <a href="{{ route('services.show', $slug) }}" class="group shrink-0 {{ $cardW }}" style="scroll-snap-align: start;">
           <div class="relative overflow-hidden w-full mb-5 rounded-xl" style="height: clamp(220px, 34vw, 480px)">
             @if($imgUrl)
               <img src="{{ $imgUrl }}" alt="{{ $title }}"
@@ -236,10 +260,14 @@
     </div>
   </div>
 
-  <div class="px-6 pb-6 md:hidden">
-    <a href="{{ url('/services') }}" class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275]">
-      All Services →
-    </a>
+  <div class="px-6 pb-8 flex items-center justify-between md:hidden">
+    <a href="{{ url('/services') }}" class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275]">All Services →</a>
+    <div class="flex items-center gap-3">
+      <button onclick="document.getElementById('services-prev').click()"
+              class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm">←</button>
+      <button onclick="document.getElementById('services-next').click()"
+              class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm">→</button>
+    </div>
   </div>
 </section>
 

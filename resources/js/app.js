@@ -79,54 +79,6 @@ if (heroBg) {
   });
 }
 
-// ─── 4. NAVBAR ───────────────────────────────────────────────────────────────
-const navbar = document.getElementById('navbar');
-
-if (navbar) {
-  const navCta = document.getElementById('nav-cta');
-
-  ScrollTrigger.create({
-    start: 'top -50',
-    onEnter: () => {
-      navbar.classList.add('bg-[#B5451B]', 'shadow-sm');
-      navbar.classList.remove('bg-[#FAF7F3]/95', 'backdrop-blur-sm');
-      navbar.querySelectorAll('a:not(#nav-cta), button').forEach(el => el.classList.add('!text-white'));
-      // CTA flips: white bg, orange text
-      if (navCta) {
-        navCta.classList.remove('bg-[#B5451B]', 'text-white');
-        navCta.classList.add('bg-white', '!text-[#B5451B]');
-      }
-      // O accent on dark bg
-      const accent = navbar.querySelector('#nav-logo span');
-      if (accent) { accent.classList.add('!text-white/60'); accent.classList.remove('text-[#B5451B]'); }
-    },
-    onLeaveBack: () => {
-      navbar.classList.remove('bg-[#B5451B]', 'shadow-sm');
-      navbar.querySelectorAll('a:not(#nav-cta), button').forEach(el => el.classList.remove('!text-white'));
-      // CTA flips back: orange bg, white text
-      if (navCta) {
-        navCta.classList.add('bg-[#B5451B]', 'text-white');
-        navCta.classList.remove('bg-white', '!text-[#B5451B]');
-      }
-      const accent = navbar.querySelector('#nav-logo span');
-      if (accent) { accent.classList.remove('!text-white/60'); accent.classList.add('text-[#B5451B]'); }
-    },
-  });
-
-  // Switch nav text to white when scrolled into a [data-dark] section
-  document.querySelectorAll('[data-dark]').forEach((section) => {
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top 60px',
-      end: 'bottom 60px',
-      onEnter: ()      => navbar.classList.add('invert-nav'),
-      onLeave: ()      => navbar.classList.remove('invert-nav'),
-      onEnterBack: ()  => navbar.classList.add('invert-nav'),
-      onLeaveBack: ()  => navbar.classList.remove('invert-nav'),
-    });
-  });
-}
-
 // ─── 4. SCROLL REVEALS ───────────────────────────────────────────────────────
 gsap.utils.toArray('[data-reveal]').forEach((el) => {
   gsap.fromTo(
@@ -146,56 +98,38 @@ gsap.utils.toArray('[data-reveal]').forEach((el) => {
   );
 });
 
-// ─── 5. HORIZONTAL PROJECTS SCROLL (desktop) ─────────────────────────────────
-const projectsSection = document.getElementById('projects-section');
-const projectsTrack   = document.getElementById('projects-track');
+// ─── 5 & 6. BUTTON CAROUSELS (projects + services) ───────────────────────────
+function initCarousel(trackId, prevId, nextId) {
+  const track = document.getElementById(trackId);
+  const prev  = document.getElementById(prevId);
+  const next  = document.getElementById(nextId);
+  if (!track || !prev || !next) return;
 
-if (projectsSection && projectsTrack && window.innerWidth >= 768) {
-  projectsTrack.style.overflow = 'visible';
-  projectsTrack.style.width    = 'max-content';
+  // Hide native scrollbar
+  track.style.scrollbarWidth   = 'none';
+  track.style.msOverflowStyle  = 'none';
+  track.style.overflowX        = 'auto';
 
-  // Distance to scroll = track full width minus one viewport width
-  const getTotal = () => projectsTrack.scrollWidth - window.innerWidth;
+  const amount = () => Math.max(track.clientWidth * 0.72, 300);
 
-  gsap.to(projectsTrack, {
-    x: () => -getTotal(),
-    ease: 'none',
-    scrollTrigger: {
-      trigger: projectsSection,
-      start: 'top top',
-      end: () => `+=${getTotal()}`,
-      pin: true,
-      scrub: 1.2,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-    },
-  });
+  prev.addEventListener('click', () => track.scrollBy({ left: -amount(), behavior: 'smooth' }));
+  next.addEventListener('click', () => track.scrollBy({ left:  amount(), behavior: 'smooth' }));
+
+  function sync() {
+    const atStart = track.scrollLeft <= 8;
+    const atEnd   = track.scrollLeft >= track.scrollWidth - track.clientWidth - 8;
+    prev.style.opacity        = atStart ? '0.3' : '1';
+    prev.style.pointerEvents  = atStart ? 'none' : 'auto';
+    next.style.opacity        = atEnd   ? '0.3' : '1';
+    next.style.pointerEvents  = atEnd   ? 'none' : 'auto';
+  }
+
+  track.addEventListener('scroll', sync, { passive: true });
+  sync();
 }
 
-// ─── 6. HORIZONTAL SERVICES SCROLL (desktop) ─────────────────────────────────
-const servicesSection = document.getElementById('services-section');
-const servicesTrack   = document.getElementById('services-track');
-
-if (servicesSection && servicesTrack && window.innerWidth >= 768) {
-  servicesTrack.style.overflow = 'visible';
-  servicesTrack.style.width    = 'max-content';
-
-  const getSvcTotal = () => servicesTrack.scrollWidth - window.innerWidth;
-
-  gsap.to(servicesTrack, {
-    x: () => -getSvcTotal(),
-    ease: 'none',
-    scrollTrigger: {
-      trigger: servicesSection,
-      start: 'top top',
-      end: () => `+=${getSvcTotal()}`,
-      pin: true,
-      scrub: 1.2,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-    },
-  });
-}
+initCarousel('projects-track', 'projects-prev', 'projects-next');
+initCarousel('services-track', 'services-prev', 'services-next');
 
 // ─── 7. STAT COUNTERS ────────────────────────────────────────────────────────
 document.querySelectorAll('[data-counter]').forEach((el) => {
