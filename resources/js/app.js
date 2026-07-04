@@ -30,29 +30,55 @@ const cursorDot  = document.getElementById('cursor-dot');
 const cursorRing = document.getElementById('cursor-ring');
 
 if (cursorDot && cursorRing) {
-  // Hide on touch devices
   if (!window.matchMedia('(pointer: fine)').matches) {
     cursorDot.style.display  = 'none';
     cursorRing.style.display = 'none';
   } else {
     let ringX = 0, ringY = 0;
     let mouseX = 0, mouseY = 0;
+    let onDark = false;
+
+    // Walk up DOM from element under cursor; return true if surface is dark
+    function sampleSurface(x, y) {
+      const el = document.elementFromPoint(x, y);
+      if (!el) return false;
+      if (el.closest('[data-dark]')) return true;
+      let node = el;
+      while (node && node !== document.documentElement) {
+        const bg = window.getComputedStyle(node).backgroundColor;
+        const m  = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+        if (m) {
+          const a = m[4] !== undefined ? parseFloat(m[4]) : 1;
+          if (a > 0.5) {
+            const lum = (0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3]) / 255;
+            return lum < 0.4;
+          }
+        }
+        node = node.parentElement;
+      }
+      return false;
+    }
+
+    function setCursorColor(dark) {
+      if (dark === onDark) return;
+      onDark = dark;
+      cursorDot.style.background    = dark ? '#ffffff' : '#1C1C1C';
+      cursorRing.style.borderColor  = dark ? 'rgba(255,255,255,0.6)' : 'rgba(28,28,28,0.45)';
+    }
 
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      // Dot follows instantly
       gsap.set(cursorDot, { x: mouseX, y: mouseY });
+      setCursorColor(sampleSurface(mouseX, mouseY));
     });
 
-    // Ring lerps toward mouse on every frame
     gsap.ticker.add(() => {
       ringX += (mouseX - ringX) * 0.25;
       ringY += (mouseY - ringY) * 0.25;
       gsap.set(cursorRing, { x: ringX, y: ringY });
     });
 
-    // Grow ring on hoverable elements
     document.querySelectorAll('a, button, [role="button"]').forEach((el) => {
       el.addEventListener('mouseenter', () => {
         gsap.to(cursorRing, { scale: 2, opacity: 0.5, duration: 0.3, ease: 'power2.out' });

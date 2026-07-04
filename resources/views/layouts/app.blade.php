@@ -61,8 +61,8 @@
 </head>
 <body class="bg-[#FAF7F3] text-[#1C1C1C] font-body antialiased overflow-x-hidden">
 
-  <div id="cursor-dot"  class="fixed top-0 left-0 w-[8px] h-[8px] bg-white rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2" style="mix-blend-mode:difference;"></div>
-  <div id="cursor-ring" class="fixed top-0 left-0 w-[36px] h-[36px] border-2 border-white rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2" style="mix-blend-mode:difference;"></div>
+  <div id="cursor-dot"  class="fixed top-0 left-0 w-[8px] h-[8px] rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2" style="background:#1C1C1C;"></div>
+  <div id="cursor-ring" class="fixed top-0 left-0 w-[36px] h-[36px] rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2" style="border:1.5px solid rgba(28,28,28,0.5);"></div>
 
   @include('partials.navbar')
 

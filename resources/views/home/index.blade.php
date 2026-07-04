@@ -11,7 +11,7 @@
 @section('content')
 
 {{-- ─── HERO ─────────────────────────────────────────────────────────────── --}}
-<section class="relative h-screen min-h-[680px] max-h-[1060px] overflow-hidden flex flex-col justify-end">
+<section class="relative h-screen min-h-[680px] max-h-[1060px] overflow-hidden flex flex-col justify-end" data-dark>
 
   <div id="hero-bg" class="absolute inset-0 scale-[1.12] will-change-transform">
     <img src="{{ asset('images/hero-bg.jpg') }}"
