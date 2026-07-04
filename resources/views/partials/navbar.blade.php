@@ -1,24 +1,33 @@
-<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+@php $onHome = request()->routeIs('home'); @endphp
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+        style="{{ $onHome ? '' : 'background:#FAF7F3;border-bottom:1px solid #E8E0D4;' }}">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12 flex items-center justify-between h-[60px]">
 
     {{-- Logo --}}
-    <a href="{{ url('/') }}" class="font-body font-light text-[15px] tracking-[0.5em] uppercase text-[#1C1C1C] z-10" id="nav-logo">
-      SUNC<span class="text-[#B5451B]">O</span>N
+    <a href="{{ url('/') }}"
+       class="nav-logo font-body font-light text-[15px] tracking-[0.5em] uppercase z-10 transition-colors duration-300"
+       style="color:{{ $onHome ? 'white' : '#1C1C1C' }}"
+       id="nav-logo">
+      SUNC<span style="color:#B5451B">O</span>N
     </a>
 
     {{-- Desktop nav --}}
     <nav class="hidden md:flex items-center gap-8">
       @foreach([['Projects','/projects'],['About','/about'],['Journal','/journal']] as $item)
+        @php $active = request()->is(ltrim($item[1],'/')) || request()->is(ltrim($item[1],'/').'/*'); @endphp
         <a href="{{ url($item[1]) }}"
-           class="font-body font-light text-[10px] uppercase tracking-[0.22em] text-[#1C1C1C] hover:text-[#B5451B] transition-colors duration-200 {{ request()->is(ltrim($item[1],'/')) || request()->is(ltrim($item[1],'/').'/*') ? 'text-[#B5451B]' : '' }}">
+           class="nav-link font-body font-light text-[10px] uppercase tracking-[0.22em] transition-colors duration-200"
+           style="color:{{ $active ? '#B5451B' : ($onHome ? 'rgba(255,255,255,0.85)' : '#1C1C1C') }}">
           {{ $item[0] }}
         </a>
       @endforeach
 
       {{-- Services dropdown --}}
       <div class="relative" id="services-dropdown">
+        @php $svcActive = request()->is('services') || request()->is('services/*'); @endphp
         <a href="{{ url('/services') }}"
-           class="font-body font-light text-[10px] uppercase tracking-[0.22em] text-[#1C1C1C] hover:text-[#B5451B] transition-colors duration-200 flex items-center gap-1.5 {{ request()->is('services') || request()->is('services/*') ? 'text-[#B5451B]' : '' }}">
+           class="nav-link font-body font-light text-[10px] uppercase tracking-[0.22em] transition-colors duration-200 flex items-center gap-1.5"
+           style="color:{{ $svcActive ? '#B5451B' : ($onHome ? 'rgba(255,255,255,0.85)' : '#1C1C1C') }}">
           Services
           <svg class="w-2.5 h-2.5 opacity-50" viewBox="0 0 10 6" fill="none">
             <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
@@ -52,8 +61,8 @@
 
     {{-- Hamburger --}}
     <button id="menu-toggle" class="md:hidden flex flex-col gap-1.5 z-10" aria-label="Toggle menu">
-      <span class="menu-bar w-6 h-px bg-[#1C1C1C] block transition-all duration-300"></span>
-      <span class="menu-bar w-6 h-px bg-[#1C1C1C] block transition-all duration-300"></span>
+      <span class="menu-bar w-6 h-px block transition-all duration-300" style="background:{{ $onHome ? 'white' : '#1C1C1C' }}"></span>
+      <span class="menu-bar w-6 h-px block transition-all duration-300" style="background:{{ $onHome ? 'white' : '#1C1C1C' }}"></span>
     </button>
   </div>
 
@@ -90,20 +99,35 @@
 </header>
 <script>
 (function(){
+  // Services dropdown
   var wrap = document.getElementById('services-dropdown');
   var menu = document.getElementById('services-menu');
-  if (!wrap || !menu) return;
-  var t;
-  wrap.addEventListener('mouseenter', function(){
-    clearTimeout(t);
-    menu.style.opacity = '1';
-    menu.style.visibility = 'visible';
-  });
-  wrap.addEventListener('mouseleave', function(){
-    t = setTimeout(function(){
-      menu.style.opacity = '0';
-      menu.style.visibility = 'hidden';
-    }, 100);
-  });
+  if (wrap && menu) {
+    var t;
+    wrap.addEventListener('mouseenter', function(){ clearTimeout(t); menu.style.opacity='1'; menu.style.visibility='visible'; });
+    wrap.addEventListener('mouseleave', function(){ t = setTimeout(function(){ menu.style.opacity='0'; menu.style.visibility='hidden'; }, 100); });
+  }
+
+  // Navbar scroll behaviour (home page only)
+  var onHome = {{ $onHome ? 'true' : 'false' }};
+  if (!onHome) return;
+
+  var navbar  = document.getElementById('navbar');
+  var links   = navbar.querySelectorAll('.nav-link, .nav-logo');
+  var bars    = navbar.querySelectorAll('.menu-bar');
+
+  function update() {
+    var scrolled = window.scrollY > 60;
+    navbar.style.background    = scrolled ? '#FAF7F3' : '';
+    navbar.style.borderBottom  = scrolled ? '1px solid #E8E0D4' : '';
+    links.forEach(function(el) {
+      if (el.style.color === 'rgb(181, 69, 27)') return; // keep active link orange
+      el.style.color = scrolled ? '#1C1C1C' : 'rgba(255,255,255,0.85)';
+    });
+    bars.forEach(function(el) { el.style.background = scrolled ? '#1C1C1C' : 'white'; });
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
 })();
 </script>
