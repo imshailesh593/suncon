@@ -98,7 +98,7 @@
           $index      = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
         @endphp
         <a href="{{ url('/projects/'.$project->slug) }}" class="group shrink-0 {{ $cardW }}" style="scroll-snap-align: start;">
-          <div class="relative overflow-hidden w-full mb-5 rounded-xl" style="height: clamp(220px, 34vw, 480px)">
+          <div class="relative overflow-hidden w-full mb-5 " style="height: clamp(220px, 34vw, 480px)">
             @if($project->imageUrl)
               <img src="{{ $project->imageUrl }}" alt="{{ $project->title }}"
                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
@@ -124,7 +124,7 @@
       @empty
         @for($i = 1; $i <= 4; $i++)
           <div class="shrink-0 w-[68vw] sm:w-[44vw] lg:w-[30vw]">
-            <div class="bg-[#E8E0D4] animate-pulse mb-5 rounded-xl" style="height: clamp(220px, 34vw, 480px)"></div>
+            <div class="bg-[#E8E0D4] animate-pulse mb-5 " style="height: clamp(220px, 34vw, 480px)"></div>
             <div class="h-3 bg-[#E8E0D4] rounded w-1/3 animate-pulse mb-3"></div>
             <div class="h-px bg-[#E8E0D4] mb-4"></div>
             <div class="h-5 bg-[#E8E0D4] rounded w-3/4 animate-pulse"></div>
@@ -233,7 +233,7 @@
           $index  = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
         @endphp
         <a href="{{ route('services.show', $slug) }}" class="group shrink-0 {{ $cardW }}" style="scroll-snap-align: start;">
-          <div class="relative overflow-hidden w-full mb-5 rounded-xl" style="height: clamp(220px, 34vw, 480px)">
+          <div class="relative overflow-hidden w-full mb-5 " style="height: clamp(220px, 34vw, 480px)">
             @if($imgUrl)
               <img src="{{ $imgUrl }}" alt="{{ $title }}"
                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -321,7 +321,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
       @forelse($articles ?? [] as $article)
         <a href="{{ url('/journal/'.$article->slug) }}" class="group block" data-reveal>
-          <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4] mb-5 rounded-lg">
+          <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4] mb-5 ">
             @if($article->imageUrl)
               <img src="{{ $article->imageUrl }}" alt="{{ $article->title }}"
                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
@@ -341,7 +341,7 @@
       @empty
         @for($i = 0; $i < 3; $i++)
           <div class="block" data-reveal>
-            <div class="aspect-[4/3] bg-[#E8E0D4] mb-5 rounded-lg animate-pulse"></div>
+            <div class="aspect-[4/3] bg-[#E8E0D4] mb-5  animate-pulse"></div>
             <div class="h-3 bg-[#E8E0D4] rounded w-1/3 mb-3 animate-pulse"></div>
             <div class="h-5 bg-[#E8E0D4] rounded w-full mb-2 animate-pulse"></div>
             <div class="h-5 bg-[#E8E0D4] rounded w-2/3 mb-3 animate-pulse"></div>
