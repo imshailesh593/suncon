@@ -176,164 +176,81 @@
   </div>
 </section>
 
-{{-- ─── SERVICES VERTICAL SLIDER ────────────────────────────────────────── --}}
+{{-- ─── SERVICES GRID ────────────────────────────────────────────────────── --}}
 @php
   $fallbackServices = [
-    ['title'=>'Architecture Design','tagline'=>'From concept to completion — buildings that endure.','slug'=>'architectural-design','features'=>[]],
-    ['title'=>'Landscape Design','tagline'=>'Connecting people to place through thoughtful design.','slug'=>'landscape-design','features'=>[]],
-    ['title'=>'Interior Design','tagline'=>'Spaces that breathe — functional, material, human.','slug'=>'interior-design','features'=>[]],
-    ['title'=>'Urban Design','tagline'=>'Shaping cities, neighbourhoods, and public spaces.','slug'=>'urban-design','features'=>[]],
-    ['title'=>'Architectural BIM','tagline'=>'Intelligent 3D models that cut cost and error.','slug'=>'architectural-bim','features'=>[]],
-    ['title'=>'PMC','tagline'=>'From tender to handover — delivering on time.','slug'=>'pmc','features'=>[]],
+    ['title'=>'Architecture Design','tagline'=>'From concept to completion — buildings that endure.','slug'=>'architectural-design'],
+    ['title'=>'Landscape Design','tagline'=>'Connecting people to place through thoughtful design.','slug'=>'landscape-design'],
+    ['title'=>'Interior Design','tagline'=>'Spaces that breathe — functional, material, human.','slug'=>'interior-design'],
+    ['title'=>'Urban Design','tagline'=>'Shaping cities, neighbourhoods, and public spaces.','slug'=>'urban-design'],
+    ['title'=>'Architectural BIM','tagline'=>'Intelligent 3D models that cut cost and error.','slug'=>'architectural-bim'],
+    ['title'=>'PMC','tagline'=>'From tender to handover — delivering on time.','slug'=>'pmc'],
   ];
   $svcList = $services->isNotEmpty() ? $services : collect($fallbackServices);
-  $svcCount = $svcList->count();
 @endphp
 
-<section class="bg-[#F2EDE4]">
+<section class="bg-[#F2EDE4] py-20 px-6 lg:px-12">
+  <div class="max-w-screen-xl mx-auto">
 
-  {{-- Header --}}
-  <div class="px-6 lg:px-12 pt-20 pb-10 max-w-screen-xl mx-auto flex items-end justify-between" data-reveal>
-    <div>
-      <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
-        {{ $settings['homepage.services_eyebrow'] ?? 'What We Do' }}
-      </p>
-      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
-        {{ $settings['homepage.services_title'] ?? 'Our Disciplines' }}
-      </h2>
-    </div>
-    <div class="flex items-center gap-5">
+    {{-- Header --}}
+    <div class="flex items-end justify-between mb-16" data-reveal>
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
+          {{ $settings['homepage.services_eyebrow'] ?? 'What We Do' }}
+        </p>
+        <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
+          {{ $settings['homepage.services_title'] ?? 'Our Disciplines' }}
+        </h2>
+      </div>
       <a href="{{ url('/services') }}"
          class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1">
         <span>All Services</span>
         <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
       </a>
-      <span class="text-[11px] font-display font-light text-[#8B8275] tabular-nums">
-        <span id="svc-idx">01</span> <span class="text-[#E8E0D4]">/</span> {{ str_pad($svcCount, 2, '0', STR_PAD_LEFT) }}
-      </span>
-      <div class="flex flex-col gap-2">
-        <button id="svc-prev"
-                class="w-10 h-10 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300 text-sm">
-          ↑
-        </button>
-        <button id="svc-next"
-                class="w-10 h-10 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300 text-sm">
-          ↓
-        </button>
-      </div>
     </div>
-  </div>
 
-  {{-- Slider container --}}
-  <div id="svc-slider" style="position:relative;overflow:hidden;">
-    @foreach($svcList as $svc)
-      @php
-        $isArr   = is_array($svc);
-        $title   = $isArr ? $svc['title']   : $svc->title;
-        $tagline = $isArr ? $svc['tagline']  : ($svc->tagline ?? '');
-        $slug    = $isArr ? $svc['slug']    : $svc->slug;
-        $imgUrl  = $isArr ? null            : ($svc->imageUrl ?? null);
-        $feats   = $isArr ? []              : ($svc->features ?? []);
-        $index   = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
-      @endphp
-      <div class="svc-slide"
-           style="position:absolute;left:0;right:0;top:0;transform:translateY({{ $loop->first ? '0%' : '100%' }});transition:transform 0.65s cubic-bezier(0.77,0,0.18,1);">
-        <div style="display:grid;grid-template-columns:1fr;" class="md:grid-cols-2">
-
-          {{-- Image --}}
-          <div class="overflow-hidden bg-[#E8E0D4]" style="min-height:280px;aspect-ratio:4/3;">
-            @if($imgUrl)
-              <img src="{{ $imgUrl }}" alt="{{ $title }}"
-                   class="w-full h-full object-cover" loading="lazy"
-                   style="display:block;width:100%;height:100%;object-fit:cover;">
-            @else
-              <div style="width:100%;height:100%;background:linear-gradient(135deg,#E8E0D4,#c8bcad);display:flex;align-items:flex-end;padding:2rem;">
-                <span style="font-family:inherit;font-size:6rem;line-height:1;color:rgba(28,28,28,0.07);user-select:none;">{{ $index }}</span>
-              </div>
-            @endif
+    {{-- Cards grid — 1px gaps act as dividers --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#D4C9BB]">
+      @foreach($svcList as $svc)
+        @php
+          $isArr   = is_array($svc);
+          $title   = $isArr ? $svc['title']   : $svc->title;
+          $tagline = $isArr ? $svc['tagline']  : ($svc->tagline ?? '');
+          $slug    = $isArr ? $svc['slug']    : $svc->slug;
+          $index   = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
+        @endphp
+        <a href="{{ route('services.show', $slug) }}"
+           class="group bg-[#FAF7F3] hover:bg-[#1C1C1C] transition-colors duration-500 p-10 flex flex-col gap-5 min-h-[260px]"
+           data-reveal>
+          <div class="flex items-start justify-between">
+            <span class="font-display font-light leading-none" style="font-size:2.8rem;color:#D4C9BB;transition:color 0.5s;" onmouseenter="this.style.color='rgba(255,255,255,0.15)'" onmouseleave="this.style.color='#D4C9BB'">{{ $index }}</span>
+            <span class="text-[#1C1C1C]/20 group-hover:text-white/60 transition-all duration-500 text-xl leading-none mt-1">→</span>
           </div>
-
-          {{-- Content --}}
-          <div class="bg-[#FAF7F3] flex flex-col justify-center px-8 lg:px-14 py-12">
-            <p class="text-[9px] uppercase tracking-[0.3em] text-[#8B8275] mb-5">{{ $index }} — Discipline</p>
-            <h3 class="font-display font-light leading-tight text-[#1C1C1C] mb-5" style="font-size:clamp(1.6rem,3vw,2.4rem);">
-              {{ $title }}
-            </h3>
-            @if($tagline)
-              <p class="text-sm text-[#8B8275] leading-relaxed font-light mb-8 max-w-sm">{{ $tagline }}</p>
-            @endif
-            @if(!empty($feats))
-              <ul class="flex flex-col gap-2.5 mb-8">
-                @foreach(array_slice($feats, 0, 4) as $feat)
-                  <li class="flex items-center gap-3 text-[10px] uppercase tracking-[0.15em] text-[#1C1C1C]">
-                    <span class="w-4 h-px bg-[#B5451B] shrink-0"></span>{{ $feat }}
-                  </li>
-                @endforeach
-              </ul>
-            @endif
-            <a href="{{ route('services.show', $slug) }}"
-               class="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] text-[#B5451B] self-start border-b border-[#B5451B]/40 pb-0.5 hover:border-[#B5451B] transition-colors duration-300">
-              Explore Service →
-            </a>
-          </div>
-        </div>
-      </div>
-    @endforeach
-  </div>
-
-  {{-- Mobile nav --}}
-  <div class="px-6 pt-6 pb-10 flex items-center justify-between md:hidden">
-    <a href="{{ url('/services') }}" class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275]">All Services →</a>
-    <div class="flex items-center gap-3">
-      <button onclick="svcGo(svcCurrent-1)" class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm">↑</button>
-      <button onclick="svcGo(svcCurrent+1)" class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm">↓</button>
+          <div class="w-8 h-px bg-[#B5451B] group-hover:w-14 transition-all duration-500"></div>
+          <h3 class="font-display font-light text-[1.25rem] leading-snug text-[#1C1C1C] group-hover:text-white transition-colors duration-500 flex-1">
+            {{ $title }}
+          </h3>
+          @if($tagline)
+            <p class="text-[12px] leading-relaxed font-light text-[#8B8275] group-hover:text-white/55 transition-colors duration-500">
+              {{ $tagline }}
+            </p>
+          @endif
+          <span class="text-[9px] uppercase tracking-[0.2em] text-[#B5451B] group-hover:text-[#E8846A] transition-colors duration-500 self-start" style="border-bottom:1px solid rgba(181,69,27,0.35);padding-bottom:2px;">
+            Explore →
+          </span>
+        </a>
+      @endforeach
     </div>
+
+    <div class="mt-10 flex justify-center md:hidden">
+      <a href="{{ url('/services') }}"
+         class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275] border border-[#8B8275]/30 px-7 py-3.5">
+        All Services →
+      </a>
+    </div>
+
   </div>
 </section>
-
-<script>
-(function(){
-  var slider  = document.getElementById('svc-slider');
-  var slides  = slider ? Array.from(slider.querySelectorAll('.svc-slide')) : [];
-  var idxEl   = document.getElementById('svc-idx');
-  var prevBtn = document.getElementById('svc-prev');
-  var nextBtn = document.getElementById('svc-next');
-  var current = 0;
-
-  function setHeight(idx) {
-    var inner = slides[idx].firstElementChild;
-    slider.style.height = inner.offsetHeight + 'px';
-    slider.style.transition = 'height 0.65s cubic-bezier(0.77,0,0.18,1)';
-  }
-
-  window.svcCurrent = 0;
-  window.svcGo = function(idx) {
-    var n = slides.length;
-    idx = ((idx % n) + n) % n;
-    slides[current].style.transform = 'translateY(' + (idx > current ? '-100%' : '100%') + ')';
-    slides[idx].style.transform = 'translateY(100%)';
-    slides[idx].style.transition = 'none';
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){
-        slides[idx].style.transition = 'transform 0.65s cubic-bezier(0.77,0,0.18,1)';
-        slides[idx].style.transform = 'translateY(0%)';
-        setHeight(idx);
-      });
-    });
-    current = idx;
-    window.svcCurrent = idx;
-    if (idxEl) idxEl.textContent = String(idx + 1).padStart(2, '0');
-  };
-
-  if (slides.length) {
-    setHeight(0);
-    window.addEventListener('resize', function(){ setHeight(current); });
-  }
-
-  if (prevBtn) prevBtn.addEventListener('click', function(){ window.svcGo(current - 1); });
-  if (nextBtn) nextBtn.addEventListener('click', function(){ window.svcGo(current + 1); });
-})();
-</script>
 
 {{-- ─── FEATURED PROJECT ────────────────────────────────────────────────── --}}
 @if($featuredProject ?? null)
