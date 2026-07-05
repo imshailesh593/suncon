@@ -23,12 +23,12 @@
 @php
   // Default Unsplash images keyed by slug for when no custom image is set
   $defaultImages = [
-    'architectural-bim-modeling' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=85&auto=format&fit=crop',
-    'structural-bim'             => 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=900&q=85&auto=format&fit=crop',
-    'mep-bim-coordination'       => 'https://images.unsplash.com/photo-1504297050568-910d24c426d3?w=900&q=85&auto=format&fit=crop',
-    'scan-to-bim'                => 'https://images.unsplash.com/photo-1590114538379-8d0df7a3b486?w=900&q=85&auto=format&fit=crop',
-    'cad-to-bim-migration'       => 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85&auto=format&fit=crop',
-    'construction-documentation' => 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=85&auto=format&fit=crop',
+    'architectural-bim-modeling' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=85&auto=format&fit=crop',  // architectural drawings
+    'structural-bim'             => 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=85&auto=format&fit=crop',  // construction steel frame
+    'mep-bim-coordination'       => 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=900&q=85&auto=format&fit=crop',  // modern building interior/technical
+    'scan-to-bim'                => 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=85&auto=format&fit=crop',  // glass building facade (point-cloud feel)
+    'cad-to-bim-migration'       => 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85&auto=format&fit=crop',  // technical workspace
+    'construction-documentation' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=85&auto=format&fit=crop',  // architectural drawings/blueprints
   ];
 
   // Fallback static list if no DB records exist yet
