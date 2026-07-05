@@ -11,8 +11,8 @@
   {{-- Background image --}}
   <div class="absolute inset-0 overflow-hidden">
     <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1800&q=80&auto=format&fit=crop"
-         alt="" class="w-full h-full object-cover" style="opacity:0.13;" loading="eager">
-    <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(10,10,10,0.97) 0%,rgba(10,10,10,0.75) 50%,rgba(10,10,10,0.92) 100%);"></div>
+         alt="" class="w-full h-full object-cover" loading="eager">
+    <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(10,10,10,0.88) 0%,rgba(10,10,10,0.55) 50%,rgba(10,10,10,0.82) 100%);"></div>
   </div>
 
   {{-- Dot grid (sits above image) --}}

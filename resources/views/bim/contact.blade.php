@@ -10,8 +10,8 @@
   {{-- Background image --}}
   <div class="absolute inset-0">
     <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1600&q=80&auto=format&fit=crop"
-         alt="" class="w-full h-full object-cover" style="opacity:0.08;" loading="eager">
-    <div class="absolute inset-0" style="background:linear-gradient(to right,rgba(10,10,10,1) 40%,rgba(10,10,10,0.8) 100%);"></div>
+         alt="" class="w-full h-full object-cover" loading="eager">
+    <div class="absolute inset-0" style="background:linear-gradient(to right,rgba(10,10,10,0.95) 30%,rgba(10,10,10,0.65) 100%);"></div>
   </div>
   <div class="relative max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="flex items-center gap-3 mb-6" data-reveal>
