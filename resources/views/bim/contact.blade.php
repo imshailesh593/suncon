@@ -6,8 +6,14 @@
 @section('content')
 
 {{-- ── HEADER ───────────────────────────────────────────────────────────────── --}}
-<section style="background:#0A0A0A;padding-top:140px;padding-bottom:80px;" data-dark>
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+<section style="background:#0A0A0A;padding-top:140px;padding-bottom:80px;position:relative;overflow:hidden;" data-dark>
+  {{-- Background image --}}
+  <div class="absolute inset-0">
+    <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1600&q=80&auto=format&fit=crop"
+         alt="" class="w-full h-full object-cover" style="opacity:0.08;" loading="eager">
+    <div class="absolute inset-0" style="background:linear-gradient(to right,rgba(10,10,10,1) 40%,rgba(10,10,10,0.8) 100%);"></div>
+  </div>
+  <div class="relative max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="flex items-center gap-3 mb-6" data-reveal>
       <span class="w-6 h-px" style="background:#B5451B;"></span>
       <span class="text-[9px] uppercase tracking-[0.3em]" style="color:#4E4A47;">Get in touch</span>
@@ -15,6 +21,9 @@
     <h1 class="font-display font-light text-display-lg leading-none" style="color:#F2EFE9;" data-reveal>
       Request a<br><em style="color:#B5451B;">Quote</em>
     </h1>
+    <p class="mt-8 text-base leading-relaxed max-w-lg" style="color:#6B6560;" data-reveal>
+      Send us your project brief. We'll review and respond with a scope, timeline, and fee estimate within 24 working hours.
+    </p>
   </div>
 </section>
 
