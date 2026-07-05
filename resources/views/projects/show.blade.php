@@ -77,15 +77,10 @@ $projBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','i
             </div>
           @endif
           @if($project->discipline)
+            @php $disciplineLabels = ['architecture'=>'Architecture Design','landscape'=>'Landscape Design','interior'=>'Interior Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC']; @endphp
             <div class="border-t border-[#E8E0D4] pt-5">
               <dt class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-1.5">Discipline</dt>
-              <dd class="text-sm text-[#1C1C1C]">{{ $project->discipline }}</dd>
-            </div>
-          @endif
-          @if($project->status)
-            <div class="border-t border-[#E8E0D4] pt-5">
-              <dt class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-1.5">Status</dt>
-              <dd class="text-sm text-[#1C1C1C]">{{ $project->status }}</dd>
+              <dd class="text-sm text-[#1C1C1C]">{{ $disciplineLabels[$project->discipline] ?? ucfirst($project->discipline) }}</dd>
             </div>
           @endif
         </dl>

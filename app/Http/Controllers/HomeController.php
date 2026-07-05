@@ -12,10 +12,10 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $projects = Project::latest()->take(6)->get();
+        $projects = Project::where('status', 'published')->latest()->take(6)->get();
 
-        $featuredProject = Project::where('featured', true)->first()
-            ?? Project::latest()->first();
+        $featuredProject = Project::where('status', 'published')->where('featured', true)->first()
+            ?? Project::where('status', 'published')->latest()->first();
 
         $articles = Article::where('published', true)
             ->orderByDesc('published_at')

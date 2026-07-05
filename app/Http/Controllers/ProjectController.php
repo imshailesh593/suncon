@@ -9,10 +9,10 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Project::latest();
+        $query = Project::where('status', 'published')->latest();
 
         if ($request->filled('discipline')) {
-            $query->where('discipline', 'like', '%'.$request->discipline.'%');
+            $query->where('discipline', $request->discipline);
         }
 
         $projects = $query->paginate(12);
@@ -22,10 +22,10 @@ class ProjectController extends Controller
 
     public function show(string $slug)
     {
-        $project = Project::where('slug', $slug)->firstOrFail();
+        $project = Project::where('slug', $slug)->where('status', 'published')->firstOrFail();
 
-        // Related projects in the same discipline, excluding this one
-        $related = Project::where('discipline', $project->discipline)
+        $related = Project::where('status', 'published')
+            ->where('discipline', $project->discipline)
             ->where('id', '!=', $project->id)
             ->latest()
             ->take(3)
