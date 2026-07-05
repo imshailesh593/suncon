@@ -23,7 +23,7 @@
           'architecture' => 'Architecture Design',
           'landscape'    => 'Landscape Design',
           'interior'     => 'Interior Design',
-          'urban'        => 'Urban',
+          'urban'        => 'Urban Design',
           'bim'          => 'Architectural BIM',
           'pmc'          => 'PMC',
         ];
@@ -67,10 +67,11 @@
                 <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#d4c9b8]"></div>
               @endif
 
-              {{-- Discipline badge --}}
+                      {{-- Discipline badge --}}
               @if($project->discipline)
+                @php static $dlabels = ['architecture'=>'Architecture Design','landscape'=>'Landscape Design','interior'=>'Interior Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC']; @endphp
                 <span class="absolute bottom-3 left-3 text-[8px] uppercase tracking-[0.22em] bg-[#FAF7F3]/90 text-[#1C1C1C] px-3 py-1.5">
-                  {{ $project->discipline }}
+                  {{ $dlabels[$project->discipline] ?? ucfirst($project->discipline) }}
                 </span>
               @endif
             </div>
