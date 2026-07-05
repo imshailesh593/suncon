@@ -51,6 +51,15 @@
           </div>
         </div>
       </div>
+
+      {{-- BIM site link --}}
+      <a href="{{ url('/bim') }}"
+         class="font-body text-[9px] uppercase tracking-[0.22em] px-3 py-1 border transition-all duration-200"
+         style="border-color:rgba(181,69,27,0.45);color:#B5451B;"
+         onmouseover="this.style.background='#B5451B';this.style.borderColor='#B5451B';this.style.color='#fff'"
+         onmouseout="this.style.background='transparent';this.style.borderColor='rgba(181,69,27,0.45)';this.style.color='#B5451B'">
+        BIM ↗
+      </a>
     </nav>
 
     {{-- CTA --}}
@@ -92,6 +101,8 @@
       </div>
     </nav>
     <div>
+      <a href="{{ url('/bim') }}" class="text-[10px] uppercase tracking-[0.28em] border border-[#B5451B]/50 text-[#B5451B] px-7 py-3.5 hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300 inline-block mb-4">BIM Services ↗</a>
+      <br>
       <a href="{{ url('/contact') }}" class="text-[10px] uppercase tracking-[0.28em] border border-[#1C1C1C]/20 px-7 py-3.5 hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300 inline-block">Start a Project →</a>
       <p class="text-[#8B8275] text-xs tracking-wide mt-5">{{ $globalSettings['site.email'] ?? 'bd@sunconengineers.com' }}</p>
     </div>

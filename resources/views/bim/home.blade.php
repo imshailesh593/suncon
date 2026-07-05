@@ -29,10 +29,10 @@
     </div>
 
     <div class="flex-1 flex flex-col justify-end pb-14">
-      <h1 class="font-display leading-none mb-0" style="font-weight:200;font-size:clamp(5rem,17vw,15rem);letter-spacing:-0.04em;color:#F2EFE9;" data-reveal>
+      <h1 class="font-display leading-none mb-0" style="font-weight:200;font-size:clamp(2.2rem,12vw,15rem);letter-spacing:-0.04em;color:#F2EFE9;" data-reveal>
         Architectural
       </h1>
-      <h1 class="font-display leading-none" style="font-weight:200;font-style:italic;font-size:clamp(5rem,17vw,15rem);letter-spacing:-0.04em;color:#B5451B;" data-reveal>
+      <h1 class="font-display leading-none" style="font-weight:200;font-style:italic;font-size:clamp(2.2rem,12vw,15rem);letter-spacing:-0.04em;color:#B5451B;" data-reveal>
         BIM.
       </h1>
 
@@ -74,10 +74,22 @@
 @endphp
 <section style="background:#111111;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);" data-dark>
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-2 md:grid-cols-{{ count($statItems) <= 4 ? count($statItems) : 4 }}">
+    <div class="grid grid-cols-2 md:grid-cols-4" style="border-color:rgba(255,255,255,0.06);">
       @foreach($statItems as $i => [$num,$label])
-        <div class="px-8 lg:px-14 py-16 {{ $i > 0 ? 'border-l' : '' }}" style="{{ $i > 0 ? 'border-color:rgba(255,255,255,0.06);' : '' }}" data-reveal>
-          <div class="font-display font-light leading-none mb-3" style="font-size:clamp(2.8rem,6vw,5.5rem);color:#F2EFE9;">{{ $num }}</div>
+        @php
+          // 2-col mobile: cols are 0,1,0,1. 4-col desktop: cols 0,1,2,3.
+          // Left border: always for i=1,3. Only on md for i=2 (leftmost on mobile but middle on desktop).
+          // Top border: i=2,3 on mobile only (they're in row 2 of 2-col grid).
+          $cls = match($i) {
+            0 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16',
+            1 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-l',
+            2 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-t md:border-t-0 md:border-l',
+            3 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-t md:border-t-0 border-l',
+            default => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-l',
+          };
+        @endphp
+        <div class="{{ $cls }}" style="border-color:rgba(255,255,255,0.06);" data-reveal>
+          <div class="font-display font-light leading-none mb-3" style="font-size:clamp(2rem,5vw,5.5rem);color:#F2EFE9;">{{ $num }}</div>
           <div class="text-[9px] uppercase tracking-[0.25em]" style="color:#4E4A47;">{{ $label }}</div>
         </div>
       @endforeach
@@ -185,9 +197,19 @@
           ];
         @endphp
         @foreach($tools as $i => $tool)
-          @php $col=$i%4; $row=intdiv($i,4); @endphp
-          <div class="px-6 py-8 {{ $col>0?'border-l':'' }} {{ $row>0?'border-t':'' }}"
-               style="{{ $col>0?'border-left-color:rgba(255,255,255,0.06);':'' }}{{ $row>0?'border-top-color:rgba(255,255,255,0.06);':'' }}">
+          @php
+            // 2-col on mobile: left-border for odd col. 4-col on sm: left-border for col>0 in group of 4.
+            $col2 = $i % 2; // column in 2-col grid
+            $col4 = $i % 4; // column in 4-col grid
+            $row2 = intdiv($i, 2); // row in 2-col grid
+            $row4 = intdiv($i, 4); // row in 4-col grid
+            $borderL = $col2 > 0 ? 'border-l' : ''; // always border-l for right col in 2-col
+            $borderL4 = $col4 > 0 && $col2 === 0 ? 'sm:border-l' : ''; // extra border-l for sm 4-col (items 2,6)
+            $borderT = $row2 > 0 ? 'border-t' : '';
+            $borderT4 = $row4 > 0 && $row2 === 0 ? 'sm:border-t' : ''; // not needed since 8 items = 2 rows in both layouts
+          @endphp
+          <div class="px-5 sm:px-6 py-8 {{ $borderL }} {{ $borderL4 }} {{ $borderT }}"
+               style="border-color:rgba(255,255,255,0.06);">
             <p class="text-sm font-medium mb-1" style="color:#F2EFE9;">{{ $tool[0] }}</p>
             <p class="text-[10px]" style="color:#4E4A47;">{{ $tool[1] }}</p>
           </div>
@@ -216,7 +238,7 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-5" data-reveal>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5" data-reveal>
       @php
         $lods = [
           ['LOD 100','Concept','Massing, orientation, and rough area. Early cost estimation and feasibility.'],
@@ -227,8 +249,17 @@
         ];
       @endphp
       @foreach($lods as $i => $lod)
-        <div class="px-6 py-10 {{ $i>0?'border-l':'' }} border-t"
-             style="{{ $i>0?'border-left-color:rgba(255,255,255,0.06);':'' }}border-top-color:rgba(255,255,255,0.06);">
+        @php
+          // On sm (2-col): border-l for odd items. border-t for items 2+.
+          // On lg (5-col): border-l for all except first. border-t reset.
+          $cls = 'px-6 py-10 border-t';
+          if ($i === 0) $cls .= ' sm:border-t-0 lg:border-t';
+          if ($i === 1) $cls .= ' sm:border-t-0 sm:border-l lg:border-t lg:border-l';
+          if ($i === 2) $cls .= ' sm:border-l-0 lg:border-l';
+          if ($i === 3) $cls .= ' sm:border-l lg:border-l';
+          if ($i === 4) $cls .= ' sm:border-l-0 lg:border-l';
+        @endphp
+        <div class="{{ $cls }}" style="border-color:rgba(255,255,255,0.06);">
           <div class="text-[10px] uppercase tracking-[0.3em] mb-4 font-medium" style="color:#B5451B;">{{ $lod[0] }}</div>
           <div class="font-display font-light text-xl mb-3" style="color:#F2EFE9;">{{ $lod[1] }}</div>
           <p class="text-xs leading-relaxed" style="color:#4E4A47;">{{ $lod[2] }}</p>
@@ -352,9 +383,16 @@
         ];
       @endphp
       @foreach($steps as $i => $step)
-        <div class="px-8 lg:px-10 py-12 {{ $i>0?'border-l':'' }} border-t"
-             style="{{ $i>0?'border-left-color:rgba(255,255,255,0.06);':'' }}border-top-color:rgba(255,255,255,0.06);"
-             data-reveal>
+        @php
+          // md = 2-col: border-l for i=1,3; border-t for i=2,3; border-t-0 for i=0,1.
+          // lg = 4-col: border-l for i>0; border-t reset.
+          $cls = 'px-8 lg:px-10 py-12 border-t';
+          if ($i === 0) $cls .= ' md:border-t-0';
+          if ($i === 1) $cls .= ' md:border-t-0 md:border-l lg:border-l';
+          if ($i === 2) $cls .= ' md:border-l-0 lg:border-l';
+          if ($i === 3) $cls .= ' md:border-l lg:border-l';
+        @endphp
+        <div class="{{ $cls }}" style="border-color:rgba(255,255,255,0.06);" data-reveal>
           <div class="font-display font-light text-6xl leading-none mb-8" style="color:rgba(255,255,255,0.05);">{{ str_pad($i+1,2,'0',STR_PAD_LEFT) }}</div>
           <h3 class="font-display font-light text-lg mb-4" style="color:#F2EFE9;">{{ $step[0] }}</h3>
           <p class="text-sm leading-relaxed" style="color:#4E4A47;">{{ $step[1] }}</p>

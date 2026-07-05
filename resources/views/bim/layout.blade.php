@@ -33,12 +33,20 @@
       </a>
 
       {{-- Desktop nav --}}
-      <nav class="hidden md:flex items-center gap-8">
-        <a href="{{ route('bim.home') }}"        class="bim-nav-link text-[10px] uppercase tracking-[0.22em] transition-colors duration-200" style="color:#6B6560;">Home</a>
-        <a href="{{ route('bim.services') }}"    class="bim-nav-link text-[10px] uppercase tracking-[0.22em] transition-colors duration-200" style="color:#6B6560;">Services</a>
-        <a href="{{ url('/projects?discipline=bim') }}" class="bim-nav-link text-[10px] uppercase tracking-[0.22em] transition-colors duration-200" style="color:#6B6560;">Projects</a>
+      <nav class="hidden md:flex items-center gap-4 lg:gap-7">
+        <a href="{{ url('/') }}"
+           class="text-[10px] uppercase tracking-[0.22em] transition-colors duration-200 flex items-center gap-1.5 shrink-0"
+           style="color:#4E4A47;"
+           onmouseover="this.style.color='#F2EFE9'"
+           onmouseout="this.style.color='#4E4A47'">
+          ← Suncon
+        </a>
+        <span class="w-px h-3 shrink-0" style="background:rgba(255,255,255,0.1);"></span>
+        <a href="{{ route('bim.home') }}"        class="bim-nav-link text-[10px] uppercase tracking-[0.22em] transition-colors duration-200 shrink-0" style="color:#6B6560;">Home</a>
+        <a href="{{ route('bim.services') }}"    class="bim-nav-link text-[10px] uppercase tracking-[0.22em] transition-colors duration-200 shrink-0" style="color:#6B6560;">Services</a>
+        <a href="{{ url('/projects?discipline=bim') }}" class="bim-nav-link text-[10px] uppercase tracking-[0.22em] transition-colors duration-200 shrink-0" style="color:#6B6560;">Projects</a>
         <a href="{{ route('bim.contact') }}"
-           class="text-[10px] uppercase tracking-[0.22em] px-6 py-2.5 transition-colors duration-250"
+           class="text-[10px] uppercase tracking-[0.22em] px-5 lg:px-6 py-2.5 transition-colors duration-250 shrink-0"
            style="background:#B5451B;color:#fff;"
            onmouseover="this.style.background='#8B3414'"
            onmouseout="this.style.background='#B5451B'">
@@ -63,7 +71,8 @@
       <a href="{{ route('bim.contact') }}"     class="font-display font-light text-4xl" style="color:#B5451B;">Get a Quote</a>
     </div>
     <div class="mt-12 pt-8" style="border-top:1px solid rgba(255,255,255,0.07);">
-      <p class="text-[9px] uppercase tracking-[0.25em]" style="color:#4E4A47;">Part of Suncon Engineers Pvt. Ltd.</p>
+      <a href="{{ url('/') }}" class="text-[9px] uppercase tracking-[0.25em] transition-colors duration-200" style="color:#4E4A47;" onmouseover="this.style.color='#F2EFE9'" onmouseout="this.style.color='#4E4A47'">← Suncon Engineers</a>
+      <p class="text-[9px] uppercase tracking-[0.25em] mt-2" style="color:#4E4A47;">Part of Suncon Engineers Pvt. Ltd.</p>
     </div>
   </div>
 
