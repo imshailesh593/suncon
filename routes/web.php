@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\BimController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
@@ -23,3 +24,10 @@ Route::get('/journal/{slug}', [ArticleController::class, 'show'])->name('journal
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+Route::prefix('bim')->name('bim.')->group(function () {
+    Route::get('/', [BimController::class, 'home'])->name('home');
+    Route::get('/services', [BimController::class, 'services'])->name('services');
+    Route::get('/contact', [BimController::class, 'contact'])->name('contact');
+    Route::post('/contact', [BimController::class, 'submitContact'])->name('contact.submit');
+});
