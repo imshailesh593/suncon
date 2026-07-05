@@ -160,7 +160,7 @@
 {{-- Map --}}
 @if(!empty($settings['contact.map_embed']))
   <div class="h-80 bg-[#E8E0D4] overflow-hidden">
-    {!! $settings['contact.map_embed'] !!}
+    {!! strip_tags($settings['contact.map_embed'], '<iframe>') !!}
   </div>
 @else
   <section class="bg-[#E8E0D4] h-64 flex items-center justify-center overflow-hidden">
