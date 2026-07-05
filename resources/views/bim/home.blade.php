@@ -1,4 +1,5 @@
 @extends('bim.layout')
+@php use Illuminate\Support\Str; @endphp
 
 @section('title', 'Suncon BIM — Architectural BIM Modeling & Coordination Services India')
 @section('description', 'Architectural BIM modeling, Revit-based LOD 100–500 documentation, MEP coordination, and clash detection by Suncon Engineers. 25+ years, 500+ projects, Pune India.')
@@ -66,10 +67,15 @@
 </section>
 
 {{-- ── STATS ────────────────────────────────────────────────────────────────── --}}
+@php
+  $statItems = $stats->count()
+    ? $stats->map(fn($s) => [$s->value.($s->suffix ?? ''), $s->label])->values()->all()
+    : [['25+','Years of practice'],['500+','BIM projects delivered'],['50+','BIM professionals'],['15+','Software platforms']];
+@endphp
 <section style="background:#111111;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);" data-dark>
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-2 md:grid-cols-4">
-      @foreach([['25+','Years of practice'],['500+','BIM projects delivered'],['50+','BIM professionals'],['15+','Software platforms']] as $i => [$num,$label])
+    <div class="grid grid-cols-2 md:grid-cols-{{ count($statItems) <= 4 ? count($statItems) : 4 }}">
+      @foreach($statItems as $i => [$num,$label])
         <div class="px-8 lg:px-14 py-16 {{ $i > 0 ? 'border-l' : '' }}" style="{{ $i > 0 ? 'border-color:rgba(255,255,255,0.06);' : '' }}" data-reveal>
           <div class="font-display font-light leading-none mb-3" style="font-size:clamp(2.8rem,6vw,5.5rem);color:#F2EFE9;">{{ $num }}</div>
           <div class="text-[9px] uppercase tracking-[0.25em]" style="color:#4E4A47;">{{ $label }}</div>
@@ -95,32 +101,51 @@
     </div>
 
     @php
-      $services = [
-        ['01','Architectural BIM Modeling','Revit-based 3D models from concept through construction documentation. LOD 100–400 delivered on schedule.',route('bim.services').'#arch-bim'],
-        ['02','Structural BIM','RC and steel structure modeling with precise detailing for coordination and fabrication.',route('bim.services').'#structural'],
-        ['03','MEP Coordination','Mechanical, Electrical, and Plumbing modeling with multi-discipline clash detection via Navisworks.',route('bim.services').'#mep'],
-        ['04','Scan to BIM','Point cloud data converted to accurate as-is Revit models for renovation and heritage projects.',route('bim.services').'#scan'],
-        ['05','CAD to BIM Migration','Legacy 2D AutoCAD drawings upgraded to fully coordinated, data-rich 3D BIM models.',route('bim.services').'#cad'],
-        ['06','Construction Documentation','Shop drawings, as-built documentation, and coordination packages ready for site.',route('bim.services').'#docs'],
+      $fallbackServices = [
+        ['01','Architectural BIM Modeling','Revit-based 3D models from concept through construction documentation. LOD 100–400 delivered on schedule.','#arch-bim'],
+        ['02','Structural BIM','RC and steel structure modeling with precise detailing for coordination and fabrication.','#structural'],
+        ['03','MEP Coordination','Mechanical, Electrical, and Plumbing modeling with multi-discipline clash detection via Navisworks.','#mep'],
+        ['04','Scan to BIM','Point cloud data converted to accurate as-is Revit models for renovation and heritage projects.','#scan'],
+        ['05','CAD to BIM Migration','Legacy 2D AutoCAD drawings upgraded to fully coordinated, data-rich 3D BIM models.','#cad'],
+        ['06','Construction Documentation','Shop drawings, as-built documentation, and coordination packages ready for site.','#docs'],
       ];
     @endphp
 
-    @foreach($services as $svc)
-      <a href="{{ $svc[3] }}" class="group block" data-reveal>
-        <div class="flex items-center gap-6 py-7 transition-colors duration-250" style="border-top:1px solid rgba(255,255,255,0.06);"
-             onmouseover="this.style.borderTopColor='rgba(181,69,27,0.5)'"
-             onmouseout="this.style.borderTopColor='rgba(255,255,255,0.06)'">
-          <span class="font-display font-light text-sm shrink-0 w-8" style="color:rgba(255,255,255,0.18);">{{ $svc[0] }}</span>
-          <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-center">
-            <div>
-              <h3 class="font-display font-light text-xl md:text-2xl leading-tight transition-colors duration-250" style="color:#F2EFE9;" onmouseover="this.style.color='#B5451B'" onmouseout="this.style.color='#F2EFE9'">{{ $svc[1] }}</h3>
-              <p class="text-sm mt-1.5 leading-relaxed" style="color:#4E4A47;">{{ $svc[2] }}</p>
+    @if($bimServices->count())
+      @foreach($bimServices as $svc)
+        <a href="{{ route('bim.services').'#'.$svc->slug }}" class="group block" data-reveal>
+          <div class="flex items-center gap-6 py-7 transition-colors duration-250" style="border-top:1px solid rgba(255,255,255,0.06);"
+               onmouseover="this.style.borderTopColor='rgba(181,69,27,0.5)'"
+               onmouseout="this.style.borderTopColor='rgba(255,255,255,0.06)'">
+            <span class="font-display font-light text-sm shrink-0 w-8" style="color:rgba(255,255,255,0.18);">{{ str_pad($loop->iteration,2,'0',STR_PAD_LEFT) }}</span>
+            <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-center">
+              <div>
+                <h3 class="font-display font-light text-xl md:text-2xl leading-tight transition-colors duration-250" style="color:#F2EFE9;" onmouseover="this.style.color='#B5451B'" onmouseout="this.style.color='#F2EFE9'">{{ $svc->title }}</h3>
+                <p class="text-sm mt-1.5 leading-relaxed" style="color:#4E4A47;">{{ $svc->tagline ?? Str::limit($svc->description, 100) }}</p>
+              </div>
+              <span class="shrink-0 text-sm transition-all duration-250 opacity-0 group-hover:opacity-100" style="color:#B5451B;">→</span>
             </div>
-            <span class="shrink-0 text-sm transition-all duration-250 opacity-0 group-hover:opacity-100" style="color:#B5451B;">→</span>
           </div>
-        </div>
-      </a>
-    @endforeach
+        </a>
+      @endforeach
+    @else
+      @foreach($fallbackServices as $svc)
+        <a href="{{ route('bim.services').$svc[3] }}" class="group block" data-reveal>
+          <div class="flex items-center gap-6 py-7 transition-colors duration-250" style="border-top:1px solid rgba(255,255,255,0.06);"
+               onmouseover="this.style.borderTopColor='rgba(181,69,27,0.5)'"
+               onmouseout="this.style.borderTopColor='rgba(255,255,255,0.06)'">
+            <span class="font-display font-light text-sm shrink-0 w-8" style="color:rgba(255,255,255,0.18);">{{ $svc[0] }}</span>
+            <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-center">
+              <div>
+                <h3 class="font-display font-light text-xl md:text-2xl leading-tight transition-colors duration-250" style="color:#F2EFE9;" onmouseover="this.style.color='#B5451B'" onmouseout="this.style.color='#F2EFE9'">{{ $svc[1] }}</h3>
+                <p class="text-sm mt-1.5 leading-relaxed" style="color:#4E4A47;">{{ $svc[2] }}</p>
+              </div>
+              <span class="shrink-0 text-sm transition-all duration-250 opacity-0 group-hover:opacity-100" style="color:#B5451B;">→</span>
+            </div>
+          </div>
+        </a>
+      @endforeach
+    @endif
     <div style="border-top:1px solid rgba(255,255,255,0.06);"></div>
   </div>
 </section>

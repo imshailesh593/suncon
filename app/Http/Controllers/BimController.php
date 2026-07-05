@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactSubmission;
 use App\Models\Project;
+use App\Models\Service;
 use App\Models\Setting;
+use App\Models\Statistic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -18,12 +20,24 @@ class BimController extends Controller
             ->take(4)
             ->get();
 
-        return view('bim.home', compact('projects'));
+        $bimServices = Service::where('section', 'bim')
+            ->orderBy('sort_order')
+            ->get();
+
+        $stats = Statistic::where('section', 'bim')
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('bim.home', compact('projects', 'bimServices', 'stats'));
     }
 
     public function services()
     {
-        return view('bim.services');
+        $bimServices = Service::where('section', 'bim')
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('bim.services', compact('bimServices'));
     }
 
     public function contact()
