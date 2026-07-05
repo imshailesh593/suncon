@@ -47,14 +47,33 @@
     </div>
   </div>
 
-  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-    <div class="w-px h-12 bg-white origin-top animate-[scrollLine_1.6s_ease-in-out_infinite]"></div>
-    <p class="text-[8px] uppercase tracking-[0.28em] text-white">Scroll</p>
+  {{-- Bottom info strip --}}
+  <div class="absolute bottom-0 left-0 right-0 border-t border-white/[0.08] hidden md:grid grid-cols-3">
+    <div class="border-r border-white/[0.08] px-6 lg:px-12 py-3.5 flex items-center gap-2.5">
+      <span class="w-1 h-1 rounded-full bg-[#B5451B] shrink-0"></span>
+      <span class="text-[8px] uppercase tracking-[0.28em] text-white/35">Pune, Maharashtra</span>
+    </div>
+    <div class="border-r border-white/[0.08] px-6 py-3.5 flex items-center gap-2.5">
+      <span class="w-1 h-1 rounded-full bg-[#B5451B] shrink-0"></span>
+      <span class="text-[8px] uppercase tracking-[0.28em] text-white/35">Est. {{ $settings['site.founded'] ?? '1999' }}</span>
+    </div>
+    <div class="px-6 py-3.5 flex items-center gap-2.5">
+      <span class="w-1 h-1 rounded-full bg-[#B5451B] shrink-0"></span>
+      <span class="text-[8px] uppercase tracking-[0.28em] text-white/35">500+ Projects Delivered</span>
+    </div>
   </div>
 </section>
 
-{{-- spacer --}}
-<div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
+{{-- ─── DISCIPLINE MARQUEE ──────────────────────────────────────────────── --}}
+@php $mItems = ['Architecture Design', 'Landscape Design', 'Interior Design', 'Urban Design', 'Architectural BIM', 'PMC']; @endphp
+<div class="bg-[#1C1C1C] overflow-hidden py-3" data-dark>
+  <div id="discipline-marquee" class="flex items-center whitespace-nowrap">
+    @foreach(array_merge($mItems, $mItems) as $item)
+      <span class="text-[8px] uppercase tracking-[0.3em] text-white/25 px-7 shrink-0">{{ $item }}</span>
+      <span class="text-[#B5451B]/35 shrink-0">·</span>
+    @endforeach
+  </div>
+</div>
 
 {{-- ─── RECENT PROJECTS ─────────────────────────────────────────────────── --}}
 @php
@@ -64,9 +83,10 @@
 
   <div class="px-6 lg:px-12 pt-20 pb-14 flex items-end justify-between" data-reveal>
     <div>
-      <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
-        {{ $settings['homepage.projects_eyebrow'] ?? 'Selected Work' }}
-      </p>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
+        <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B]">{{ $settings['homepage.projects_eyebrow'] ?? 'Selected Work' }}</p>
+      </div>
       <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
         {{ $settings['homepage.projects_title'] ?? 'Recent Projects' }}
       </h2>
@@ -162,33 +182,34 @@
 <div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
 
 {{-- ─── STATISTICS ──────────────────────────────────────────────────────── --}}
-<section class="bg-[#1C1C1C] py-24 px-6 lg:px-12" data-dark>
-  <div class="max-w-screen-xl mx-auto">
-    <h2 class="font-display font-light text-xl text-[#FAF7F3] mb-16 leading-relaxed max-w-lg" data-reveal>
-      {{ $settings['site.footer_tagline'] ?? "Shaping India's Built Environment" }}<br>
-      <em class="italic text-[#B5451B]">Since {{ $settings['site.founded'] ?? '1999' }}</em>
-    </h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12">
+<section class="bg-[#1C1C1C]" data-dark>
+  @php
+    $stats = !empty($statistics) ? $statistics : [
+      ['value'=>'25','suffix'=>'+','label'=>'Years of Practice'],
+      ['value'=>'500','suffix'=>'+','label'=>'Projects Delivered'],
+      ['value'=>'50','suffix'=>'+','label'=>'Expert Professionals'],
+      ['value'=>'15','suffix'=>'+','label'=>'States Across India'],
+      ['value'=>'100','suffix'=>'+','label'=>'Satisfied Clients'],
+      ['value'=>'3','suffix'=>'M+','label'=>'Sq. Ft. Designed'],
+    ];
+  @endphp
+  <div class="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-3">
+    @foreach($stats as $stat)
       @php
-        $stats = !empty($statistics) ? $statistics : [
-          ['value'=>'25','suffix'=>'+','label'=>'Years of Practice'],
-          ['value'=>'500','suffix'=>'+','label'=>'Projects Delivered'],
-          ['value'=>'50','suffix'=>'+','label'=>'Expert Professionals'],
-          ['value'=>'15','suffix'=>'+','label'=>'States Across India'],
-          ['value'=>'100','suffix'=>'+','label'=>'Satisfied Clients'],
-          ['value'=>'3','suffix'=>'M+','label'=>'Sq. Ft. Designed'],
-        ];
+        $col = $loop->index % 3;
+        $row = intdiv($loop->index, 3);
       @endphp
-      @foreach($stats as $stat)
-        <div data-reveal>
-          <div class="flex items-baseline gap-0.5 mb-2">
-            <span class="font-display font-light text-display-lg text-[#FAF7F3] leading-none" data-counter data-target="{{ $stat['value'] }}">0</span>
-            <span class="font-display font-light text-display-md text-[#B5451B] leading-none">{{ $stat['suffix'] }}</span>
-          </div>
-          <p class="text-[#8B8275] text-xs uppercase tracking-[0.18em]">{{ $stat['label'] }}</p>
+      <div class="px-8 lg:px-14 py-14 md:py-16
+                  {{ $col > 0 ? 'border-l border-white/[0.07]' : '' }}
+                  {{ $row > 0 ? 'border-t border-white/[0.07]' : '' }}"
+           data-reveal>
+        <div class="flex items-baseline gap-1 mb-3">
+          <span class="font-display font-light text-display-xl text-[#FAF7F3] leading-none" data-counter data-target="{{ $stat['value'] }}">0</span>
+          <span class="font-display font-light text-display-md text-[#B5451B] leading-none">{{ $stat['suffix'] }}</span>
         </div>
-      @endforeach
-    </div>
+        <p class="text-[#5C5652] text-[9px] uppercase tracking-[0.22em]">{{ $stat['label'] }}</p>
+      </div>
+    @endforeach
   </div>
 </section>
 
@@ -214,9 +235,10 @@
     {{-- Header --}}
     <div class="flex items-end justify-between mb-16" data-reveal>
       <div>
-        <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
-          {{ $settings['homepage.services_eyebrow'] ?? 'What We Do' }}
-        </p>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
+          <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B]">{{ $settings['homepage.services_eyebrow'] ?? 'What We Do' }}</p>
+        </div>
         <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
           {{ $settings['homepage.services_title'] ?? 'Our Disciplines' }}
         </h2>
@@ -329,9 +351,10 @@
   <div class="max-w-screen-xl mx-auto">
     <div class="flex items-end justify-between mb-16" data-reveal>
       <div>
-        <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-4">
-          {{ $settings['homepage.journal_eyebrow'] ?? 'From the Studio' }}
-        </p>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
+          <p class="text-[10px] uppercase tracking-[0.3em] text-[#B5451B]">{{ $settings['homepage.journal_eyebrow'] ?? 'From the Studio' }}</p>
+        </div>
         <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
           {{ $settings['homepage.journal_title'] ?? 'Latest Insights' }}
         </h2>

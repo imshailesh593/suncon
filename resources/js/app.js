@@ -204,6 +204,7 @@ function initMarquee(rowEl, direction = -1) {
 
 initMarquee(document.getElementById('marquee-row1'), -1);
 initMarquee(document.getElementById('marquee-row2'),  1);
+initMarquee(document.getElementById('discipline-marquee'), -1);
 
 // ─── 9. WORD-SPLIT HERO ANIMATION ────────────────────────────────────────────
 // Simple word reveal on page load for .word-split elements
