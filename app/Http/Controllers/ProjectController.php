@@ -11,7 +11,8 @@ class ProjectController extends Controller
     {
         $query = Project::where('status', 'published')->latest();
 
-        if ($request->filled('discipline')) {
+        $allowed = ['architectural', 'landscape', 'interior', 'urban', 'bim', 'pmc'];
+        if ($request->filled('discipline') && in_array($request->discipline, $allowed, true)) {
             $query->where('discipline', $request->discipline);
         }
 

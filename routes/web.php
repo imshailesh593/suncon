@@ -23,11 +23,11 @@ Route::get('/journal', [ArticleController::class, 'index'])->name('journal.index
 Route::get('/journal/{slug}', [ArticleController::class, 'show'])->name('journal.show');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+Route::post('/contact', [ContactController::class, 'submit'])->middleware('throttle:5,1')->name('contact.submit');
 
 Route::prefix('bim')->name('bim.')->group(function () {
     Route::get('/', [BimController::class, 'home'])->name('home');
     Route::get('/services', [BimController::class, 'services'])->name('services');
     Route::get('/contact', [BimController::class, 'contact'])->name('contact');
-    Route::post('/contact', [BimController::class, 'submitContact'])->name('contact.submit');
+    Route::post('/contact', [BimController::class, 'submitContact'])->middleware('throttle:5,1')->name('contact.submit');
 });
