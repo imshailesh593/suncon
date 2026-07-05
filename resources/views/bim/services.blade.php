@@ -6,14 +6,18 @@
 @section('content')
 
 {{-- ── PAGE HEADER ──────────────────────────────────────────────────────────── --}}
-<section style="background:#0A0A0A;padding-top:140px;padding-bottom:80px;" data-dark>
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
-    <div class="flex items-center gap-3 mb-6" data-reveal>
-      <span class="w-6 h-px" style="background:#B5451B;"></span>
-      <span class="text-[9px] uppercase tracking-[0.3em]" style="color:#4E4A47;">What we deliver</span>
+<section style="background:#0A0A0A;padding-top:140px;padding-bottom:80px;position:relative;overflow:hidden;">
+  {{-- Left lime rail --}}
+  <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EE8A2;"></div>
+  {{-- Engineering grid --}}
+  <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(126,232,162,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(126,232,162,0.02) 1px,transparent 1px);background-size:64px 64px;"></div>
+  <div class="relative max-w-screen-xl mx-auto px-8 lg:px-16">
+    <div class="flex items-center gap-4 mb-6">
+      <span class="w-[3px] h-4 shrink-0" style="background:#7EE8A2;"></span>
+      <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">What we deliver</span>
     </div>
-    <h1 class="font-display font-light text-display-lg leading-none" style="color:#F2EFE9;" data-reveal>Our Services</h1>
-    <p class="mt-8 text-lg leading-relaxed max-w-2xl" style="color:#6B6560;" data-reveal>
+    <h1 class="sg font-bold leading-none" style="font-size:clamp(3rem,8vw,7rem);color:#E8EDF2;letter-spacing:-0.03em;">Our Services</h1>
+    <p class="dm mt-8 text-lg leading-relaxed max-w-2xl" style="color:#6B7280;font-weight:300;">
       A full-stack BIM practice backed by 25 years of architectural expertise. Every service is delivered in-house by our Pune-based team, with a project-specific BIM Execution Plan on every engagement.
     </p>
   </div>
@@ -21,17 +25,15 @@
 
 {{-- ── SERVICE SECTIONS ─────────────────────────────────────────────────────── --}}
 @php
-  // Default Unsplash images keyed by slug for when no custom image is set
   $defaultImages = [
-    'architectural-bim-modeling' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=85&auto=format&fit=crop',  // architectural drawings
-    'structural-bim'             => 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=85&auto=format&fit=crop',  // construction steel frame
-    'mep-bim-coordination'       => 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=900&q=85&auto=format&fit=crop',  // modern building interior/technical
-    'scan-to-bim'                => 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=85&auto=format&fit=crop',  // glass building facade (point-cloud feel)
-    'cad-to-bim-migration'       => 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85&auto=format&fit=crop',  // technical workspace
-    'construction-documentation' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=85&auto=format&fit=crop',  // architectural drawings/blueprints
+    'architectural-bim-modeling' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=85&auto=format&fit=crop',
+    'structural-bim'             => 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=85&auto=format&fit=crop',
+    'mep-bim-coordination'       => 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=900&q=85&auto=format&fit=crop',
+    'scan-to-bim'                => 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=85&auto=format&fit=crop',
+    'cad-to-bim-migration'       => 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85&auto=format&fit=crop',
+    'construction-documentation' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=85&auto=format&fit=crop',
   ];
 
-  // Fallback static list if no DB records exist yet
   $fallbackServices = collect([
     ['id'=>'arch-bim','number'=>'01','title'=>'Architectural BIM Modeling','lead'=>'Revit-based 3D architectural models at any LOD — from concept massing through permit and construction documentation.','body'=>'Our architectural BIM team produces coordinated Revit models that serve as the single source of truth for your project. Starting from schematic 2D drawings, point clouds, or design intent sketches, we develop models that evolve with your project — from LOD 100 concept massing through LOD 400 construction-ready documentation.','delivers'=>['LOD 100–400 Revit models','Coordinated floor plans, sections & elevations','3D sections and interior views','Model-based quantity extraction','IFC & DWG export packages'],'formats'=>'Input: DWG, PDF, SKP, IFC, point cloud. Output: RVT, IFC, DWG, PDF.','image'=>$defaultImages['architectural-bim-modeling'],'imgAlt'=>'Architectural technical drawings'],
     ['id'=>'structural','number'=>'02','title'=>'Structural BIM','lead'=>'Reinforced concrete and structural steel modeling with precise detailing for design coordination and fabrication.','body'=>'Working from structural engineer\'s calculation packages and design drawings, we produce fully detailed Revit structural models that integrate seamlessly with architectural and MEP disciplines. Our structural models support clash detection, reinforcement scheduling, and formwork calculation.','delivers'=>['RC column, beam & slab modeling','Steel framing and connection details','Foundation and pile cap modeling','Reinforcement LOD 300–400','Structural quantity take-off reports'],'formats'=>'Input: DWG, PDF structural GAs. Output: RVT, IFC, DWG.','image'=>$defaultImages['structural-bim'],'imgAlt'=>'Structural steel building frame'],
@@ -46,7 +48,6 @@
 
 @foreach($serviceList as $i => $svc)
 @php
-  // Normalise DB model vs fallback array to same keys
   if ($svc instanceof \App\Models\Service) {
     $id       = $svc->slug;
     $number   = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
@@ -68,46 +69,45 @@
     $imgSrc   = $svc['image'];
     $imgAlt   = $svc['imgAlt'];
   }
+  $bg = $i%2===0 ? '#0A0A0A' : '#111318';
 @endphp
 
-{{-- Full-bleed section: content side + image side --}}
-<section id="{{ $id }}" style="background:{{ $i%2===0?'#0A0A0A':'#111111' }};border-top:1px solid rgba(255,255,255,0.05);" data-dark>
+<section id="{{ $id }}" style="background:{{ $bg }};border-top:1px solid rgba(255,255,255,0.05);">
   <div class="flex flex-col {{ $i%2===0 ? 'lg:flex-row' : 'lg:flex-row-reverse' }}">
 
     {{-- Content half --}}
     <div class="flex-1 min-w-0 flex flex-col justify-center px-6 lg:px-0">
       <div class="{{ $i%2===0 ? 'lg:pl-12 xl:pl-20 lg:pr-16' : 'lg:pr-12 xl:pr-20 lg:pl-16' }} py-20 max-w-2xl {{ $i%2===0 ? 'lg:ml-auto' : 'lg:mr-auto' }}">
 
-        <div class="flex items-center gap-5 mb-8" data-reveal>
-          <span class="font-display font-light" style="font-size:clamp(3rem,8vw,7rem);line-height:1;color:rgba(255,255,255,0.04);">{{ $number }}</span>
-          <div style="width:48px;height:1px;background:rgba(181,69,27,0.5);"></div>
+        <div class="flex items-center gap-5 mb-8">
+          <span class="sg font-bold leading-none" style="font-size:clamp(3rem,7vw,6rem);color:rgba(126,232,162,0.07);letter-spacing:-0.04em;">{{ $number }}</span>
+          <div style="width:40px;height:2px;background:rgba(126,232,162,0.4);"></div>
         </div>
 
-        <h2 class="font-display font-light text-display-md leading-tight mb-5" style="color:#F2EFE9;" data-reveal>{{ $title }}</h2>
-        @if($lead)<p class="text-base leading-relaxed mb-6" style="color:#6B6560;" data-reveal>{{ $lead }}</p>@endif
-        @if($body)<p class="text-sm leading-relaxed mb-10" style="color:#4E4A47;" data-reveal>{{ $body }}</p>@endif
+        <h2 class="sg font-bold leading-tight mb-5" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:#E8EDF2;letter-spacing:-0.02em;">{{ $title }}</h2>
+        @if($lead)<p class="dm text-base leading-relaxed mb-6" style="color:#6B7280;font-weight:300;">{{ $lead }}</p>@endif
+        @if($body)<p class="dm text-sm leading-relaxed mb-10" style="color:#6B7280;">{{ $body }}</p>@endif
 
         @if(count($delivers))
-        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:28px;" data-reveal>
-          <p class="text-[9px] uppercase tracking-[0.3em] mb-5" style="color:#4E4A47;">Key deliverables</p>
+        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:28px;">
+          <p class="dm text-[9px] uppercase tracking-[0.3em] mb-5" style="color:#6B7280;">Key deliverables</p>
           <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 mb-8">
             @foreach($delivers as $item)
               <li class="flex items-center gap-3">
-                <span class="w-1 h-1 rounded-full shrink-0" style="background:#B5451B;"></span>
-                <span class="text-sm" style="color:#F2EFE9;">{{ $item }}</span>
+                <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background:#7EE8A2;"></span>
+                <span class="dm text-sm" style="color:#E8EDF2;">{{ $item }}</span>
               </li>
             @endforeach
           </ul>
-          @if($formats)<p class="text-[10px] leading-relaxed mb-8" style="color:#4E4A47;">{{ $formats }}</p>@endif
+          @if($formats)<p class="dm text-[10px] leading-relaxed mb-8" style="color:#6B7280;">{{ $formats }}</p>@endif
         </div>
         @endif
 
         <a href="{{ route('bim.contact') }}?service={{ urlencode($title) }}"
-           class="inline-block text-[10px] uppercase tracking-[0.22em] px-8 py-3.5 transition-all duration-250"
-           style="border:1px solid rgba(255,255,255,0.16);color:#6B6560;"
-           onmouseover="this.style.background='#B5451B';this.style.borderColor='#B5451B';this.style.color='#fff'"
-           onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,0.16)';this.style.color='#6B6560'"
-           data-reveal>
+           class="bim-svc-cta sg font-bold inline-block text-[10px] uppercase tracking-[0.2em] px-8 py-3.5 transition-all duration-200"
+           style="border:1px solid rgba(126,232,162,0.3);color:#7EE8A2;"
+           onmouseover="this.style.background='#7EE8A2';this.style.borderColor='#7EE8A2';this.style.color='#0A0A0A'"
+           onmouseout="this.style.background='transparent';this.style.borderColor='rgba(126,232,162,0.3)';this.style.color='#7EE8A2'">
           Enquire about this service
         </a>
       </div>
