@@ -245,11 +245,15 @@
           $tagline = $isArr ? $svc['tagline']  : ($svc->tagline ?? '');
           $slug    = $isArr ? $svc['slug']    : $svc->slug;
           $imgUrl  = $isArr ? null            : ($svc->imageUrl ?? null);
+          $index   = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
         @endphp
         <a href="{{ route('services.show', $slug) }}" class="group block" data-reveal>
 
+          {{-- Index --}}
+          <p class="text-[9px] uppercase tracking-[0.28em] text-[#8B8275] mb-3">{{ $index }}</p>
+
           {{-- Tall portrait image --}}
-          <div class="overflow-hidden aspect-[3/4] bg-[#E8E0D4] mb-5">
+          <div class="overflow-hidden aspect-[3/4] bg-[#E8E0D4] relative">
             @if($imgUrl)
               <img src="{{ $imgUrl }}" alt="{{ $title }}"
                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
@@ -257,6 +261,15 @@
             @else
               <div class="w-full h-full bg-[#E8E0D4]"></div>
             @endif
+            {{-- Subtle terracotta tint on hover --}}
+            <div class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.07] transition-opacity duration-500"
+                 style="background:#B5451B;"></div>
+          </div>
+
+          {{-- Animated sweep line --}}
+          <div class="relative h-px bg-[#E8E0D4] mt-0 mb-5 overflow-hidden">
+            <div class="absolute inset-y-0 left-0 bg-[#B5451B] transition-all duration-500 ease-out"
+                 style="width:0;" data-sweep></div>
           </div>
 
           <h3 class="font-display font-light text-lg text-[#1C1C1C] mb-2 leading-snug group-hover:text-[#B5451B] transition-colors duration-300">
@@ -265,10 +278,17 @@
           @if($tagline)
             <p class="text-[#8B8275] text-xs leading-relaxed mb-4">{{ $tagline }}</p>
           @endif
-          <p class="text-[10px] uppercase tracking-[0.18em] text-[#B5451B]">Explore →</p>
+          <p class="text-[10px] uppercase tracking-[0.18em] text-[#B5451B] flex items-center gap-2">
+            Explore
+            <span class="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+          </p>
         </a>
       @endforeach
     </div>
+
+    <style>
+      .group:hover [data-sweep] { width: 100% !important; }
+    </style>
 
   </div>
 </section>
