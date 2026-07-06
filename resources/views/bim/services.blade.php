@@ -6,7 +6,7 @@
 @section('content')
 
 {{-- ── PAGE HEADER ──────────────────────────────────────────────────────────── --}}
-<section style="background:#0A0A0A;padding-top:140px;padding-bottom:80px;position:relative;overflow:hidden;">
+<section style="background:#EAECEF;padding-top:140px;padding-bottom:80px;position:relative;overflow:hidden;">
   {{-- Left lime rail --}}
   <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EC8E8;"></div>
   {{-- Engineering grid --}}
@@ -16,7 +16,7 @@
       <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
       <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">What we deliver</span>
     </div>
-    <h1 class="sg font-bold leading-none" style="font-size:clamp(3rem,8vw,7rem);color:#E8EDF2;letter-spacing:-0.03em;">Our Services</h1>
+    <h1 class="sg font-bold leading-none" style="font-size:clamp(3rem,8vw,7rem);color:#111827;letter-spacing:-0.03em;">Our Services</h1>
     <p class="dm mt-8 text-lg leading-relaxed max-w-2xl" style="color:#6B7280;font-weight:300;">
       A full-stack BIM practice backed by 25 years of architectural expertise. Every service is delivered in-house by our Pune-based team, with a project-specific BIM Execution Plan on every engagement.
     </p>
@@ -69,10 +69,10 @@
     $imgSrc   = $svc['image'];
     $imgAlt   = $svc['imgAlt'];
   }
-  $bg = $i%2===0 ? '#0A0A0A' : '#111318';
+  $bg = $i%2===0 ? '#EAECEF' : '#F4F5F7';
 @endphp
 
-<section id="{{ $id }}" style="background:{{ $bg }};border-top:1px solid rgba(255,255,255,0.05);">
+<section id="{{ $id }}" style="background:{{ $bg }};border-top:1px solid rgba(0,0,0,0.06);">
   <div class="flex flex-col {{ $i%2===0 ? 'lg:flex-row' : 'lg:flex-row-reverse' }}">
 
     {{-- Content half --}}
@@ -84,18 +84,18 @@
           <div style="width:40px;height:2px;background:rgba(126,200,232,0.4);"></div>
         </div>
 
-        <h2 class="sg font-bold leading-tight mb-5" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:#E8EDF2;letter-spacing:-0.02em;">{{ $title }}</h2>
+        <h2 class="sg font-bold leading-tight mb-5" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:#111827;letter-spacing:-0.02em;">{{ $title }}</h2>
         @if($lead)<p class="dm text-base leading-relaxed mb-6" style="color:#6B7280;font-weight:300;">{{ $lead }}</p>@endif
         @if($body)<p class="dm text-sm leading-relaxed mb-10" style="color:#6B7280;">{{ $body }}</p>@endif
 
         @if(count($delivers))
-        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:28px;">
+        <div style="border-top:1px solid rgba(0,0,0,0.07);padding-top:28px;">
           <p class="dm text-[9px] uppercase tracking-[0.3em] mb-5" style="color:#6B7280;">Key deliverables</p>
           <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 mb-8">
             @foreach($delivers as $item)
               <li class="flex items-center gap-3">
                 <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background:#7EC8E8;"></span>
-                <span class="dm text-sm" style="color:#E8EDF2;">{{ $item }}</span>
+                <span class="dm text-sm" style="color:#111827;">{{ $item }}</span>
               </li>
             @endforeach
           </ul>
@@ -106,7 +106,7 @@
         <a href="{{ route('bim.contact') }}?service={{ urlencode($title) }}"
            class="bim-svc-cta sg font-bold inline-block text-[10px] uppercase tracking-[0.2em] px-8 py-3.5 transition-all duration-200"
            style="border:1px solid rgba(126,200,232,0.3);color:#7EC8E8;"
-           onmouseover="this.style.background='#7EC8E8';this.style.borderColor='#7EC8E8';this.style.color='#0A0A0A'"
+           onmouseover="this.style.background='#7EC8E8';this.style.borderColor='#7EC8E8';this.style.color='#111827'"
            onmouseout="this.style.background='transparent';this.style.borderColor='rgba(126,200,232,0.3)';this.style.color='#7EC8E8'">
           Enquire about this service
         </a>

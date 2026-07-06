@@ -16,15 +16,15 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   <style>
     :root {
-      --bim-base:    #0A0A0A;
-      --bim-surface: #111318;
-      --bim-lift:    #191D26;
+      --bim-base:    #EAECEF;
+      --bim-surface: #F4F5F7;
+      --bim-lift:    #FFFFFF;
       --bim-accent:  #7EC8E8;
-      --bim-adim:    rgba(126,200,232,0.08);
-      --bim-text:    #E8EDF2;
-      --bim-muted:   #6B7280;
-      --bim-dim:     #2C3140;
-      --bim-border:  rgba(255,255,255,0.07);
+      --bim-adim:    rgba(126,200,232,0.10);
+      --bim-text:    #111827;
+      --bim-muted:   #5F6B7A;
+      --bim-dim:     #C8CDD6;
+      --bim-border:  rgba(0,0,0,0.08);
       --ff-sg:       'Space Grotesk', system-ui, sans-serif;
       --ff-dm:       'DM Sans', system-ui, sans-serif;
     }
@@ -40,10 +40,10 @@
 
   {{-- Custom cursor --}}
   <div id="cursor-dot"  class="fixed top-0 left-0 w-[8px] h-[8px] rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2" style="background:#7EC8E8;"></div>
-  <div id="cursor-ring" class="fixed top-0 left-0 w-[40px] h-[40px] rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2" style="border:1.5px solid rgba(232,237,242,0.65);"></div>
+  <div id="cursor-ring" class="fixed top-0 left-0 w-[40px] h-[40px] rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2" style="border:1.5px solid rgba(17,24,39,0.2);"></div>
 
   {{-- ── NAVBAR ──────────────────────────────────────────────────────────────── --}}
-  <header id="bim-nav" class="fixed top-0 left-0 right-0 z-50" style="background:rgba(10,10,10,0.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bim-border);">
+  <header id="bim-nav" class="fixed top-0 left-0 right-0 z-50" style="background:rgba(234,236,239,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bim-border);">
     <div class="max-w-screen-xl mx-auto px-6 lg:px-12 h-[62px] flex items-center justify-between">
 
       {{-- Logo --}}
@@ -73,7 +73,7 @@
         {{-- CTA --}}
         <a href="{{ route('bim.contact') }}"
            class="sg text-[10px] font-bold uppercase tracking-[0.2em] px-5 py-2.5 shrink-0 transition-opacity duration-200"
-           style="background:var(--bim-accent);color:#0A0A0A;"
+           style="background:var(--bim-accent);color:#111827;"
            onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">
           Get a Quote
         </a>
@@ -117,7 +117,7 @@
         </div>
         <a href="{{ route('bim.contact') }}"
            class="sg font-bold text-[10px] uppercase tracking-[0.2em] px-10 py-4 shrink-0 transition-opacity duration-200"
-           style="background:var(--bim-accent);color:#0A0A0A;"
+           style="background:var(--bim-accent);color:#111827;"
            onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">
           Request a Quote
         </a>
