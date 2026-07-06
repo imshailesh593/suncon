@@ -58,9 +58,10 @@
     body          { font-family: var(--ff-dm); background: var(--bim-base); color: var(--bim-text); transition: background 0.3s, color 0.3s; }
     .sg { font-family: var(--ff-sg); }
     .dm { font-family: var(--ff-dm); }
-    /* Swatch toggle */
-    .bim-swatch { display:inline-block; width:13px; height:13px; border-radius:50%; cursor:pointer; border:0; padding:0; outline:2px solid transparent; outline-offset:2.5px; transition:outline-color 0.2s; }
-    .bim-swatch.active { outline-color: var(--bim-accent); }
+    /* Theme pill toggle */
+    .bim-theme-pill { display:flex; align-items:center; border-radius:999px; overflow:hidden; border:1px solid var(--bim-border); background:var(--bim-surface); transition:border-color 0.3s, background 0.3s; }
+    .bim-theme-btn  { background:transparent; border:0; cursor:pointer; padding:5px 11px; font-family:var(--ff-dm); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--bim-muted); transition:background 0.2s, color 0.2s; white-space:nowrap; line-height:1; }
+    .bim-theme-btn.active { background:var(--bim-accent); color:#111827; }
   </style>
 </head>
 <body class="antialiased overflow-x-hidden">
@@ -97,10 +98,10 @@
              class="bim-navlink dm text-[10px] uppercase tracking-[0.22em] transition-colors duration-200 shrink-0"
              style="color:{{ $active ? 'var(--bim-accent)' : 'var(--bim-muted)' }};">{{ $label }}</a>
         @endforeach
-        {{-- Theme swatches --}}
-        <div class="flex items-center gap-1.5 shrink-0 ml-1" title="Switch theme">
-          <button id="swatch-dark"  class="bim-swatch" style="background:#0D1020;" aria-label="Dark mode"></button>
-          <button id="swatch-light" class="bim-swatch" style="background:#E0E3E8;border:1px solid rgba(0,0,0,0.18);" aria-label="Light mode"></button>
+        {{-- Theme pill --}}
+        <div class="bim-theme-pill shrink-0">
+          <button id="swatch-light" class="bim-theme-btn" aria-label="Light mode">Light</button>
+          <button id="swatch-dark"  class="bim-theme-btn" aria-label="Dark mode">Dark</button>
         </div>
         {{-- CTA --}}
         <a href="{{ route('bim.contact') }}"
@@ -128,10 +129,12 @@
       <a href="{{ route('bim.contact') }}"             class="sg text-4xl font-bold" style="color:var(--bim-accent);">Get a Quote</a>
     </div>
     <div class="mt-12 pt-8" style="border-top:1px solid var(--bim-border);">
-      <div class="flex items-center gap-2 mb-5">
+      <div class="flex items-center gap-3 mb-5">
         <span class="dm text-[9px] uppercase tracking-[0.22em]" style="color:var(--bim-muted);">Theme</span>
-        <button id="swatch-dark-mob"  class="bim-swatch" style="background:#0D1020;" aria-label="Dark mode"></button>
-        <button id="swatch-light-mob" class="bim-swatch" style="background:#E0E3E8;border:1px solid rgba(0,0,0,0.18);" aria-label="Light mode"></button>
+        <div class="bim-theme-pill">
+          <button id="swatch-light-mob" class="bim-theme-btn" aria-label="Light mode">Light</button>
+          <button id="swatch-dark-mob"  class="bim-theme-btn" aria-label="Dark mode">Dark</button>
+        </div>
       </div>
       <a href="{{ url('/') }}" class="dm text-[9px] uppercase tracking-[0.28em] transition-colors duration-200" style="color:var(--bim-muted);">← Architecture Site</a>
       <p class="dm text-[9px] uppercase tracking-[0.25em] mt-2" style="color:var(--bim-dim);">Part of Suncon Engineers Pvt. Ltd.</p>
