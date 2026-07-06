@@ -14,36 +14,63 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+  {{-- Anti-flash: set theme before paint --}}
+  <script>document.documentElement.setAttribute('data-bim-theme',localStorage.getItem('bim-theme')||'light');</script>
   <style>
+    /* ── Light mode (default) ─────────────────────────────── */
     :root {
-      --bim-base:    #EAECEF;
-      --bim-surface: #F4F5F7;
-      --bim-lift:    #FFFFFF;
-      --bim-accent:  #7EC8E8;
-      --bim-adim:    rgba(126,200,232,0.10);
-      --bim-text:    #111827;
-      --bim-muted:   #5F6B7A;
-      --bim-dim:     #C8CDD6;
-      --bim-border:  rgba(0,0,0,0.08);
-      --ff-sg:       'Space Grotesk', system-ui, sans-serif;
-      --ff-dm:       'DM Sans', system-ui, sans-serif;
+      --bim-base:      #EAECEF;
+      --bim-surface:   #F4F5F7;
+      --bim-lift:      #FFFFFF;
+      --bim-accent:    #7EC8E8;
+      --bim-adim:      rgba(126,200,232,0.10);
+      --bim-text:      #111827;
+      --bim-muted:     #5F6B7A;
+      --bim-dim:       #C8CDD6;
+      --bim-border:    rgba(0,0,0,0.08);
+      --bim-border-sm: rgba(0,0,0,0.06);
+      --bim-border-lg: rgba(0,0,0,0.12);
+      --bim-ghost:     rgba(0,0,0,0.10);
+      --bim-ghost-sm:  rgba(0,0,0,0.07);
+      --bim-nav-bg:    rgba(234,236,239,0.96);
+      --bim-ring:      rgba(17,24,39,0.20);
+      --ff-sg: 'Space Grotesk', system-ui, sans-serif;
+      --ff-dm: 'DM Sans', system-ui, sans-serif;
     }
-    /* Override shared Tailwind font classes for BIM pages */
+    /* ── Dark mode ────────────────────────────────────────── */
+    html[data-bim-theme="dark"] {
+      --bim-base:      #0A0A0A;
+      --bim-surface:   #111318;
+      --bim-lift:      #191D26;
+      --bim-text:      #E8EDF2;
+      --bim-muted:     #6B7280;
+      --bim-dim:       #2C3140;
+      --bim-border:    rgba(255,255,255,0.07);
+      --bim-border-sm: rgba(255,255,255,0.05);
+      --bim-border-lg: rgba(255,255,255,0.14);
+      --bim-ghost:     rgba(255,255,255,0.15);
+      --bim-ghost-sm:  rgba(255,255,255,0.06);
+      --bim-nav-bg:    rgba(10,10,10,0.93);
+      --bim-ring:      rgba(232,237,242,0.65);
+    }
     .font-display { font-family: var(--ff-sg) !important; }
     .font-body    { font-family: var(--ff-dm) !important; }
-    body          { font-family: var(--ff-dm); background: var(--bim-base); color: var(--bim-text); }
+    body          { font-family: var(--ff-dm); background: var(--bim-base); color: var(--bim-text); transition: background 0.3s, color 0.3s; }
     .sg { font-family: var(--ff-sg); }
     .dm { font-family: var(--ff-dm); }
+    /* Swatch toggle */
+    .bim-swatch { display:inline-block; width:13px; height:13px; border-radius:50%; cursor:pointer; border:0; padding:0; outline:2px solid transparent; outline-offset:2.5px; transition:outline-color 0.2s; }
+    .bim-swatch.active { outline-color: var(--bim-accent); }
   </style>
 </head>
 <body class="antialiased overflow-x-hidden">
 
   {{-- Custom cursor --}}
   <div id="cursor-dot"  class="fixed top-0 left-0 w-[8px] h-[8px] rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2" style="background:#7EC8E8;"></div>
-  <div id="cursor-ring" class="fixed top-0 left-0 w-[40px] h-[40px] rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2" style="border:1.5px solid rgba(17,24,39,0.2);"></div>
+  <div id="cursor-ring" class="fixed top-0 left-0 w-[40px] h-[40px] rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2" style="border:1.5px solid var(--bim-ring);"></div>
 
   {{-- ── NAVBAR ──────────────────────────────────────────────────────────────── --}}
-  <header id="bim-nav" class="fixed top-0 left-0 right-0 z-50" style="background:rgba(234,236,239,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bim-border);">
+  <header id="bim-nav" class="fixed top-0 left-0 right-0 z-50" style="background:var(--bim-nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bim-border);transition:background 0.3s;">
     <div class="max-w-screen-xl mx-auto px-6 lg:px-12 h-[62px] flex items-center justify-between">
 
       {{-- Logo --}}
@@ -70,6 +97,11 @@
              class="bim-navlink dm text-[10px] uppercase tracking-[0.22em] transition-colors duration-200 shrink-0"
              style="color:{{ $active ? 'var(--bim-accent)' : 'var(--bim-muted)' }};">{{ $label }}</a>
         @endforeach
+        {{-- Theme swatches --}}
+        <div class="flex items-center gap-1.5 shrink-0 ml-1" title="Switch theme">
+          <button id="swatch-dark"  class="bim-swatch" style="background:#0D1020;" aria-label="Dark mode"></button>
+          <button id="swatch-light" class="bim-swatch" style="background:#E0E3E8;border:1px solid rgba(0,0,0,0.18);" aria-label="Light mode"></button>
+        </div>
         {{-- CTA --}}
         <a href="{{ route('bim.contact') }}"
            class="sg text-[10px] font-bold uppercase tracking-[0.2em] px-5 py-2.5 shrink-0 transition-opacity duration-200"
@@ -96,6 +128,11 @@
       <a href="{{ route('bim.contact') }}"             class="sg text-4xl font-bold" style="color:var(--bim-accent);">Get a Quote</a>
     </div>
     <div class="mt-12 pt-8" style="border-top:1px solid var(--bim-border);">
+      <div class="flex items-center gap-2 mb-5">
+        <span class="dm text-[9px] uppercase tracking-[0.22em]" style="color:var(--bim-muted);">Theme</span>
+        <button id="swatch-dark-mob"  class="bim-swatch" style="background:#0D1020;" aria-label="Dark mode"></button>
+        <button id="swatch-light-mob" class="bim-swatch" style="background:#E0E3E8;border:1px solid rgba(0,0,0,0.18);" aria-label="Light mode"></button>
+      </div>
       <a href="{{ url('/') }}" class="dm text-[9px] uppercase tracking-[0.28em] transition-colors duration-200" style="color:var(--bim-muted);">← Architecture Site</a>
       <p class="dm text-[9px] uppercase tracking-[0.25em] mt-2" style="color:var(--bim-dim);">Part of Suncon Engineers Pvt. Ltd.</p>
     </div>
@@ -189,7 +226,34 @@
 
   <script>
   (function () {
-    // Nav hover
+
+    // ── Theme toggle ──────────────────────────────────────────────────────────
+    function setBimTheme(theme) {
+      document.documentElement.setAttribute('data-bim-theme', theme);
+      localStorage.setItem('bim-theme', theme);
+      ['swatch-dark','swatch-dark-mob'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active', theme === 'dark');
+      });
+      ['swatch-light','swatch-light-mob'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active', theme === 'light');
+      });
+    }
+
+    const currentTheme = localStorage.getItem('bim-theme') || 'light';
+    setBimTheme(currentTheme);
+
+    ['swatch-dark','swatch-dark-mob'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', () => setBimTheme('dark'));
+    });
+    ['swatch-light','swatch-light-mob'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', () => setBimTheme('light'));
+    });
+
+    // ── Nav hover ─────────────────────────────────────────────────────────────
     document.querySelectorAll('.bim-navlink').forEach(a => {
       if (a.style.color !== 'var(--bim-accent)') {
         a.addEventListener('mouseenter', () => a.style.color = 'var(--bim-text)');
@@ -202,7 +266,7 @@
       back.addEventListener('mouseleave', () => back.style.color = 'var(--bim-muted)');
     }
 
-    // Mobile menu
+    // ── Mobile menu ───────────────────────────────────────────────────────────
     const toggle = document.getElementById('bim-menu-toggle');
     const menu   = document.getElementById('bim-mobile-menu');
     const bars   = document.querySelectorAll('.bim-bar');
@@ -220,7 +284,7 @@
       menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (open) toggle.click(); }));
     }
 
-    // Custom cursor
+    // ── Custom cursor ─────────────────────────────────────────────────────────
     const dot  = document.getElementById('cursor-dot');
     const ring = document.getElementById('cursor-ring');
     if (dot && ring) {

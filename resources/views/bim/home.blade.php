@@ -7,7 +7,7 @@
 @section('content')
 
 {{-- ── HERO ─────────────────────────────────────────────────────────────────── --}}
-<section class="min-h-screen relative flex flex-col" style="background:#EAECEF;overflow:hidden;">
+<section class="min-h-screen relative flex flex-col" style="background:var(--bim-base);overflow:hidden;">
 
   {{-- Left 3px lime rail --}}
   <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EC8E8;z-index:2;"></div>
@@ -22,38 +22,38 @@
     <div class="pt-32 pb-0">
       <div class="inline-flex items-center gap-3">
         <span class="w-2 h-2 rounded-full" style="background:#7EC8E8;"></span>
-        <span class="dm text-[9px] uppercase tracking-[0.38em]" style="color:#6B7280;">Suncon Engineers — BIM Division</span>
+        <span class="dm text-[9px] uppercase tracking-[0.38em]" style="color:var(--bim-muted);">Suncon Engineers — BIM Division</span>
       </div>
     </div>
 
     {{-- Main headline --}}
     <div class="flex-1 flex flex-col justify-end pb-14">
       <p class="dm text-[9px] uppercase tracking-[0.4em] mb-5" style="color:#7EC8E8;">Architectural</p>
-      <h1 class="sg font-bold leading-[0.88] mb-0" style="font-size:clamp(4rem,14vw,12.5rem);letter-spacing:-0.03em;color:#111827;">
+      <h1 class="sg font-bold leading-[0.88] mb-0" style="font-size:clamp(4rem,14vw,12.5rem);letter-spacing:-0.03em;color:var(--bim-text);">
         BIM<span style="color:#7EC8E8;">.</span>
       </h1>
 
-      <div class="mt-10 pt-10 flex flex-col md:flex-row md:items-end justify-between gap-8" style="border-top:1px solid rgba(0,0,0,0.08);">
-        <p class="dm text-base leading-relaxed max-w-lg" style="color:#6B7280;font-weight:300;">
+      <div class="mt-10 pt-10 flex flex-col md:flex-row md:items-end justify-between gap-8" style="border-top:1px solid var(--bim-border);">
+        <p class="dm text-base leading-relaxed max-w-lg" style="color:var(--bim-muted);font-weight:300;">
           Precision Revit modeling, intelligent MEP coordination, and LOD 100–500 documentation — from concept to construction. Backed by 25 years of architectural practice.
         </p>
         <div class="flex flex-wrap gap-3 shrink-0">
           <a href="{{ route('bim.contact') }}"
              class="sg font-bold text-[10px] uppercase tracking-[0.2em] px-8 py-3.5 transition-opacity duration-200"
-             style="background:#7EC8E8;color:#111827;"
+             style="background:#7EC8E8;color:var(--bim-text);"
              onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">Request a Quote</a>
           <a href="{{ route('bim.services') }}"
              class="dm text-[10px] uppercase tracking-[0.22em] px-8 py-3.5 transition-all duration-200"
-             style="border:1px solid rgba(0,0,0,0.12);color:#6B7280;"
-             onmouseover="this.style.borderColor='rgba(0,0,0,0.35)';this.style.color='#111827'"
-             onmouseout="this.style.borderColor='rgba(0,0,0,0.12)';this.style.color='#6B7280'">Explore Services</a>
+             style="border:1px solid var(--bim-border-lg);color:var(--bim-muted);"
+             onmouseover="this.style.borderColor='var(--bim-muted)';this.style.color='var(--bim-text)'"
+             onmouseout="this.style.borderColor='var(--bim-border-lg)';this.style.color='#6B7280'">Explore Services</a>
         </div>
       </div>
     </div>
   </div>
 
   {{-- LOD badge strip --}}
-  <div style="border-top:1px solid rgba(0,0,0,0.06);">
+  <div style="border-top:1px solid var(--bim-border-sm);">
     <div class="max-w-screen-xl mx-auto px-8 lg:px-16 py-4 flex gap-2 overflow-x-auto">
       @foreach(['LOD 100 — Concept','LOD 200 — Schematic','LOD 300 — Detailed','LOD 400 — Fabrication','LOD 500 — As-Built'] as $lod)
         <span class="shrink-0 dm text-[8px] uppercase tracking-[0.28em] px-4 py-1.5" style="border:1px solid rgba(126,200,232,0.12);color:#3A4050;">{{ $lod }}</span>
@@ -68,7 +68,7 @@
     ? $stats->map(fn($s) => [$s->value.($s->suffix ?? ''), $s->label])->values()->all()
     : [['25+','Years of practice'],['500+','BIM projects delivered'],['50+','BIM professionals'],['15+','Software platforms']];
 @endphp
-<section style="background:#F4F5F7;border-top:3px solid #7EC8E8;">
+<section style="background:var(--bim-surface);border-top:3px solid #7EC8E8;">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="grid grid-cols-2 md:grid-cols-4">
       @foreach($statItems as $i => [$num,$label])
@@ -81,9 +81,9 @@
             default => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-l',
           };
         @endphp
-        <div class="{{ $cls }}" style="border-color:rgba(0,0,0,0.07);">
-          <div class="sg font-bold leading-none mb-3" style="font-size:clamp(2.2rem,5vw,5rem);color:#111827;letter-spacing:-0.03em;">{{ $num }}</div>
-          <div class="dm text-[9px] uppercase tracking-[0.28em]" style="color:#6B7280;">{{ $label }}</div>
+        <div class="{{ $cls }}" style="border-color:var(--bim-border-sm);">
+          <div class="sg font-bold leading-none mb-3" style="font-size:clamp(2.2rem,5vw,5rem);color:var(--bim-text);letter-spacing:-0.03em;">{{ $num }}</div>
+          <div class="dm text-[9px] uppercase tracking-[0.28em]" style="color:var(--bim-muted);">{{ $label }}</div>
         </div>
       @endforeach
     </div>
@@ -91,21 +91,21 @@
 </section>
 
 {{-- ── SERVICES (editorial list) ────────────────────────────────────────────── --}}
-<section style="background:#EAECEF;padding:100px 0;">
+<section style="background:var(--bim-base);padding:100px 0;">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
 
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
       <div>
         <div class="flex items-center gap-4 mb-5">
           <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
-          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">What we deliver</span>
+          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:var(--bim-muted);">What we deliver</span>
         </div>
-        <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#111827;letter-spacing:-0.02em;">BIM Services</h2>
+        <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:var(--bim-text);letter-spacing:-0.02em;">BIM Services</h2>
       </div>
       <a href="{{ route('bim.services') }}"
          class="dm text-[10px] uppercase tracking-[0.28em] transition-colors duration-200"
-         style="color:#6B7280;"
-         onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#6B7280'">All Services →</a>
+         style="color:var(--bim-muted);"
+         onmouseover="this.style.color='var(--bim-text)'" onmouseout="this.style.color='#6B7280'">All Services →</a>
     </div>
 
     @php
@@ -122,12 +122,12 @@
     @if($bimServices->count())
       @foreach($bimServices as $svc)
         <a href="{{ route('bim.services').'#'.$svc->slug }}" class="group block">
-          <div class="flex items-center gap-6 py-7 bim-svc-row" style="border-top:1px solid rgba(0,0,0,0.07);">
-            <span class="dm text-[10px] shrink-0 w-8" style="color:rgba(0,0,0,0.10);">{{ str_pad($loop->iteration,2,'0',STR_PAD_LEFT) }}</span>
+          <div class="flex items-center gap-6 py-7 bim-svc-row" style="border-top:1px solid var(--bim-border-sm);">
+            <span class="dm text-[10px] shrink-0 w-8" style="color:var(--bim-ghost);">{{ str_pad($loop->iteration,2,'0',STR_PAD_LEFT) }}</span>
             <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-center">
               <div>
-                <h3 class="sg font-semibold text-xl md:text-2xl leading-tight transition-colors duration-200" style="color:#111827;" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='#111827'">{{ $svc->title }}</h3>
-                <p class="dm text-sm mt-1.5 leading-relaxed" style="color:#6B7280;">{{ $svc->tagline ?? Str::limit($svc->description, 100) }}</p>
+                <h3 class="sg font-semibold text-xl md:text-2xl leading-tight transition-colors duration-200" style="color:var(--bim-text);" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='var(--bim-text)'">{{ $svc->title }}</h3>
+                <p class="dm text-sm mt-1.5 leading-relaxed" style="color:var(--bim-muted);">{{ $svc->tagline ?? Str::limit($svc->description, 100) }}</p>
               </div>
               <span class="shrink-0 text-lg transition-all duration-200 opacity-0 group-hover:opacity-100" style="color:#7EC8E8;">→</span>
             </div>
@@ -137,12 +137,12 @@
     @else
       @foreach($fallbackServices as $svc)
         <a href="{{ route('bim.services').$svc[3] }}" class="group block">
-          <div class="flex items-center gap-6 py-7 bim-svc-row" style="border-top:1px solid rgba(0,0,0,0.07);">
-            <span class="dm text-[10px] shrink-0 w-8" style="color:rgba(0,0,0,0.10);">{{ $svc[0] }}</span>
+          <div class="flex items-center gap-6 py-7 bim-svc-row" style="border-top:1px solid var(--bim-border-sm);">
+            <span class="dm text-[10px] shrink-0 w-8" style="color:var(--bim-ghost);">{{ $svc[0] }}</span>
             <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-center">
               <div>
-                <h3 class="sg font-semibold text-xl md:text-2xl leading-tight transition-colors duration-200" style="color:#111827;" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='#111827'">{{ $svc[1] }}</h3>
-                <p class="dm text-sm mt-1.5 leading-relaxed" style="color:#6B7280;">{{ $svc[2] }}</p>
+                <h3 class="sg font-semibold text-xl md:text-2xl leading-tight transition-colors duration-200" style="color:var(--bim-text);" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='var(--bim-text)'">{{ $svc[1] }}</h3>
+                <p class="dm text-sm mt-1.5 leading-relaxed" style="color:var(--bim-muted);">{{ $svc[2] }}</p>
               </div>
               <span class="shrink-0 text-lg transition-all duration-200 opacity-0 group-hover:opacity-100" style="color:#7EC8E8;">→</span>
             </div>
@@ -150,22 +150,22 @@
         </a>
       @endforeach
     @endif
-    <div style="border-top:1px solid rgba(0,0,0,0.07);"></div>
+    <div style="border-top:1px solid var(--bim-border-sm);"></div>
   </div>
 </section>
 
 {{-- ── SOFTWARE & TOOLS ─────────────────────────────────────────────────────── --}}
-<section style="background:#F4F5F7;padding:100px 0;border-top:1px solid rgba(0,0,0,0.06);border-bottom:1px solid rgba(0,0,0,0.06);">
+<section style="background:var(--bim-surface);padding:100px 0;border-top:1px solid var(--bim-border-sm);border-bottom:1px solid var(--bim-border-sm);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-20">
 
       <div>
         <div class="flex items-center gap-4 mb-5">
           <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
-          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Technology</span>
+          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:var(--bim-muted);">Technology</span>
         </div>
-        <h2 class="sg font-bold leading-none mb-6" style="font-size:clamp(2rem,4vw,3.5rem);color:#111827;letter-spacing:-0.02em;">Software<br>&amp; Tools</h2>
-        <p class="dm text-sm leading-relaxed" style="color:#6B7280;">The industry's leading BIM authoring, coordination, and documentation platforms.</p>
+        <h2 class="sg font-bold leading-none mb-6" style="font-size:clamp(2rem,4vw,3.5rem);color:var(--bim-text);letter-spacing:-0.02em;">Software<br>&amp; Tools</h2>
+        <p class="dm text-sm leading-relaxed" style="color:var(--bim-muted);">The industry's leading BIM authoring, coordination, and documentation platforms.</p>
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-4">
@@ -191,9 +191,9 @@
             $borderT = $row2 > 0 ? 'border-t' : '';
           @endphp
           <div class="px-5 sm:px-6 py-8 {{ $borderL }} {{ $borderL4 }} {{ $borderT }}"
-               style="border-color:rgba(0,0,0,0.07);">
-            <p class="sg font-medium text-sm mb-1" style="color:#111827;">{{ $tool[0] }}</p>
-            <p class="dm text-[10px]" style="color:#6B7280;">{{ $tool[1] }}</p>
+               style="border-color:var(--bim-border-sm);">
+            <p class="sg font-medium text-sm mb-1" style="color:var(--bim-text);">{{ $tool[0] }}</p>
+            <p class="dm text-[10px]" style="color:var(--bim-muted);">{{ $tool[1] }}</p>
           </div>
         @endforeach
       </div>
@@ -202,16 +202,16 @@
 </section>
 
 {{-- ── LOD FRAMEWORK ────────────────────────────────────────────────────────── --}}
-<section style="background:#EAECEF;padding:100px 0;">
+<section style="background:var(--bim-base);padding:100px 0;">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
 
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-16 items-center mb-16">
       <div>
         <div class="flex items-center gap-4 mb-5">
           <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
-          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Level of development</span>
+          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:var(--bim-muted);">Level of development</span>
         </div>
-        <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#111827;letter-spacing:-0.02em;">We model at<br><span style="color:#7EC8E8;">every LOD</span></h2>
+        <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:var(--bim-text);letter-spacing:-0.02em;">We model at<br><span style="color:#7EC8E8;">every LOD</span></h2>
       </div>
       <div class="overflow-hidden" style="aspect-ratio:16/9;">
         <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=85&auto=format&fit=crop"
@@ -239,10 +239,10 @@
           if ($i === 3) $cls .= ' sm:border-l lg:border-l';
           if ($i === 4) $cls .= ' sm:border-l-0 lg:border-l';
         @endphp
-        <div class="{{ $cls }}" style="border-color:rgba(0,0,0,0.07);">
+        <div class="{{ $cls }}" style="border-color:var(--bim-border-sm);">
           <div class="sg font-bold text-[10px] uppercase tracking-[0.3em] mb-4" style="color:#7EC8E8;">{{ $lod[0] }}</div>
-          <div class="sg font-semibold text-lg mb-3" style="color:#111827;">{{ $lod[1] }}</div>
-          <p class="dm text-xs leading-relaxed" style="color:#6B7280;">{{ $lod[2] }}</p>
+          <div class="sg font-semibold text-lg mb-3" style="color:var(--bim-text);">{{ $lod[1] }}</div>
+          <p class="dm text-xs leading-relaxed" style="color:var(--bim-muted);">{{ $lod[2] }}</p>
         </div>
       @endforeach
     </div>
@@ -250,7 +250,7 @@
 </section>
 
 {{-- ── WHY SUNCON BIM ────────────────────────────────────────────────────────── --}}
-<section style="background:#F4F5F7;border-top:1px solid rgba(0,0,0,0.06);">
+<section style="background:var(--bim-surface);border-top:1px solid var(--bim-border-sm);">
   <div class="flex flex-col lg:flex-row">
 
     {{-- Image panel --}}
@@ -265,9 +265,9 @@
       <div class="max-w-xl">
         <div class="flex items-center gap-4 mb-5">
           <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
-          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Our advantage</span>
+          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:var(--bim-muted);">Our advantage</span>
         </div>
-        <h2 class="sg font-bold leading-none mb-14" style="font-size:clamp(2rem,4vw,3.5rem);color:#111827;letter-spacing:-0.02em;">Why Suncon BIM?</h2>
+        <h2 class="sg font-bold leading-none mb-14" style="font-size:clamp(2rem,4vw,3.5rem);color:var(--bim-text);letter-spacing:-0.02em;">Why Suncon BIM?</h2>
 
         <div class="flex flex-col gap-0">
           @php
@@ -279,12 +279,12 @@
             ];
           @endphp
           @foreach($pillars as $i => $p)
-            <div class="py-7 {{ $i>0?'border-t':'' }}" style="{{ $i>0?'border-color:rgba(0,0,0,0.07);':'' }}">
+            <div class="py-7 {{ $i>0?'border-t':'' }}" style="{{ $i>0?'border-color:var(--bim-border-sm);':'' }}">
               <div class="flex items-start gap-5">
                 <span class="sg font-bold text-sm shrink-0 mt-0.5" style="color:rgba(126,200,232,0.35);">0{{ $i+1 }}</span>
                 <div>
-                  <h3 class="sg font-semibold text-lg mb-2" style="color:#111827;">{{ $p[0] }}</h3>
-                  <p class="dm text-sm leading-relaxed" style="color:#6B7280;">{{ $p[1] }}</p>
+                  <h3 class="sg font-semibold text-lg mb-2" style="color:var(--bim-text);">{{ $p[0] }}</h3>
+                  <p class="dm text-sm leading-relaxed" style="color:var(--bim-muted);">{{ $p[1] }}</p>
                 </div>
               </div>
             </div>
@@ -297,53 +297,53 @@
 
 {{-- ── PROJECTS ─────────────────────────────────────────────────────────────── --}}
 @if(isset($projects) && $projects->count())
-<section style="background:#EAECEF;padding:100px 0;border-top:1px solid rgba(0,0,0,0.06);">
+<section style="background:var(--bim-base);padding:100px 0;border-top:1px solid var(--bim-border-sm);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
       <div>
         <div class="flex items-center gap-4 mb-5">
           <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
-          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Portfolio</span>
+          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:var(--bim-muted);">Portfolio</span>
         </div>
-        <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#111827;letter-spacing:-0.02em;">BIM Projects</h2>
+        <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:var(--bim-text);letter-spacing:-0.02em;">BIM Projects</h2>
       </div>
       <a href="{{ url('/projects?discipline=bim') }}"
          class="dm text-[10px] uppercase tracking-[0.28em] transition-colors duration-200"
-         style="color:#6B7280;"
-         onmouseover="this.style.color='#111827'" onmouseout="this.style.color='#6B7280'">View All →</a>
+         style="color:var(--bim-muted);"
+         onmouseover="this.style.color='var(--bim-text)'" onmouseout="this.style.color='#6B7280'">View All →</a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
       @foreach($projects as $project)
         <a href="{{ url('/projects/'.$project->slug) }}" class="group block">
-          <div class="overflow-hidden aspect-[4/3] mb-4" style="background:#FFFFFF;">
+          <div class="overflow-hidden aspect-[4/3] mb-4" style="background:var(--bim-lift);">
             @if($project->image)
               <img src="{{ $project->imageUrl }}" alt="{{ $project->title }}" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy">
             @else
               <div class="w-full h-full" style="background:#1C2030;"></div>
             @endif
           </div>
-          <h3 class="sg font-semibold text-base leading-snug mb-1 transition-colors duration-200" style="color:#111827;" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='#111827'">{{ $project->title }}</h3>
-          @if($project->location)<p class="dm text-[9px] uppercase tracking-[0.15em]" style="color:#6B7280;">{{ $project->location }}</p>@endif
+          <h3 class="sg font-semibold text-base leading-snug mb-1 transition-colors duration-200" style="color:var(--bim-text);" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='var(--bim-text)'">{{ $project->title }}</h3>
+          @if($project->location)<p class="dm text-[9px] uppercase tracking-[0.15em]" style="color:var(--bim-muted);">{{ $project->location }}</p>@endif
         </a>
       @endforeach
     </div>
   </div>
 </section>
 @else
-<section style="background:#EAECEF;padding:80px 0;border-top:1px solid rgba(0,0,0,0.06);">
+<section style="background:var(--bim-base);padding:80px 0;border-top:1px solid var(--bim-border-sm);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
     <div>
       <div class="flex items-center gap-4 mb-5">
         <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
-        <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Portfolio</span>
+        <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:var(--bim-muted);">Portfolio</span>
       </div>
-      <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#111827;letter-spacing:-0.02em;">BIM Projects</h2>
+      <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:var(--bim-text);letter-spacing:-0.02em;">BIM Projects</h2>
     </div>
     <a href="{{ url('/projects?discipline=bim') }}"
        class="dm shrink-0 text-[10px] uppercase tracking-[0.22em] px-8 py-3.5 transition-all duration-200"
-       style="border:1px solid rgba(0,0,0,0.12);color:#6B7280;"
-       onmouseover="this.style.borderColor='rgba(0,0,0,0.35)';this.style.color='#111827'"
-       onmouseout="this.style.borderColor='rgba(0,0,0,0.12)';this.style.color='#6B7280'">
+       style="border:1px solid var(--bim-border-lg);color:var(--bim-muted);"
+       onmouseover="this.style.borderColor='var(--bim-muted)';this.style.color='var(--bim-text)'"
+       onmouseout="this.style.borderColor='var(--bim-border-lg)';this.style.color='#6B7280'">
       View BIM Portfolio
     </a>
   </div>
@@ -351,14 +351,14 @@
 @endif
 
 {{-- ── PROCESS ──────────────────────────────────────────────────────────────── --}}
-<section style="background:#F4F5F7;padding:100px 0;border-top:1px solid rgba(0,0,0,0.06);">
+<section style="background:var(--bim-surface);padding:100px 0;border-top:1px solid var(--bim-border-sm);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="mb-16">
       <div class="flex items-center gap-4 mb-5">
         <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
-        <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">How we work</span>
+        <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:var(--bim-muted);">How we work</span>
       </div>
-      <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#111827;letter-spacing:-0.02em;">Our Process</h2>
+      <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:var(--bim-text);letter-spacing:-0.02em;">Our Process</h2>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
       @php
@@ -377,10 +377,10 @@
           if ($i === 2) $cls .= ' md:border-l-0 lg:border-l';
           if ($i === 3) $cls .= ' md:border-l lg:border-l';
         @endphp
-        <div class="{{ $cls }}" style="border-color:rgba(0,0,0,0.07);">
+        <div class="{{ $cls }}" style="border-color:var(--bim-border-sm);">
           <div class="sg font-bold mb-8 leading-none" style="font-size:clamp(3rem,6vw,5rem);color:rgba(126,200,232,0.08);letter-spacing:-0.04em;">{{ str_pad($i+1,2,'0',STR_PAD_LEFT) }}</div>
-          <h3 class="sg font-semibold text-lg mb-4" style="color:#111827;">{{ $step[0] }}</h3>
-          <p class="dm text-sm leading-relaxed" style="color:#6B7280;">{{ $step[1] }}</p>
+          <h3 class="sg font-semibold text-lg mb-4" style="color:var(--bim-text);">{{ $step[0] }}</h3>
+          <p class="dm text-sm leading-relaxed" style="color:var(--bim-muted);">{{ $step[1] }}</p>
         </div>
       @endforeach
     </div>
