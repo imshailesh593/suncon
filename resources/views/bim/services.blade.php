@@ -46,85 +46,80 @@
   $serviceList = $bimServices->count() ? $bimServices : $fallbackServices;
 @endphp
 
-@foreach($serviceList as $i => $svc)
-@php
-  if ($svc instanceof \App\Models\Service) {
-    $id       = $svc->slug;
-    $number   = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
-    $title    = $svc->title;
-    $lead     = $svc->tagline ?? '';
-    $body     = $svc->long_description ?? $svc->description ?? '';
-    $delivers = $svc->features ?? [];
-    $formats  = $svc->formats ?? '';
-    $imgSrc   = $svc->image ? $svc->imageUrl : ($defaultImages[$svc->slug] ?? 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=85&auto=format&fit=crop');
-    $imgAlt   = $svc->title;
-  } else {
-    $id       = $svc['id'];
-    $number   = $svc['number'];
-    $title    = $svc['title'];
-    $lead     = $svc['lead'];
-    $body     = $svc['body'];
-    $delivers = $svc['delivers'];
-    $formats  = $svc['formats'];
-    $imgSrc   = $svc['image'];
-    $imgAlt   = $svc['imgAlt'];
-  }
-  $bg = $i%2===0 ? 'var(--bim-base)' : 'var(--bim-surface)';
-@endphp
+<section style="background:var(--bim-surface);padding:80px 0 100px;" class="px-6 lg:px-12">
+  <div class="max-w-screen-xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
 
-<section id="{{ $id }}" style="background:{{ $bg }};border-top:1px solid var(--bim-border-sm);">
-  <div class="flex flex-col {{ $i%2===0 ? 'lg:flex-row' : 'lg:flex-row-reverse' }}">
+      @foreach($serviceList as $i => $svc)
+      @php
+        if ($svc instanceof \App\Models\Service) {
+          $id     = $svc->slug;
+          $number = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
+          $title  = $svc->title;
+          $lead   = $svc->tagline ?? '';
+          $imgSrc = $svc->image ? $svc->imageUrl : ($defaultImages[$svc->slug] ?? null);
+          $imgAlt = $svc->title;
+        } else {
+          $id     = $svc['id'];
+          $number = $svc['number'];
+          $title  = $svc['title'];
+          $lead   = $svc['lead'];
+          $imgSrc = $svc['image'];
+          $imgAlt = $svc['imgAlt'];
+        }
+      @endphp
 
-    {{-- Content half --}}
-    <div class="flex-1 min-w-0 flex flex-col justify-center px-6 lg:px-0">
-      <div class="{{ $i%2===0 ? 'lg:pl-12 xl:pl-20 lg:pr-16' : 'lg:pr-12 xl:pr-20 lg:pl-16' }} py-20 max-w-2xl {{ $i%2===0 ? 'lg:ml-auto' : 'lg:mr-auto' }}">
+      <a href="{{ route('bim.contact') }}?service={{ urlencode($title) }}"
+         class="bim-svc-card group block">
 
-        <div class="flex items-center gap-5 mb-8">
-          <span class="sg font-bold leading-none" style="font-size:clamp(3rem,7vw,6rem);color:rgba(126,200,232,0.07);letter-spacing:-0.04em;">{{ $number }}</span>
-          <div style="width:40px;height:2px;background:rgba(126,200,232,0.4);"></div>
+        {{-- Index --}}
+        <p class="dm text-[9px] uppercase tracking-[0.3em] mb-3"
+           style="color:var(--bim-muted);">{{ $number }}</p>
+
+        {{-- Tall portrait image --}}
+        <div class="overflow-hidden aspect-[3/4] relative" style="background:var(--bim-lift);">
+          @if($imgSrc)
+            <img src="{{ $imgSrc }}" alt="{{ $imgAlt }}"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                 loading="lazy">
+          @else
+            <div class="w-full h-full flex items-end p-6"
+                 style="background:linear-gradient(150deg,var(--bim-surface) 0%,var(--bim-dim) 100%);">
+              <span class="sg font-bold" style="font-size:5rem;line-height:1;color:var(--bim-adim);">{{ $number }}</span>
+            </div>
+          @endif
+          {{-- Accent tint on hover --}}
+          <div class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.07] transition-opacity duration-500"
+               style="background:var(--bim-accent);"></div>
         </div>
 
-        <h2 class="sg font-bold leading-tight mb-5" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:var(--bim-text);letter-spacing:-0.02em;">{{ $title }}</h2>
-        @if($lead)<p class="dm text-base leading-relaxed mb-6" style="color:var(--bim-muted);font-weight:300;">{{ $lead }}</p>@endif
-        @if($body)<p class="dm text-sm leading-relaxed mb-10" style="color:var(--bim-muted);">{{ $body }}</p>@endif
-
-        @if(count($delivers))
-        <div style="border-top:1px solid var(--bim-border-sm);padding-top:28px;">
-          <p class="dm text-[9px] uppercase tracking-[0.3em] mb-5" style="color:var(--bim-muted);">Key deliverables</p>
-          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 mb-8">
-            @foreach($delivers as $item)
-              <li class="flex items-center gap-3">
-                <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background:#7EC8E8;"></span>
-                <span class="dm text-sm" style="color:var(--bim-text);">{{ $item }}</span>
-              </li>
-            @endforeach
-          </ul>
-          @if($formats)<p class="dm text-[10px] leading-relaxed mb-8" style="color:var(--bim-muted);">{{ $formats }}</p>@endif
+        {{-- Animated sweep line --}}
+        <div class="relative h-px mt-0 mb-4 overflow-hidden" style="background:var(--bim-border);">
+          <div class="bim-sweep absolute inset-y-0 left-0 transition-all duration-500 ease-out"
+               style="width:0;background:var(--bim-accent);"></div>
         </div>
+
+        <h3 class="sg font-semibold mb-2 leading-snug bim-svc-title transition-colors duration-300"
+            style="font-size:1.05rem;color:var(--bim-text);">{{ $title }}</h3>
+
+        @if($lead)
+          <p class="dm text-xs leading-relaxed mb-4" style="color:var(--bim-muted);">{{ $lead }}</p>
         @endif
 
-        <a href="{{ route('bim.contact') }}?service={{ urlencode($title) }}"
-           class="bim-svc-cta sg font-bold inline-block text-[10px] uppercase tracking-[0.2em] px-8 py-3.5 transition-all duration-200"
-           style="border:1px solid rgba(126,200,232,0.3);color:#7EC8E8;"
-           onmouseover="this.style.background='#7EC8E8';this.style.borderColor='#7EC8E8';this.style.color='var(--bim-text)'"
-           onmouseout="this.style.background='transparent';this.style.borderColor='rgba(126,200,232,0.3)';this.style.color='#7EC8E8'">
-          Enquire about this service
-        </a>
-      </div>
-    </div>
+        <p class="dm text-[9px] uppercase tracking-[0.22em]" style="color:var(--bim-accent);">
+          Enquire
+          <span class="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </p>
+      </a>
+      @endforeach
 
-    {{-- Image half --}}
-    <div class="w-full lg:w-[42%] shrink-0 overflow-hidden" style="min-height:360px;">
-      <img src="{{ $imgSrc }}"
-           alt="{{ $imgAlt }}"
-           class="w-full h-full object-cover"
-           style="min-height:360px;"
-           loading="lazy">
     </div>
-
   </div>
 </section>
 
-@endforeach
+<style>
+  .bim-svc-card:hover .bim-sweep        { width: 100% !important; }
+  .bim-svc-card:hover .bim-svc-title    { color: var(--bim-accent) !important; }
+</style>
 
 @endsection
