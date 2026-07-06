@@ -76,106 +76,95 @@
 </div>
 
 {{-- ─── RECENT PROJECTS ─────────────────────────────────────────────────── --}}
-@php
-  $disciplineMap = ['architecture'=>'Architecture','interior'=>'Interior Design','landscape'=>'Landscape Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC'];
-@endphp
-<section id="projects-section" class="bg-white">
+<section id="projects-section" class="bg-white overflow-hidden">
 
-  <div class="px-6 lg:px-12 pt-20 pb-14 flex items-end justify-between" data-reveal>
-    <div>
-      <div class="flex items-center gap-3 mb-4">
-        <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
-        <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B]">{{ $settings['homepage.projects_eyebrow'] ?? 'Selected Work' }}</p>
-      </div>
+  <div class="px-6 lg:px-12 pt-20 pb-12 flex items-end justify-between">
+    <div data-reveal>
+      <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
+        {{ $settings['homepage.projects_eyebrow'] ?? 'Selected Work' }}
+      </p>
       <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
         {{ $settings['homepage.projects_title'] ?? 'Recent Projects' }}
       </h2>
     </div>
-    <a href="{{ url('/projects') }}"
-       class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1">
-      <span>View All</span>
-      <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
-    </a>
+    <div class="flex items-center gap-4">
+      <a href="{{ url('/projects') }}"
+         class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1 mr-4">
+        <span>View All</span>
+        <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
+      </a>
+      <button id="projects-prev" aria-label="Previous"
+              class="w-10 h-10 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+        ←
+      </button>
+      <button id="projects-next" aria-label="Next"
+              class="w-10 h-10 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+        →
+      </button>
+    </div>
   </div>
 
-  {{-- Alternating full-width rows --}}
-  <div class="divide-y divide-[#F0EBE3]">
-    @forelse($projects as $project)
+  <div class="pb-20">
+    <div id="projects-track"
+         class="flex gap-4 pl-6 lg:pl-12"
+         style="padding-right: 3rem; overflow-x: auto; scroll-snap-type: x mandatory;">
+
       @php
-        $discipline = $disciplineMap[$project->discipline] ?? ucfirst($project->discipline ?? 'Architecture');
-        $index      = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
-        $flip       = $loop->iteration % 2 === 0;
+        $disciplineMap = ['architecture'=>'Architecture','interior'=>'Interior Design','landscape'=>'Landscape Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC'];
       @endphp
-      <a href="{{ url('/projects/'.$project->slug) }}"
-         class="group flex flex-col {{ $flip ? 'md:flex-row-reverse' : 'md:flex-row' }}"
-         data-reveal>
 
-        {{-- Image —— 58% wide on desktop --}}
-        <div class="overflow-hidden bg-[#E8E0D4] w-full md:w-[58%] shrink-0" style="min-height:380px;max-height:560px;">
-          @if($project->imageUrl)
-            <img src="{{ $project->imageUrl }}" alt="{{ $project->title }}"
-                 class="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
-                 style="min-height:380px;max-height:560px;">
-          @else
-            <div class="w-full h-full bg-[#E8E0D4]" style="min-height:380px;"></div>
-          @endif
-        </div>
-
-        {{-- Content panel --}}
-        <div class="flex-1 flex flex-col justify-between px-8 lg:px-14 py-12 bg-white group-hover:bg-[#FAF7F3] transition-colors duration-500">
-          <div>
-            <div class="flex items-start justify-between mb-8">
-              <span class="text-[9px] uppercase tracking-[0.24em] text-[#B5451B]">{{ $discipline }}</span>
-              <span class="font-display font-light text-[3rem] leading-none text-[#F0EBE3] select-none">{{ $index }}</span>
+      @forelse($projects as $project)
+        @php
+          $cardW      = $loop->first ? 'w-[78vw] sm:w-[56vw] lg:w-[42vw]' : 'w-[68vw] sm:w-[44vw] lg:w-[30vw]';
+          $discipline = $disciplineMap[$project->discipline] ?? ucfirst($project->discipline ?? 'Architecture');
+          $index      = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
+        @endphp
+        <a href="{{ url('/projects/'.$project->slug) }}" class="group shrink-0 {{ $cardW }}" style="scroll-snap-align: start;">
+          <div class="relative overflow-hidden w-full mb-5" style="height: clamp(220px, 34vw, 480px)">
+            @if($project->imageUrl)
+              <img src="{{ $project->imageUrl }}" alt="{{ $project->title }}"
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+            @else
+              <div class="w-full h-full bg-[#E8E0D4]"></div>
+            @endif
+            <span class="absolute bottom-4 left-5 font-display font-light text-[3.5rem] leading-none text-white/[0.12] select-none pointer-events-none">{{ $index }}</span>
+          </div>
+          <div class="px-1">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[9px] uppercase tracking-[0.22em] text-[#8B8275]">{{ $index }} — {{ $discipline }}</span>
+              <span class="text-[9px] font-display italic text-[#8B8275]">{{ $project->year }}</span>
             </div>
-            <div class="w-8 h-px bg-[#1C1C1C]/20 mb-6 group-hover:bg-[#B5451B] group-hover:w-14 transition-all duration-500"></div>
-            <h3 class="font-display font-light leading-tight text-[#1C1C1C] group-hover:text-[#B5451B] transition-colors duration-400 mb-4"
-                style="font-size:clamp(1.4rem,2vw,2rem);">
+            <div class="w-full h-px bg-[#1C1C1C]/15 mb-4 group-hover:bg-[#B5451B]/60 transition-colors duration-500"></div>
+            <h3 class="font-display font-light text-[1.2rem] leading-snug text-[#1C1C1C] group-hover:text-[#B5451B] transition-colors duration-300 mb-2">
               {{ $project->title }}
             </h3>
             @if($project->location)
-              <p class="text-[9px] uppercase tracking-[0.2em] text-[#8B8275] mb-5">{{ $project->location }}</p>
-            @endif
-            @if($project->description)
-              <p class="text-sm text-[#8B8275] leading-relaxed font-light" style="max-width:26rem;">
-                {{ Str::limit($project->description, 160) }}
-              </p>
+              <p class="text-[9px] uppercase tracking-[0.16em] text-[#8B8275]">{{ $project->location }}</p>
             @endif
           </div>
-          <div class="flex items-center justify-between mt-10 pt-6 border-t border-[#F0EBE3]">
-            @if($project->year)
-              <span class="font-display italic text-[#8B8275] text-sm">{{ $project->year }}</span>
-            @else
-              <span></span>
-            @endif
-            <span class="text-[9px] uppercase tracking-[0.22em] text-[#B5451B] flex items-center gap-2 translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-              View Project →
-            </span>
+        </a>
+      @empty
+        @for($i = 1; $i <= 4; $i++)
+          <div class="shrink-0 w-[68vw] sm:w-[44vw] lg:w-[30vw]">
+            <div class="bg-[#E8E0D4] animate-pulse mb-5" style="height: clamp(220px, 34vw, 480px)"></div>
+            <div class="h-3 bg-[#E8E0D4] rounded w-1/3 animate-pulse mb-3"></div>
+            <div class="h-px bg-[#E8E0D4] mb-4"></div>
+            <div class="h-5 bg-[#E8E0D4] rounded w-3/4 animate-pulse"></div>
           </div>
-        </div>
-      </a>
-    @empty
-      @for($i = 1; $i <= 3; $i++)
-        <div class="flex flex-col md:flex-row">
-          <div class="w-full md:w-[58%] bg-[#E8E0D4] animate-pulse" style="min-height:380px;"></div>
-          <div class="flex-1 px-8 lg:px-14 py-12 flex flex-col gap-4">
-            <div class="h-3 bg-[#E8E0D4] rounded w-1/4 animate-pulse"></div>
-            <div class="h-px bg-[#E8E0D4] w-8"></div>
-            <div class="h-7 bg-[#E8E0D4] rounded w-3/4 animate-pulse"></div>
-            <div class="h-3 bg-[#E8E0D4] rounded w-1/3 animate-pulse"></div>
-          </div>
-        </div>
-      @endfor
-    @endforelse
+        @endfor
+      @endforelse
+    </div>
   </div>
 
-  <div class="px-6 py-12 flex justify-center">
-    <a href="{{ url('/projects') }}"
-       class="text-[9px] uppercase tracking-[0.28em] border border-[#1C1C1C]/20 px-8 py-3.5 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
-      View All Projects →
-    </a>
+  <div class="px-6 pb-8 flex items-center justify-between md:hidden">
+    <a href="{{ url('/projects') }}" class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275]">View All →</a>
+    <div class="flex items-center gap-3">
+      <button onclick="document.getElementById('projects-prev').click()"
+              class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm">←</button>
+      <button onclick="document.getElementById('projects-next').click()"
+              class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm">→</button>
+    </div>
   </div>
-
 </section>
 
 {{-- spacer --}}
@@ -258,44 +247,24 @@
           $title   = $isArr ? $svc['title']   : $svc->title;
           $tagline = $isArr ? $svc['tagline']  : ($svc->tagline ?? '');
           $slug    = $isArr ? $svc['slug']    : $svc->slug;
-          $imgUrl  = $isArr ? null            : ($svc->imageUrl ?? null);
           $index   = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
         @endphp
         <a href="{{ route('services.show', $slug) }}"
-           class="group bg-[#FAF7F3] hover:bg-[#1C1C1C] transition-colors duration-500 flex flex-col"
+           class="group bg-[#FAF7F3] hover:bg-[#1C1C1C] transition-colors duration-500 p-10 flex flex-col gap-5 min-h-[260px]"
            data-reveal>
-
-          {{-- Image --}}
-          <div class="overflow-hidden bg-[#E8E0D4]" style="height:280px;">
-            @if($imgUrl)
-              <img src="{{ $imgUrl }}" alt="{{ $title }}"
-                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy">
-            @else
-              <div class="w-full h-full flex items-end p-8" style="background:linear-gradient(135deg,#E8E0D4,#C8BCAD);">
-                <span class="font-display font-light select-none" style="font-size:6rem;line-height:1;color:rgba(28,28,28,0.06);">{{ $index }}</span>
-              </div>
-            @endif
+          <div class="flex items-start justify-between">
+            <span class="font-display font-light leading-none" style="font-size:2.8rem;color:#D4C9BB;transition:color 0.5s;"
+                  onmouseenter="this.style.color='rgba(255,255,255,0.15)'"
+                  onmouseleave="this.style.color='#D4C9BB'">{{ $index }}</span>
+            <span class="text-[#1C1C1C]/20 group-hover:text-white/60 transition-all duration-500 text-xl leading-none mt-1">→</span>
           </div>
-
-          {{-- Content --}}
-          <div class="p-8 lg:p-10 flex flex-col gap-4 flex-1">
-            <div class="flex items-start justify-between">
-              <span class="font-display font-light text-[#D4C9BB] group-hover:text-white/15 transition-colors duration-500 leading-none" style="font-size:2.4rem;">{{ $index }}</span>
-              <span class="text-[#1C1C1C]/20 group-hover:text-white/50 transition-all duration-500 text-lg leading-none mt-1">→</span>
-            </div>
-            <div class="w-8 h-px bg-[#B5451B] group-hover:w-14 transition-all duration-500"></div>
-            <h3 class="font-display font-light text-[1.2rem] leading-snug text-[#1C1C1C] group-hover:text-white transition-colors duration-500 flex-1">
-              {{ $title }}
-            </h3>
-            @if($tagline)
-              <p class="text-[12px] leading-relaxed font-light text-[#8B8275] group-hover:text-white/50 transition-colors duration-500">
-                {{ $tagline }}
-              </p>
-            @endif
-            <span class="text-[9px] uppercase tracking-[0.2em] text-[#B5451B] group-hover:text-[#E8846A] transition-colors duration-500 self-start" style="border-bottom:1px solid rgba(181,69,27,0.35);padding-bottom:2px;">
-              Explore →
-            </span>
-          </div>
+          <div class="w-8 h-px bg-[#B5451B] group-hover:w-14 transition-all duration-500"></div>
+          <h3 class="font-display font-light text-[1.25rem] leading-snug text-[#1C1C1C] group-hover:text-white transition-colors duration-500 flex-1">{{ $title }}</h3>
+          @if($tagline)
+            <p class="text-[12px] leading-relaxed font-light text-[#8B8275] group-hover:text-white/55 transition-colors duration-500">{{ $tagline }}</p>
+          @endif
+          <span class="text-[9px] uppercase tracking-[0.2em] text-[#B5451B] group-hover:text-[#E8846A] transition-colors duration-500 self-start"
+                style="border-bottom:1px solid rgba(181,69,27,0.35);padding-bottom:2px;">Explore →</span>
         </a>
       @endforeach
     </div>

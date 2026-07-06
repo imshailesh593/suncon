@@ -124,6 +124,31 @@ gsap.utils.toArray('[data-reveal]').forEach((el) => {
   );
 });
 
+// ─── 5 & 6. BUTTON CAROUSELS (projects + services) ───────────────────────────
+function initCarousel(trackId, prevId, nextId) {
+  const track = document.getElementById(trackId);
+  const prev  = document.getElementById(prevId);
+  const next  = document.getElementById(nextId);
+  if (!track || !prev || !next) return;
+  track.style.scrollbarWidth   = 'none';
+  track.style.msOverflowStyle  = 'none';
+  track.style.overflowX        = 'auto';
+  const amount = () => Math.max(track.clientWidth * 0.72, 300);
+  prev.addEventListener('click', () => track.scrollBy({ left: -amount(), behavior: 'smooth' }));
+  next.addEventListener('click', () => track.scrollBy({ left:  amount(), behavior: 'smooth' }));
+  function sync() {
+    const atStart = track.scrollLeft <= 8;
+    const atEnd   = track.scrollLeft >= track.scrollWidth - track.clientWidth - 8;
+    prev.style.opacity        = atStart ? '0.3' : '1';
+    prev.style.pointerEvents  = atStart ? 'none' : 'auto';
+    next.style.opacity        = atEnd   ? '0.3' : '1';
+    next.style.pointerEvents  = atEnd   ? 'none' : 'auto';
+  }
+  track.addEventListener('scroll', sync, { passive: true });
+  sync();
+}
+initCarousel('projects-track', 'projects-prev', 'projects-next');
+
 // ─── 5. STAT COUNTERS ────────────────────────────────────────────────────────
 document.querySelectorAll('[data-counter]').forEach((el) => {
   const target = parseFloat(el.dataset.target) || 0;
