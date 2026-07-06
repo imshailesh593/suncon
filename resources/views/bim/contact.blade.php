@@ -8,16 +8,16 @@
 {{-- ── HEADER ───────────────────────────────────────────────────────────────── --}}
 <section style="background:#0A0A0A;padding-top:140px;padding-bottom:80px;position:relative;overflow:hidden;">
   {{-- Left lime rail --}}
-  <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EE8A2;"></div>
+  <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EC8E8;"></div>
   {{-- Engineering grid --}}
-  <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(126,232,162,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(126,232,162,0.02) 1px,transparent 1px);background-size:64px 64px;"></div>
+  <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(126,200,232,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(126,200,232,0.02) 1px,transparent 1px);background-size:64px 64px;"></div>
   <div class="relative max-w-screen-xl mx-auto px-8 lg:px-16">
     <div class="flex items-center gap-4 mb-6">
-      <span class="w-[3px] h-4 shrink-0" style="background:#7EE8A2;"></span>
+      <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
       <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Get in touch</span>
     </div>
     <h1 class="sg font-bold leading-none" style="font-size:clamp(3rem,8vw,7rem);color:#E8EDF2;letter-spacing:-0.03em;">
-      Request a<br><span style="color:#7EE8A2;">Quote</span>
+      Request a<br><span style="color:#7EC8E8;">Quote</span>
     </h1>
     <p class="dm mt-8 text-base leading-relaxed max-w-lg" style="color:#6B7280;font-weight:300;">
       Send us your project brief. We'll review and respond with a scope, timeline, and fee estimate within 24 working hours.
@@ -33,7 +33,7 @@
       {{-- Form --}}
       <div>
         @if(session('success'))
-          <div class="mb-8 px-6 py-4 text-sm" style="border-left:3px solid #7EE8A2;background:rgba(126,232,162,0.06);color:#6B7280;">
+          <div class="mb-8 px-6 py-4 text-sm" style="border-left:3px solid #7EC8E8;background:rgba(126,200,232,0.06);color:#6B7280;">
             {{ session('success') }}
           </div>
         @endif
@@ -47,18 +47,18 @@
               <input type="text" name="name" value="{{ old('name') }}" required
                      class="w-full px-0 py-3 dm text-sm bg-transparent outline-none"
                      style="border-bottom:1px solid rgba(255,255,255,0.1);color:#E8EDF2;"
-                     onfocus="this.style.borderBottomColor='#7EE8A2'"
+                     onfocus="this.style.borderBottomColor='#7EC8E8'"
                      onblur="this.style.borderBottomColor='rgba(255,255,255,0.1)'">
-              @error('name')<p class="mt-1.5 text-xs" style="color:#7EE8A2;">{{ $message }}</p>@enderror
+              @error('name')<p class="mt-1.5 text-xs" style="color:#7EC8E8;">{{ $message }}</p>@enderror
             </div>
             <div>
               <label class="block dm text-[9px] uppercase tracking-[0.28em] mb-3" style="color:#6B7280;">Email Address *</label>
               <input type="email" name="email" value="{{ old('email') }}" required
                      class="w-full px-0 py-3 dm text-sm bg-transparent outline-none"
                      style="border-bottom:1px solid rgba(255,255,255,0.1);color:#E8EDF2;"
-                     onfocus="this.style.borderBottomColor='#7EE8A2'"
+                     onfocus="this.style.borderBottomColor='#7EC8E8'"
                      onblur="this.style.borderBottomColor='rgba(255,255,255,0.1)'">
-              @error('email')<p class="mt-1.5 text-xs" style="color:#7EE8A2;">{{ $message }}</p>@enderror
+              @error('email')<p class="mt-1.5 text-xs" style="color:#7EC8E8;">{{ $message }}</p>@enderror
             </div>
           </div>
 
@@ -68,7 +68,7 @@
               <input type="tel" name="phone" value="{{ old('phone') }}"
                      class="w-full px-0 py-3 dm text-sm bg-transparent outline-none"
                      style="border-bottom:1px solid rgba(255,255,255,0.1);color:#E8EDF2;"
-                     onfocus="this.style.borderBottomColor='#7EE8A2'"
+                     onfocus="this.style.borderBottomColor='#7EC8E8'"
                      onblur="this.style.borderBottomColor='rgba(255,255,255,0.1)'">
             </div>
             <div>
@@ -76,7 +76,7 @@
               <input type="text" name="company" value="{{ old('company') }}"
                      class="w-full px-0 py-3 dm text-sm bg-transparent outline-none"
                      style="border-bottom:1px solid rgba(255,255,255,0.1);color:#E8EDF2;"
-                     onfocus="this.style.borderBottomColor='#7EE8A2'"
+                     onfocus="this.style.borderBottomColor='#7EC8E8'"
                      onblur="this.style.borderBottomColor='rgba(255,255,255,0.1)'">
             </div>
           </div>
@@ -86,7 +86,7 @@
             <select name="service"
                     class="w-full px-0 py-3 dm text-sm bg-transparent outline-none appearance-none cursor-pointer"
                     style="border-bottom:1px solid rgba(255,255,255,0.1);color:#E8EDF2;background:transparent;"
-                    onfocus="this.style.borderBottomColor='#7EE8A2'"
+                    onfocus="this.style.borderBottomColor='#7EC8E8'"
                     onblur="this.style.borderBottomColor='rgba(255,255,255,0.1)'">
               <option value="" style="background:#111318;">Select a service…</option>
               @foreach([
@@ -109,15 +109,15 @@
                       placeholder="Building type, area, target LOD, available input files, timeline…"
                       class="w-full px-0 py-3 dm text-sm bg-transparent outline-none resize-none"
                       style="border-bottom:1px solid rgba(255,255,255,0.1);color:#E8EDF2;"
-                      onfocus="this.style.borderBottomColor='#7EE8A2'"
+                      onfocus="this.style.borderBottomColor='#7EC8E8'"
                       onblur="this.style.borderBottomColor='rgba(255,255,255,0.1)'">{{ old('message') }}</textarea>
-            @error('message')<p class="mt-1.5 text-xs" style="color:#7EE8A2;">{{ $message }}</p>@enderror
+            @error('message')<p class="mt-1.5 text-xs" style="color:#7EC8E8;">{{ $message }}</p>@enderror
           </div>
 
           <div class="pt-2">
             <button type="submit"
                     class="sg font-bold text-[10px] uppercase tracking-[0.2em] px-10 py-4 transition-opacity duration-200"
-                    style="background:#7EE8A2;color:#0A0A0A;"
+                    style="background:#7EC8E8;color:#0A0A0A;"
                     onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">
               Send Enquiry
             </button>
@@ -129,12 +129,12 @@
       <div class="flex flex-col gap-10">
 
         <div>
-          <p class="dm text-[9px] uppercase tracking-[0.28em] mb-4" style="color:#7EE8A2;">Response time</p>
+          <p class="dm text-[9px] uppercase tracking-[0.28em] mb-4" style="color:#7EC8E8;">Response time</p>
           <p class="dm text-sm leading-relaxed" style="color:#6B7280;">All BIM enquiries are responded to within <strong style="color:#E8EDF2;font-weight:500;">24 working hours.</strong> For urgent requirements, call us directly.</p>
         </div>
 
         <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:36px;">
-          <p class="dm text-[9px] uppercase tracking-[0.28em] mb-5" style="color:#7EE8A2;">Contact</p>
+          <p class="dm text-[9px] uppercase tracking-[0.28em] mb-5" style="color:#7EC8E8;">Contact</p>
           <ul class="flex flex-col gap-5">
             <li>
               <p class="dm text-[8px] uppercase tracking-[0.22em] mb-1.5" style="color:#6B7280;">Email</p>
@@ -156,7 +156,7 @@
         </div>
 
         <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:36px;">
-          <p class="dm text-[9px] uppercase tracking-[0.28em] mb-5" style="color:#7EE8A2;">Helpful to include</p>
+          <p class="dm text-[9px] uppercase tracking-[0.28em] mb-5" style="color:#7EC8E8;">Helpful to include</p>
           <ul class="flex flex-col gap-3">
             @foreach([
               'Building type and gross area',
@@ -166,7 +166,7 @@
               'Client BIM standards or BEP (if any)',
             ] as $tip)
               <li class="flex items-start gap-3">
-                <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2" style="background:#7EE8A2;"></span>
+                <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-2" style="background:#7EC8E8;"></span>
                 <span class="dm text-sm" style="color:#6B7280;">{{ $tip }}</span>
               </li>
             @endforeach

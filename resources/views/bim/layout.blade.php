@@ -19,8 +19,8 @@
       --bim-base:    #0A0A0A;
       --bim-surface: #111318;
       --bim-lift:    #191D26;
-      --bim-accent:  #7EE8A2;
-      --bim-adim:    rgba(126,232,162,0.08);
+      --bim-accent:  #7EC8E8;
+      --bim-adim:    rgba(126,200,232,0.08);
       --bim-text:    #E8EDF2;
       --bim-muted:   #6B7280;
       --bim-dim:     #2C3140;
@@ -39,7 +39,7 @@
 <body class="antialiased overflow-x-hidden">
 
   {{-- Custom cursor --}}
-  <div id="cursor-dot"  class="fixed top-0 left-0 w-[8px] h-[8px] rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2" style="background:#7EE8A2;"></div>
+  <div id="cursor-dot"  class="fixed top-0 left-0 w-[8px] h-[8px] rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2" style="background:#7EC8E8;"></div>
   <div id="cursor-ring" class="fixed top-0 left-0 w-[40px] h-[40px] rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2" style="border:1.5px solid rgba(232,237,242,0.65);"></div>
 
   {{-- ── NAVBAR ──────────────────────────────────────────────────────────────── --}}

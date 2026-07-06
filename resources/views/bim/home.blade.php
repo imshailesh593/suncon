@@ -10,10 +10,10 @@
 <section class="min-h-screen relative flex flex-col" style="background:#0A0A0A;overflow:hidden;">
 
   {{-- Left 3px lime rail --}}
-  <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EE8A2;z-index:2;"></div>
+  <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EC8E8;z-index:2;"></div>
 
   {{-- Engineering grid overlay --}}
-  <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(126,232,162,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(126,232,162,0.025) 1px,transparent 1px);background-size:64px 64px;"></div>
+  <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(126,200,232,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(126,200,232,0.025) 1px,transparent 1px);background-size:64px 64px;"></div>
 
   {{-- Content --}}
   <div class="relative flex-1 flex flex-col max-w-screen-xl mx-auto w-full px-8 lg:px-16" style="z-index:1;">
@@ -21,16 +21,16 @@
     {{-- Eyebrow --}}
     <div class="pt-32 pb-0">
       <div class="inline-flex items-center gap-3">
-        <span class="w-2 h-2 rounded-full" style="background:#7EE8A2;"></span>
+        <span class="w-2 h-2 rounded-full" style="background:#7EC8E8;"></span>
         <span class="dm text-[9px] uppercase tracking-[0.38em]" style="color:#6B7280;">Suncon Engineers — BIM Division</span>
       </div>
     </div>
 
     {{-- Main headline --}}
     <div class="flex-1 flex flex-col justify-end pb-14">
-      <p class="dm text-[9px] uppercase tracking-[0.4em] mb-5" style="color:#7EE8A2;">Architectural</p>
+      <p class="dm text-[9px] uppercase tracking-[0.4em] mb-5" style="color:#7EC8E8;">Architectural</p>
       <h1 class="sg font-bold leading-[0.88] mb-0" style="font-size:clamp(4rem,14vw,12.5rem);letter-spacing:-0.03em;color:#E8EDF2;">
-        BIM<span style="color:#7EE8A2;">.</span>
+        BIM<span style="color:#7EC8E8;">.</span>
       </h1>
 
       <div class="mt-10 pt-10 flex flex-col md:flex-row md:items-end justify-between gap-8" style="border-top:1px solid rgba(255,255,255,0.07);">
@@ -40,7 +40,7 @@
         <div class="flex flex-wrap gap-3 shrink-0">
           <a href="{{ route('bim.contact') }}"
              class="sg font-bold text-[10px] uppercase tracking-[0.2em] px-8 py-3.5 transition-opacity duration-200"
-             style="background:#7EE8A2;color:#0A0A0A;"
+             style="background:#7EC8E8;color:#0A0A0A;"
              onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">Request a Quote</a>
           <a href="{{ route('bim.services') }}"
              class="dm text-[10px] uppercase tracking-[0.22em] px-8 py-3.5 transition-all duration-200"
@@ -56,7 +56,7 @@
   <div style="border-top:1px solid rgba(255,255,255,0.05);">
     <div class="max-w-screen-xl mx-auto px-8 lg:px-16 py-4 flex gap-2 overflow-x-auto">
       @foreach(['LOD 100 — Concept','LOD 200 — Schematic','LOD 300 — Detailed','LOD 400 — Fabrication','LOD 500 — As-Built'] as $lod)
-        <span class="shrink-0 dm text-[8px] uppercase tracking-[0.28em] px-4 py-1.5" style="border:1px solid rgba(126,232,162,0.12);color:#3A4050;">{{ $lod }}</span>
+        <span class="shrink-0 dm text-[8px] uppercase tracking-[0.28em] px-4 py-1.5" style="border:1px solid rgba(126,200,232,0.12);color:#3A4050;">{{ $lod }}</span>
       @endforeach
     </div>
   </div>
@@ -68,7 +68,7 @@
     ? $stats->map(fn($s) => [$s->value.($s->suffix ?? ''), $s->label])->values()->all()
     : [['25+','Years of practice'],['500+','BIM projects delivered'],['50+','BIM professionals'],['15+','Software platforms']];
 @endphp
-<section style="background:#111318;border-top:3px solid #7EE8A2;">
+<section style="background:#111318;border-top:3px solid #7EC8E8;">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="grid grid-cols-2 md:grid-cols-4">
       @foreach($statItems as $i => [$num,$label])
@@ -97,7 +97,7 @@
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
       <div>
         <div class="flex items-center gap-4 mb-5">
-          <span class="w-[3px] h-4 shrink-0" style="background:#7EE8A2;"></span>
+          <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
           <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">What we deliver</span>
         </div>
         <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#E8EDF2;letter-spacing:-0.02em;">BIM Services</h2>
@@ -126,10 +126,10 @@
             <span class="dm text-[10px] shrink-0 w-8" style="color:rgba(255,255,255,0.15);">{{ str_pad($loop->iteration,2,'0',STR_PAD_LEFT) }}</span>
             <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-center">
               <div>
-                <h3 class="sg font-semibold text-xl md:text-2xl leading-tight transition-colors duration-200" style="color:#E8EDF2;" onmouseover="this.style.color='#7EE8A2'" onmouseout="this.style.color='#E8EDF2'">{{ $svc->title }}</h3>
+                <h3 class="sg font-semibold text-xl md:text-2xl leading-tight transition-colors duration-200" style="color:#E8EDF2;" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='#E8EDF2'">{{ $svc->title }}</h3>
                 <p class="dm text-sm mt-1.5 leading-relaxed" style="color:#6B7280;">{{ $svc->tagline ?? Str::limit($svc->description, 100) }}</p>
               </div>
-              <span class="shrink-0 text-lg transition-all duration-200 opacity-0 group-hover:opacity-100" style="color:#7EE8A2;">→</span>
+              <span class="shrink-0 text-lg transition-all duration-200 opacity-0 group-hover:opacity-100" style="color:#7EC8E8;">→</span>
             </div>
           </div>
         </a>
@@ -141,10 +141,10 @@
             <span class="dm text-[10px] shrink-0 w-8" style="color:rgba(255,255,255,0.15);">{{ $svc[0] }}</span>
             <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-center">
               <div>
-                <h3 class="sg font-semibold text-xl md:text-2xl leading-tight transition-colors duration-200" style="color:#E8EDF2;" onmouseover="this.style.color='#7EE8A2'" onmouseout="this.style.color='#E8EDF2'">{{ $svc[1] }}</h3>
+                <h3 class="sg font-semibold text-xl md:text-2xl leading-tight transition-colors duration-200" style="color:#E8EDF2;" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='#E8EDF2'">{{ $svc[1] }}</h3>
                 <p class="dm text-sm mt-1.5 leading-relaxed" style="color:#6B7280;">{{ $svc[2] }}</p>
               </div>
-              <span class="shrink-0 text-lg transition-all duration-200 opacity-0 group-hover:opacity-100" style="color:#7EE8A2;">→</span>
+              <span class="shrink-0 text-lg transition-all duration-200 opacity-0 group-hover:opacity-100" style="color:#7EC8E8;">→</span>
             </div>
           </div>
         </a>
@@ -161,7 +161,7 @@
 
       <div>
         <div class="flex items-center gap-4 mb-5">
-          <span class="w-[3px] h-4 shrink-0" style="background:#7EE8A2;"></span>
+          <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
           <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Technology</span>
         </div>
         <h2 class="sg font-bold leading-none mb-6" style="font-size:clamp(2rem,4vw,3.5rem);color:#E8EDF2;letter-spacing:-0.02em;">Software<br>&amp; Tools</h2>
@@ -208,10 +208,10 @@
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-16 items-center mb-16">
       <div>
         <div class="flex items-center gap-4 mb-5">
-          <span class="w-[3px] h-4 shrink-0" style="background:#7EE8A2;"></span>
+          <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
           <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Level of development</span>
         </div>
-        <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#E8EDF2;letter-spacing:-0.02em;">We model at<br><span style="color:#7EE8A2;">every LOD</span></h2>
+        <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#E8EDF2;letter-spacing:-0.02em;">We model at<br><span style="color:#7EC8E8;">every LOD</span></h2>
       </div>
       <div class="overflow-hidden" style="aspect-ratio:16/9;">
         <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=85&auto=format&fit=crop"
@@ -240,7 +240,7 @@
           if ($i === 4) $cls .= ' sm:border-l-0 lg:border-l';
         @endphp
         <div class="{{ $cls }}" style="border-color:rgba(255,255,255,0.06);">
-          <div class="sg font-bold text-[10px] uppercase tracking-[0.3em] mb-4" style="color:#7EE8A2;">{{ $lod[0] }}</div>
+          <div class="sg font-bold text-[10px] uppercase tracking-[0.3em] mb-4" style="color:#7EC8E8;">{{ $lod[0] }}</div>
           <div class="sg font-semibold text-lg mb-3" style="color:#E8EDF2;">{{ $lod[1] }}</div>
           <p class="dm text-xs leading-relaxed" style="color:#6B7280;">{{ $lod[2] }}</p>
         </div>
@@ -264,7 +264,7 @@
     <div class="flex-1 px-8 lg:px-16 py-20">
       <div class="max-w-xl">
         <div class="flex items-center gap-4 mb-5">
-          <span class="w-[3px] h-4 shrink-0" style="background:#7EE8A2;"></span>
+          <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
           <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Our advantage</span>
         </div>
         <h2 class="sg font-bold leading-none mb-14" style="font-size:clamp(2rem,4vw,3.5rem);color:#E8EDF2;letter-spacing:-0.02em;">Why Suncon BIM?</h2>
@@ -281,7 +281,7 @@
           @foreach($pillars as $i => $p)
             <div class="py-7 {{ $i>0?'border-t':'' }}" style="{{ $i>0?'border-color:rgba(255,255,255,0.06);':'' }}">
               <div class="flex items-start gap-5">
-                <span class="sg font-bold text-sm shrink-0 mt-0.5" style="color:rgba(126,232,162,0.35);">0{{ $i+1 }}</span>
+                <span class="sg font-bold text-sm shrink-0 mt-0.5" style="color:rgba(126,200,232,0.35);">0{{ $i+1 }}</span>
                 <div>
                   <h3 class="sg font-semibold text-lg mb-2" style="color:#E8EDF2;">{{ $p[0] }}</h3>
                   <p class="dm text-sm leading-relaxed" style="color:#6B7280;">{{ $p[1] }}</p>
@@ -302,7 +302,7 @@
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
       <div>
         <div class="flex items-center gap-4 mb-5">
-          <span class="w-[3px] h-4 shrink-0" style="background:#7EE8A2;"></span>
+          <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
           <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Portfolio</span>
         </div>
         <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#E8EDF2;letter-spacing:-0.02em;">BIM Projects</h2>
@@ -322,7 +322,7 @@
               <div class="w-full h-full" style="background:#1C2030;"></div>
             @endif
           </div>
-          <h3 class="sg font-semibold text-base leading-snug mb-1 transition-colors duration-200" style="color:#E8EDF2;" onmouseover="this.style.color='#7EE8A2'" onmouseout="this.style.color='#E8EDF2'">{{ $project->title }}</h3>
+          <h3 class="sg font-semibold text-base leading-snug mb-1 transition-colors duration-200" style="color:#E8EDF2;" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='#E8EDF2'">{{ $project->title }}</h3>
           @if($project->location)<p class="dm text-[9px] uppercase tracking-[0.15em]" style="color:#6B7280;">{{ $project->location }}</p>@endif
         </a>
       @endforeach
@@ -334,7 +334,7 @@
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
     <div>
       <div class="flex items-center gap-4 mb-5">
-        <span class="w-[3px] h-4 shrink-0" style="background:#7EE8A2;"></span>
+        <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
         <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">Portfolio</span>
       </div>
       <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#E8EDF2;letter-spacing:-0.02em;">BIM Projects</h2>
@@ -355,7 +355,7 @@
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="mb-16">
       <div class="flex items-center gap-4 mb-5">
-        <span class="w-[3px] h-4 shrink-0" style="background:#7EE8A2;"></span>
+        <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
         <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">How we work</span>
       </div>
       <h2 class="sg font-bold leading-none" style="font-size:clamp(2rem,4vw,3.5rem);color:#E8EDF2;letter-spacing:-0.02em;">Our Process</h2>
@@ -378,7 +378,7 @@
           if ($i === 3) $cls .= ' md:border-l lg:border-l';
         @endphp
         <div class="{{ $cls }}" style="border-color:rgba(255,255,255,0.06);">
-          <div class="sg font-bold mb-8 leading-none" style="font-size:clamp(3rem,6vw,5rem);color:rgba(126,232,162,0.08);letter-spacing:-0.04em;">{{ str_pad($i+1,2,'0',STR_PAD_LEFT) }}</div>
+          <div class="sg font-bold mb-8 leading-none" style="font-size:clamp(3rem,6vw,5rem);color:rgba(126,200,232,0.08);letter-spacing:-0.04em;">{{ str_pad($i+1,2,'0',STR_PAD_LEFT) }}</div>
           <h3 class="sg font-semibold text-lg mb-4" style="color:#E8EDF2;">{{ $step[0] }}</h3>
           <p class="dm text-sm leading-relaxed" style="color:#6B7280;">{{ $step[1] }}</p>
         </div>
@@ -388,7 +388,7 @@
 </section>
 
 <style>
-.bim-svc-row:hover { border-top-color: rgba(126,232,162,0.35) !important; }
+.bim-svc-row:hover { border-top-color: rgba(126,200,232,0.35) !important; }
 </style>
 
 @endsection

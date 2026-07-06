@@ -8,12 +8,12 @@
 {{-- ── PAGE HEADER ──────────────────────────────────────────────────────────── --}}
 <section style="background:#0A0A0A;padding-top:140px;padding-bottom:80px;position:relative;overflow:hidden;">
   {{-- Left lime rail --}}
-  <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EE8A2;"></div>
+  <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EC8E8;"></div>
   {{-- Engineering grid --}}
-  <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(126,232,162,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(126,232,162,0.02) 1px,transparent 1px);background-size:64px 64px;"></div>
+  <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(126,200,232,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(126,200,232,0.02) 1px,transparent 1px);background-size:64px 64px;"></div>
   <div class="relative max-w-screen-xl mx-auto px-8 lg:px-16">
     <div class="flex items-center gap-4 mb-6">
-      <span class="w-[3px] h-4 shrink-0" style="background:#7EE8A2;"></span>
+      <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
       <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:#6B7280;">What we deliver</span>
     </div>
     <h1 class="sg font-bold leading-none" style="font-size:clamp(3rem,8vw,7rem);color:#E8EDF2;letter-spacing:-0.03em;">Our Services</h1>
@@ -80,8 +80,8 @@
       <div class="{{ $i%2===0 ? 'lg:pl-12 xl:pl-20 lg:pr-16' : 'lg:pr-12 xl:pr-20 lg:pl-16' }} py-20 max-w-2xl {{ $i%2===0 ? 'lg:ml-auto' : 'lg:mr-auto' }}">
 
         <div class="flex items-center gap-5 mb-8">
-          <span class="sg font-bold leading-none" style="font-size:clamp(3rem,7vw,6rem);color:rgba(126,232,162,0.07);letter-spacing:-0.04em;">{{ $number }}</span>
-          <div style="width:40px;height:2px;background:rgba(126,232,162,0.4);"></div>
+          <span class="sg font-bold leading-none" style="font-size:clamp(3rem,7vw,6rem);color:rgba(126,200,232,0.07);letter-spacing:-0.04em;">{{ $number }}</span>
+          <div style="width:40px;height:2px;background:rgba(126,200,232,0.4);"></div>
         </div>
 
         <h2 class="sg font-bold leading-tight mb-5" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:#E8EDF2;letter-spacing:-0.02em;">{{ $title }}</h2>
@@ -94,7 +94,7 @@
           <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 mb-8">
             @foreach($delivers as $item)
               <li class="flex items-center gap-3">
-                <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background:#7EE8A2;"></span>
+                <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background:#7EC8E8;"></span>
                 <span class="dm text-sm" style="color:#E8EDF2;">{{ $item }}</span>
               </li>
             @endforeach
@@ -105,9 +105,9 @@
 
         <a href="{{ route('bim.contact') }}?service={{ urlencode($title) }}"
            class="bim-svc-cta sg font-bold inline-block text-[10px] uppercase tracking-[0.2em] px-8 py-3.5 transition-all duration-200"
-           style="border:1px solid rgba(126,232,162,0.3);color:#7EE8A2;"
-           onmouseover="this.style.background='#7EE8A2';this.style.borderColor='#7EE8A2';this.style.color='#0A0A0A'"
-           onmouseout="this.style.background='transparent';this.style.borderColor='rgba(126,232,162,0.3)';this.style.color='#7EE8A2'">
+           style="border:1px solid rgba(126,200,232,0.3);color:#7EC8E8;"
+           onmouseover="this.style.background='#7EC8E8';this.style.borderColor='#7EC8E8';this.style.color='#0A0A0A'"
+           onmouseout="this.style.background='transparent';this.style.borderColor='rgba(126,200,232,0.3)';this.style.color='#7EC8E8'">
           Enquire about this service
         </a>
       </div>
