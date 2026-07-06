@@ -105,54 +105,90 @@
       <a href="{{ route('bim.services') }}"
          class="dm text-[10px] uppercase tracking-[0.28em] transition-colors duration-200"
          style="color:var(--bim-muted);"
-         onmouseover="this.style.color='var(--bim-text)'" onmouseout="this.style.color='#6B7280'">All Services →</a>
+         onmouseover="this.style.color='var(--bim-text)'" onmouseout="this.style.color='var(--bim-muted)'">All Services →</a>
     </div>
 
     @php
+      $defaultImages = [
+        'arch-bim'   => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&auto=format&fit=crop',
+        'structural' => 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80&auto=format&fit=crop',
+        'mep'        => 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80&auto=format&fit=crop',
+        'scan'       => 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&auto=format&fit=crop',
+        'cad'        => 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&auto=format&fit=crop',
+        'docs'       => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&auto=format&fit=crop',
+      ];
       $fallbackServices = [
-        ['01','Architectural BIM Modeling','Revit-based 3D models from concept through construction documentation. LOD 100–400 delivered on schedule.','#arch-bim'],
-        ['02','Structural BIM','RC and steel structure modeling with precise detailing for coordination and fabrication.','#structural'],
-        ['03','MEP Coordination','Mechanical, Electrical, and Plumbing modeling with multi-discipline clash detection via Navisworks.','#mep'],
-        ['04','Scan to BIM','Point cloud data converted to accurate as-is Revit models for renovation and heritage projects.','#scan'],
-        ['05','CAD to BIM Migration','Legacy 2D AutoCAD drawings upgraded to fully coordinated, data-rich 3D BIM models.','#cad'],
-        ['06','Construction Documentation','Shop drawings, as-built documentation, and coordination packages ready for site.','#docs'],
+        ['01','Architectural BIM Modeling','Revit-based 3D models from concept through construction documentation. LOD 100–400.','#arch-bim','arch-bim'],
+        ['02','Structural BIM','RC and steel structure modeling with precise detailing for coordination and fabrication.','#structural','structural'],
+        ['03','MEP Coordination','Mechanical, Electrical, and Plumbing modeling with multi-discipline clash detection.','#mep','mep'],
+        ['04','Scan to BIM','Point cloud data converted to accurate as-is Revit models for renovation and heritage.','#scan','scan'],
+        ['05','CAD to BIM Migration','Legacy 2D AutoCAD drawings upgraded to coordinated, data-rich 3D BIM models.','#cad','cad'],
+        ['06','Construction Documentation','Shop drawings, as-built documentation, and coordination packages for site.','#docs','docs'],
       ];
     @endphp
 
-    @if($bimServices->count())
-      @foreach($bimServices as $svc)
-        <a href="{{ route('bim.services').'#'.$svc->slug }}" class="group block">
-          <div class="flex items-center gap-6 py-7 bim-svc-row" style="border-top:1px solid var(--bim-border-sm);">
-            <span class="dm text-[10px] shrink-0 w-8" style="color:var(--bim-ghost);">{{ str_pad($loop->iteration,2,'0',STR_PAD_LEFT) }}</span>
-            <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-center">
-              <div>
-                <h3 class="sg font-semibold text-xl md:text-2xl leading-tight transition-colors duration-200" style="color:var(--bim-text);" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='var(--bim-text)'">{{ $svc->title }}</h3>
-                <p class="dm text-sm mt-1.5 leading-relaxed" style="color:var(--bim-muted);">{{ $svc->tagline ?? Str::limit($svc->description, 100) }}</p>
-              </div>
-              <span class="shrink-0 text-lg transition-all duration-200 opacity-0 group-hover:opacity-100" style="color:#7EC8E8;">→</span>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+
+      @if($bimServices->count())
+        @foreach($bimServices as $svc)
+          @php
+            $num    = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
+            $imgSrc = $svc->image ? $svc->imageUrl : ($defaultImages[$svc->slug] ?? null);
+          @endphp
+          <a href="{{ route('bim.services').'#'.$svc->slug }}" class="bim-home-svc-card group block">
+            <p class="dm text-[9px] uppercase tracking-[0.3em] mb-3" style="color:var(--bim-muted);">{{ $num }}</p>
+            <div class="overflow-hidden aspect-[3/4] relative" style="background:var(--bim-lift);">
+              @if($imgSrc)
+                <img src="{{ $imgSrc }}" alt="{{ $svc->title }}"
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+              @else
+                <div class="w-full h-full flex items-end p-6" style="background:linear-gradient(150deg,var(--bim-surface) 0%,var(--bim-dim) 100%);">
+                  <span class="sg font-bold" style="font-size:5rem;line-height:1;color:var(--bim-adim);">{{ $num }}</span>
+                </div>
+              @endif
+              <div class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.07] transition-opacity duration-500" style="background:var(--bim-accent);"></div>
             </div>
-          </div>
-        </a>
-      @endforeach
-    @else
-      @foreach($fallbackServices as $svc)
-        <a href="{{ route('bim.services').$svc[3] }}" class="group block">
-          <div class="flex items-center gap-6 py-7 bim-svc-row" style="border-top:1px solid var(--bim-border-sm);">
-            <span class="dm text-[10px] shrink-0 w-8" style="color:var(--bim-ghost);">{{ $svc[0] }}</span>
-            <div class="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-center">
-              <div>
-                <h3 class="sg font-semibold text-xl md:text-2xl leading-tight transition-colors duration-200" style="color:var(--bim-text);" onmouseover="this.style.color='#7EC8E8'" onmouseout="this.style.color='var(--bim-text)'">{{ $svc[1] }}</h3>
-                <p class="dm text-sm mt-1.5 leading-relaxed" style="color:var(--bim-muted);">{{ $svc[2] }}</p>
-              </div>
-              <span class="shrink-0 text-lg transition-all duration-200 opacity-0 group-hover:opacity-100" style="color:#7EC8E8;">→</span>
+            <div class="relative h-px mt-0 mb-4 overflow-hidden" style="background:var(--bim-border);">
+              <div class="bim-hsweep absolute inset-y-0 left-0 transition-all duration-500 ease-out" style="width:0;background:var(--bim-accent);"></div>
             </div>
-          </div>
-        </a>
-      @endforeach
-    @endif
-    <div style="border-top:1px solid var(--bim-border-sm);"></div>
+            <h3 class="sg font-semibold mb-2 leading-snug bim-hsvc-title transition-colors duration-300" style="font-size:1.05rem;color:var(--bim-text);">{{ $svc->title }}</h3>
+            <p class="dm text-xs leading-relaxed mb-4" style="color:var(--bim-muted);">{{ $svc->tagline ?? Str::limit($svc->description, 90) }}</p>
+            <p class="dm text-[9px] uppercase tracking-[0.22em]" style="color:var(--bim-accent);">Explore <span class="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span></p>
+          </a>
+        @endforeach
+      @else
+        @foreach($fallbackServices as $svc)
+          @php $imgSrc = $defaultImages[$svc[4]] ?? null; @endphp
+          <a href="{{ route('bim.services').$svc[3] }}" class="bim-home-svc-card group block">
+            <p class="dm text-[9px] uppercase tracking-[0.3em] mb-3" style="color:var(--bim-muted);">{{ $svc[0] }}</p>
+            <div class="overflow-hidden aspect-[3/4] relative" style="background:var(--bim-lift);">
+              @if($imgSrc)
+                <img src="{{ $imgSrc }}" alt="{{ $svc[1] }}"
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+              @else
+                <div class="w-full h-full flex items-end p-6" style="background:linear-gradient(150deg,var(--bim-surface) 0%,var(--bim-dim) 100%);">
+                  <span class="sg font-bold" style="font-size:5rem;line-height:1;color:var(--bim-adim);">{{ $svc[0] }}</span>
+                </div>
+              @endif
+              <div class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.07] transition-opacity duration-500" style="background:var(--bim-accent);"></div>
+            </div>
+            <div class="relative h-px mt-0 mb-4 overflow-hidden" style="background:var(--bim-border);">
+              <div class="bim-hsweep absolute inset-y-0 left-0 transition-all duration-500 ease-out" style="width:0;background:var(--bim-accent);"></div>
+            </div>
+            <h3 class="sg font-semibold mb-2 leading-snug bim-hsvc-title transition-colors duration-300" style="font-size:1.05rem;color:var(--bim-text);">{{ $svc[1] }}</h3>
+            <p class="dm text-xs leading-relaxed mb-4" style="color:var(--bim-muted);">{{ $svc[2] }}</p>
+            <p class="dm text-[9px] uppercase tracking-[0.22em]" style="color:var(--bim-accent);">Explore <span class="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span></p>
+          </a>
+        @endforeach
+      @endif
+
+    </div>
   </div>
 </section>
+<style>
+  .bim-home-svc-card:hover .bim-hsweep     { width: 100% !important; }
+  .bim-home-svc-card:hover .bim-hsvc-title { color: var(--bim-accent) !important; }
+</style>
 
 {{-- ── SOFTWARE & TOOLS ─────────────────────────────────────────────────────── --}}
 <section style="background:var(--bim-surface);padding:100px 0;border-top:1px solid var(--bim-border-sm);border-bottom:1px solid var(--bim-border-sm);">
