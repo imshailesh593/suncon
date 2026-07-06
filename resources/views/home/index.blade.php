@@ -218,78 +218,59 @@
   $svcList = $services->isNotEmpty() ? $services : collect($fallbackServices);
 @endphp
 
-<section class="bg-[#F2EDE4]">
+<section class="py-24 bg-[#FAF7F3] px-6 lg:px-12">
+  <div class="max-w-screen-xl mx-auto">
 
-  {{-- Section header --}}
-  <div class="px-6 lg:px-12 pt-20 pb-14 flex items-end justify-between" data-reveal>
-    <div>
-      <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
-        {{ $settings['homepage.services_eyebrow'] ?? 'What We Do' }}
-      </p>
-      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
-        {{ $settings['homepage.services_title'] ?? 'Our Disciplines' }}
-      </h2>
-    </div>
-    <a href="{{ url('/services') }}"
-       class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1">
-      <span>All Services</span>
-      <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
-    </a>
-  </div>
-
-  {{-- Full-bleed image columns --}}
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style="gap:1px;background:#D4C9BB;">
-    @foreach($svcList as $svc)
-      @php
-        $isArr   = is_array($svc);
-        $title   = $isArr ? $svc['title']   : $svc->title;
-        $tagline = $isArr ? $svc['tagline']  : ($svc->tagline ?? '');
-        $slug    = $isArr ? $svc['slug']    : $svc->slug;
-        $imgUrl  = $isArr ? null            : ($svc->imageUrl ?? null);
-      @endphp
-      <a href="{{ route('services.show', $slug) }}" class="group block bg-[#F2EDE4]">
-
-        {{-- Tall image with overlay label --}}
-        <div class="relative overflow-hidden" style="height:clamp(440px,58vw,700px);">
-
-          @if($imgUrl)
-            <img src="{{ $imgUrl }}" alt="{{ $title }}"
-                 class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                 loading="lazy">
-          @else
-            {{-- Warm gradient placeholder --}}
-            <div class="w-full h-full transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                 style="background:linear-gradient(160deg,#D4C5AF 0%,#BFB09A 100%);"></div>
-          @endif
-
-          {{-- Bottom fade --}}
-          <div class="absolute inset-0 pointer-events-none"
-               style="background:linear-gradient(to top,rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.18) 40%,transparent 70%);"></div>
-
-          {{-- Discipline name overlay --}}
-          <div class="absolute bottom-0 left-0 right-0 px-7 pb-8">
-            <h3 class="font-display font-light text-white leading-[1.05]"
-                style="font-size:clamp(1.9rem,3.2vw,2.9rem);">{{ $title }}</h3>
-          </div>
+    <div class="flex items-end justify-between mb-16" data-reveal>
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
+          <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B]">{{ $settings['homepage.services_eyebrow'] ?? 'What We Do' }}</p>
         </div>
-
-        {{-- Description row --}}
-        @if($tagline)
-          <div class="px-7 py-5 border-t border-[#D4C9BB]/70">
-            <p class="text-[13px] leading-relaxed text-[#6B5F55] font-light">{{ $tagline }}</p>
-          </div>
-        @endif
+        <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
+          {{ $settings['homepage.services_title'] ?? 'Our Disciplines' }}
+        </h2>
+      </div>
+      <a href="{{ url('/services') }}"
+         class="text-[10px] uppercase tracking-[0.2em] text-[#8B8275] border-b border-[#8B8275]/40 pb-0.5 hover:text-[#B5451B] hover:border-[#B5451B] transition-all duration-300 hidden md:block">
+        All Services
       </a>
-    @endforeach
-  </div>
+    </div>
 
-  <div class="px-6 py-10 flex justify-center md:hidden">
-    <a href="{{ url('/services') }}"
-       class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275] border border-[#8B8275]/30 px-7 py-3.5">
-      All Services →
-    </a>
-  </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      @foreach($svcList as $svc)
+        @php
+          $isArr   = is_array($svc);
+          $title   = $isArr ? $svc['title']   : $svc->title;
+          $tagline = $isArr ? $svc['tagline']  : ($svc->tagline ?? '');
+          $slug    = $isArr ? $svc['slug']    : $svc->slug;
+          $imgUrl  = $isArr ? null            : ($svc->imageUrl ?? null);
+        @endphp
+        <a href="{{ route('services.show', $slug) }}" class="group block" data-reveal>
 
+          {{-- Tall portrait image --}}
+          <div class="overflow-hidden aspect-[3/4] bg-[#E8E0D4] mb-5">
+            @if($imgUrl)
+              <img src="{{ $imgUrl }}" alt="{{ $title }}"
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                   loading="lazy">
+            @else
+              <div class="w-full h-full bg-[#E8E0D4]"></div>
+            @endif
+          </div>
+
+          <h3 class="font-display font-light text-lg text-[#1C1C1C] mb-2 leading-snug group-hover:text-[#B5451B] transition-colors duration-300">
+            {{ $title }}
+          </h3>
+          @if($tagline)
+            <p class="text-[#8B8275] text-xs leading-relaxed mb-4">{{ $tagline }}</p>
+          @endif
+          <p class="text-[10px] uppercase tracking-[0.18em] text-[#B5451B]">Explore →</p>
+        </a>
+      @endforeach
+    </div>
+
+  </div>
 </section>
 
 {{-- spacer --}}
