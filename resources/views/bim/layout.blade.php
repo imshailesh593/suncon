@@ -100,8 +100,8 @@
         @endforeach
         {{-- Theme pill --}}
         <div class="bim-theme-pill shrink-0">
-          <button id="swatch-light" class="bim-theme-btn" aria-label="Light mode">Light</button>
-          <button id="swatch-dark"  class="bim-theme-btn" aria-label="Dark mode">Dark</button>
+          <button class="bim-theme-btn" data-theme="light" onclick="setBimTheme('light')">Light</button>
+          <button class="bim-theme-btn" data-theme="dark"  onclick="setBimTheme('dark')">Dark</button>
         </div>
         {{-- CTA --}}
         <a href="{{ route('bim.contact') }}"
@@ -132,8 +132,8 @@
       <div class="flex items-center gap-3 mb-5">
         <span class="dm text-[9px] uppercase tracking-[0.22em]" style="color:var(--bim-muted);">Theme</span>
         <div class="bim-theme-pill">
-          <button id="swatch-light-mob" class="bim-theme-btn" aria-label="Light mode">Light</button>
-          <button id="swatch-dark-mob"  class="bim-theme-btn" aria-label="Dark mode">Dark</button>
+          <button class="bim-theme-btn" data-theme="light" onclick="setBimTheme('light')">Light</button>
+          <button class="bim-theme-btn" data-theme="dark"  onclick="setBimTheme('dark')">Dark</button>
         </div>
       </div>
       <a href="{{ url('/') }}" class="dm text-[9px] uppercase tracking-[0.28em] transition-colors duration-200" style="color:var(--bim-muted);">← Architecture Site</a>
@@ -230,31 +230,15 @@
   <script>
   (function () {
 
-    // ── Theme toggle ──────────────────────────────────────────────────────────
-    function setBimTheme(theme) {
+    // ── Theme toggle (global so onclick= attributes can reach it) ────────────
+    window.setBimTheme = function(theme) {
       document.documentElement.setAttribute('data-bim-theme', theme);
       localStorage.setItem('bim-theme', theme);
-      ['swatch-dark','swatch-dark-mob'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.toggle('active', theme === 'dark');
+      document.querySelectorAll('.bim-theme-btn[data-theme]').forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
       });
-      ['swatch-light','swatch-light-mob'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.toggle('active', theme === 'light');
-      });
-    }
-
-    const currentTheme = localStorage.getItem('bim-theme') || 'light';
-    setBimTheme(currentTheme);
-
-    ['swatch-dark','swatch-dark-mob'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('click', () => setBimTheme('dark'));
-    });
-    ['swatch-light','swatch-light-mob'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('click', () => setBimTheme('light'));
-    });
+    };
+    setBimTheme(localStorage.getItem('bim-theme') || 'light');
 
     // ── Nav hover ─────────────────────────────────────────────────────────────
     document.querySelectorAll('.bim-navlink').forEach(a => {
