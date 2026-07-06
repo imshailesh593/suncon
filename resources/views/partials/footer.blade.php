@@ -16,16 +16,17 @@
   ]);
 @endphp
 
-<footer class="bg-[#1C1C1C] text-[#FAF7F3]">
+<footer class="bg-[#1C1C1C] text-[#FAF7F3] relative">
+  <div class="arch-grid-light"></div>
 
   {{-- CTA band --}}
-  <div class="border-b border-white/10">
+  <div class="border-b border-white/10 relative">
     <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-20 flex flex-col md:flex-row items-start md:items-end justify-between gap-8">
       <div>
         <p class="text-[#8B8275] text-xs uppercase tracking-[0.2em] mb-4">Ready to build?</p>
         <h2 class="font-display text-display-lg text-[#FAF7F3] leading-none">
           Let's make<br>
-          <em class="font-light text-[#B5451B]">something great.</em>
+          <span class="font-bold text-[#B5451B]">something great.</span>
         </h2>
       </div>
       <a href="{{ url('/contact') }}"
@@ -36,7 +37,7 @@
   </div>
 
   {{-- Links --}}
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-16">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 relative">
     <div class="grid grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.5fr] gap-x-10 gap-y-12">
 
       {{-- Brand --}}

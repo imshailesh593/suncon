@@ -13,6 +13,7 @@
 {{-- ─── HERO ─────────────────────────────────────────────────────────────── --}}
 <section class="relative h-screen min-h-[680px] max-h-[1060px] overflow-hidden flex flex-col justify-end" data-dark>
 
+  <div class="arch-grid-light" style="z-index:1;"></div>
   <div id="hero-bg" class="absolute inset-0 scale-[1.12] will-change-transform">
     <img src="{{ asset('images/hero-bg.jpg') }}"
          alt="{{ $settings['site.name'] ?? 'Suncon Engineers' }}"
@@ -171,7 +172,8 @@
 <div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
 
 {{-- ─── STATISTICS ──────────────────────────────────────────────────────── --}}
-<section class="bg-[#1C1C1C]" data-dark>
+<section class="bg-[#1C1C1C] relative" data-dark>
+  <div class="arch-grid-light"></div>
   @php
     $stats = !empty($statistics) ? $statistics : [
       ['value'=>'25','suffix'=>'+','label'=>'Years of Practice'],
@@ -224,8 +226,9 @@
   $svcList = $services->isNotEmpty() ? $services : collect($fallbackServices);
 @endphp
 
-<section class="py-24 bg-[#FAF7F3] px-6 lg:px-12">
-  <div class="max-w-screen-xl mx-auto">
+<section class="py-24 bg-[#FAF7F3] px-6 lg:px-12 relative overflow-hidden">
+  <div class="arch-grid"></div>
+  <div class="max-w-screen-xl mx-auto relative">
 
     <div class="flex items-end justify-between mb-16" data-reveal>
       <div>
@@ -304,8 +307,9 @@
 
 {{-- ─── FEATURED PROJECT ────────────────────────────────────────────────── --}}
 @if($featuredProject ?? null)
-<section class="bg-[#F2EDE4] py-0 overflow-hidden">
-  <div class="max-w-screen-xl mx-auto grid md:grid-cols-2">
+<section class="bg-[#F2EDE4] py-0 overflow-hidden relative">
+  <div class="arch-grid"></div>
+  <div class="max-w-screen-xl mx-auto grid md:grid-cols-2 relative">
     <div class="aspect-[4/3] md:aspect-auto md:min-h-[600px] overflow-hidden bg-[#E8E0D4]">
       @if($featuredProject->imageUrl)
         <img src="{{ $featuredProject->imageUrl }}" alt="{{ $featuredProject->title }}"

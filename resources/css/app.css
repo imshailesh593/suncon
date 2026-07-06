@@ -71,6 +71,26 @@ body {
     letter-spacing: var(--letter-spacing-display-md);
 }
 
+/* ---- Engineering grid overlay (mirrors BIM aesthetic) ---- */
+.arch-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(181,69,27,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(181,69,27,0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+}
+.arch-grid-light {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+}
+
 /* ---- Cursor ---- */
 * { cursor: none; }
 a, button { cursor: none; }
