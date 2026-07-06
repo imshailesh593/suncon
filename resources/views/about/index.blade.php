@@ -145,7 +145,7 @@
               <span class="{{ $s <= ($t->rating ?? 5) ? 'text-[#B5451B]' : 'text-[#E8E0D4]' }} text-sm">★</span>
             @endfor
           </div>
-          <blockquote class="font-display font-light text-[1.05rem] leading-relaxed text-[#1C1C1C] italic mb-8 flex-1">
+          <blockquote class="font-display font-light text-[1.05rem] leading-relaxed text-[#1C1C1C] mb-8 flex-1">
             "{{ $t->quote }}"
           </blockquote>
           <div class="flex items-center gap-4 border-t border-[#E8E0D4] pt-6">
@@ -224,7 +224,7 @@
         $c2 = array_merge($c2, $c2);
       @endphp
       @foreach($c2 as $client)
-        <span class="text-[#8B8275] text-xl lg:text-2xl font-display italic font-light tracking-[0.08em] shrink-0">{{ $client }}</span>
+        <span class="text-[#8B8275] text-xl lg:text-2xl font-display font-light tracking-[0.08em] shrink-0">{{ $client }}</span>
         <span class="text-[#8B8275] text-lg shrink-0">·</span>
       @endforeach
     </div>

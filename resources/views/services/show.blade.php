@@ -29,7 +29,7 @@ $svcBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
         </h1>
       </div>
       @if($service->tagline)
-        <p class="font-display font-light text-xl text-[#B5451B] italic leading-snug" data-reveal>
+        <p class="font-display font-light text-xl text-[#B5451B] leading-snug" data-reveal>
           {{ $service->tagline }}
         </p>
       @endif

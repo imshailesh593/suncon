@@ -61,7 +61,7 @@ $artBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
     {{-- Article body --}}
     <div data-reveal>
       @if($article->excerpt)
-        <p class="text-[#1C1C1C] text-xl font-display font-light leading-relaxed mb-8 italic">
+        <p class="text-[#1C1C1C] text-xl font-display font-light leading-relaxed mb-8">
           {{ $article->excerpt }}
         </p>
         <div class="w-12 h-px bg-[#B5451B] mb-8"></div>

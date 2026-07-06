@@ -6,9 +6,8 @@
 /* ---- Design tokens (mirrors Next.js tailwind.config.ts) ---- */
 @theme {
     /* Fonts */
-    --font-display: 'Fraunces', Georgia, serif;
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
-    --font-ui: 'Space Grotesk', system-ui, sans-serif;
 
     /* Colors */
     --color-sand:          #F2EDE4;
@@ -52,7 +51,7 @@ body {
 }
 
 /* ── Font helpers (mirror BIM site) ── */
-.sg { font-family: var(--font-ui); }
+.sg { font-family: var(--font-display); }
 .dm { font-family: var(--font-body); }
 
 /* ---- Display size utilities ---- */

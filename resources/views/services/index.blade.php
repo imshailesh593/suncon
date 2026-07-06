@@ -99,7 +99,7 @@
           <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none mb-3">
             {{ is_array($svc) ? $svc['title'] : $svc->title }}
           </h2>
-          <p class="text-[#B5451B] text-sm font-light mb-6 italic font-display">
+          <p class="text-[#B5451B] text-sm font-light mb-6 font-display">
             {{ is_array($svc) ? $svc['tagline'] : $svc->tagline }}
           </p>
           <p class="text-[#8B8275] text-sm leading-relaxed font-light mb-8">

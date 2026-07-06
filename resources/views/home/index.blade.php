@@ -28,7 +28,7 @@
     </p>
     <h1 class="font-display font-light leading-[0.9] tracking-tight mb-10" data-reveal>
       <span class="block text-display-xl text-white word-split">{{ $settings['homepage.hero_line1'] ?? 'Architecture' }}</span>
-      <span class="block text-display-xl italic text-[#B5451B] word-split">{{ $settings['homepage.hero_line2'] ?? '& Design.' }}</span>
+      <span class="block text-display-xl font-bold text-[#B5451B] word-split">{{ $settings['homepage.hero_line2'] ?? '& Design.' }}</span>
     </h1>
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-10" data-reveal>
       <p class="max-w-md text-white/60 text-sm leading-relaxed font-light">
@@ -132,7 +132,7 @@
           <div class="px-1">
             <div class="flex items-center justify-between mb-3">
               <span class="text-[9px] uppercase tracking-[0.22em] text-[#8B8275]">{{ $index }} — {{ $discipline }}</span>
-              <span class="text-[9px] font-display italic text-[#8B8275]">{{ $project->year }}</span>
+              <span class="text-[9px] font-display text-[#8B8275]">{{ $project->year }}</span>
             </div>
             <div class="w-full h-px bg-[#1C1C1C]/15 mb-4 group-hover:bg-[#B5451B]/60 transition-colors duration-500"></div>
             <h3 class="font-display font-light text-[1.2rem] leading-snug text-[#1C1C1C] group-hover:text-[#B5451B] transition-colors duration-300 mb-2">
