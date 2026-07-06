@@ -218,65 +218,78 @@
   $svcList = $services->isNotEmpty() ? $services : collect($fallbackServices);
 @endphp
 
-<section class="bg-[#F2EDE4] py-20 px-6 lg:px-12">
-  <div class="max-w-screen-xl mx-auto">
+<section class="bg-[#F2EDE4]">
 
-    {{-- Header --}}
-    <div class="flex items-end justify-between mb-16" data-reveal>
-      <div>
-        <div class="flex items-center gap-3 mb-4">
-          <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
-          <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B]">{{ $settings['homepage.services_eyebrow'] ?? 'What We Do' }}</p>
-        </div>
-        <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
-          {{ $settings['homepage.services_title'] ?? 'Our Disciplines' }}
-        </h2>
-      </div>
-      <a href="{{ url('/services') }}"
-         class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1">
-        <span>All Services</span>
-        <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
-      </a>
+  {{-- Section header --}}
+  <div class="px-6 lg:px-12 pt-20 pb-14 flex items-end justify-between" data-reveal>
+    <div>
+      <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
+        {{ $settings['homepage.services_eyebrow'] ?? 'What We Do' }}
+      </p>
+      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
+        {{ $settings['homepage.services_title'] ?? 'Our Disciplines' }}
+      </h2>
     </div>
-
-    {{-- Cards grid — 1px gaps act as dividers --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#D4C9BB]">
-      @foreach($svcList as $svc)
-        @php
-          $isArr   = is_array($svc);
-          $title   = $isArr ? $svc['title']   : $svc->title;
-          $tagline = $isArr ? $svc['tagline']  : ($svc->tagline ?? '');
-          $slug    = $isArr ? $svc['slug']    : $svc->slug;
-          $index   = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
-        @endphp
-        <a href="{{ route('services.show', $slug) }}"
-           class="group bg-[#FAF7F3] hover:bg-[#1C1C1C] transition-colors duration-500 p-10 flex flex-col gap-5 min-h-[260px]"
-           data-reveal>
-          <div class="flex items-start justify-between">
-            <span class="font-display font-light leading-none" style="font-size:2.8rem;color:#D4C9BB;transition:color 0.5s;"
-                  onmouseenter="this.style.color='rgba(255,255,255,0.15)'"
-                  onmouseleave="this.style.color='#D4C9BB'">{{ $index }}</span>
-            <span class="text-[#1C1C1C]/20 group-hover:text-white/60 transition-all duration-500 text-xl leading-none mt-1">→</span>
-          </div>
-          <div class="w-8 h-px bg-[#B5451B] group-hover:w-14 transition-all duration-500"></div>
-          <h3 class="font-display font-light text-[1.25rem] leading-snug text-[#1C1C1C] group-hover:text-white transition-colors duration-500 flex-1">{{ $title }}</h3>
-          @if($tagline)
-            <p class="text-[12px] leading-relaxed font-light text-[#8B8275] group-hover:text-white/55 transition-colors duration-500">{{ $tagline }}</p>
-          @endif
-          <span class="text-[9px] uppercase tracking-[0.2em] text-[#B5451B] group-hover:text-[#E8846A] transition-colors duration-500 self-start"
-                style="border-bottom:1px solid rgba(181,69,27,0.35);padding-bottom:2px;">Explore →</span>
-        </a>
-      @endforeach
-    </div>
-
-    <div class="mt-10 flex justify-center md:hidden">
-      <a href="{{ url('/services') }}"
-         class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275] border border-[#8B8275]/30 px-7 py-3.5">
-        All Services →
-      </a>
-    </div>
-
+    <a href="{{ url('/services') }}"
+       class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1">
+      <span>All Services</span>
+      <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
+    </a>
   </div>
+
+  {{-- Full-bleed image columns --}}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style="gap:1px;background:#D4C9BB;">
+    @foreach($svcList as $svc)
+      @php
+        $isArr   = is_array($svc);
+        $title   = $isArr ? $svc['title']   : $svc->title;
+        $tagline = $isArr ? $svc['tagline']  : ($svc->tagline ?? '');
+        $slug    = $isArr ? $svc['slug']    : $svc->slug;
+        $imgUrl  = $isArr ? null            : ($svc->imageUrl ?? null);
+      @endphp
+      <a href="{{ route('services.show', $slug) }}" class="group block bg-[#F2EDE4]">
+
+        {{-- Tall image with overlay label --}}
+        <div class="relative overflow-hidden" style="height:clamp(440px,58vw,700px);">
+
+          @if($imgUrl)
+            <img src="{{ $imgUrl }}" alt="{{ $title }}"
+                 class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                 loading="lazy">
+          @else
+            {{-- Warm gradient placeholder --}}
+            <div class="w-full h-full transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                 style="background:linear-gradient(160deg,#D4C5AF 0%,#BFB09A 100%);"></div>
+          @endif
+
+          {{-- Bottom fade --}}
+          <div class="absolute inset-0 pointer-events-none"
+               style="background:linear-gradient(to top,rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.18) 40%,transparent 70%);"></div>
+
+          {{-- Discipline name overlay --}}
+          <div class="absolute bottom-0 left-0 right-0 px-7 pb-8">
+            <h3 class="font-display font-light text-white leading-[1.05]"
+                style="font-size:clamp(1.9rem,3.2vw,2.9rem);">{{ $title }}</h3>
+          </div>
+        </div>
+
+        {{-- Description row --}}
+        @if($tagline)
+          <div class="px-7 py-5 border-t border-[#D4C9BB]/70">
+            <p class="text-[13px] leading-relaxed text-[#6B5F55] font-light">{{ $tagline }}</p>
+          </div>
+        @endif
+      </a>
+    @endforeach
+  </div>
+
+  <div class="px-6 py-10 flex justify-center md:hidden">
+    <a href="{{ url('/services') }}"
+       class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275] border border-[#8B8275]/30 px-7 py-3.5">
+      All Services →
+    </a>
+  </div>
+
 </section>
 
 {{-- spacer --}}
