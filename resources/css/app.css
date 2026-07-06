@@ -7,7 +7,8 @@
 @theme {
     /* Fonts */
     --font-display: 'Fraunces', Georgia, serif;
-    --font-body: 'Outfit', system-ui, sans-serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --font-ui: 'Space Grotesk', system-ui, sans-serif;
 
     /* Colors */
     --color-sand:          #F2EDE4;
@@ -49,6 +50,10 @@ body {
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
 }
+
+/* ── Font helpers (mirror BIM site) ── */
+.sg { font-family: var(--font-ui); }
+.dm { font-family: var(--font-body); }
 
 /* ---- Display size utilities ---- */
 .text-display-xl {
@@ -98,6 +103,6 @@ a, button { cursor: none; }
 
 /* ---- Prose overrides for article body ---- */
 .prose { color: #1C1C1C; }
-.prose h2, .prose h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 300; }
+.prose h2, .prose h3 { font-family: var(--font-display); font-weight: 300; }
 .prose a { color: #B5451B; }
 

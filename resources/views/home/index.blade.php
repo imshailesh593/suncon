@@ -34,7 +34,7 @@
       <p class="max-w-md text-white/60 text-sm leading-relaxed font-light">
         {{ $settings['homepage.hero_subtitle'] ?? 'A multidisciplinary consultancy delivering architecture, landscape & interior design across India since 1999.' }}
       </p>
-      <div class="flex items-center gap-6 shrink-0">
+      <div class="flex flex-wrap items-center gap-3 sm:gap-6">
         <a href="{{ url('/projects') }}"
            class="text-[10px] uppercase tracking-[0.2em] bg-[#B5451B] text-white px-7 py-3.5 hover:bg-[#9a3a17] transition-colors duration-300">
           {{ $settings['homepage.cta_primary'] ?? 'View Our Work' }} →
@@ -78,7 +78,7 @@
 {{-- ─── RECENT PROJECTS ─────────────────────────────────────────────────── --}}
 <section id="projects-section" class="bg-white overflow-hidden">
 
-  <div class="px-6 lg:px-12 pt-20 pb-12 flex items-end justify-between">
+  <div class="px-6 lg:px-12 pt-14 md:pt-20 pb-12 flex items-end justify-between">
     <div data-reveal>
       <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
         {{ $settings['homepage.projects_eyebrow'] ?? 'Selected Work' }}
@@ -87,9 +87,9 @@
         {{ $settings['homepage.projects_title'] ?? 'Recent Projects' }}
       </h2>
     </div>
-    <div class="flex items-center gap-4">
+    <div class="hidden md:flex items-center gap-4">
       <a href="{{ url('/projects') }}"
-         class="hidden md:flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1 mr-4">
+         class="flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1 mr-4">
         <span>View All</span>
         <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
       </a>
@@ -182,24 +182,30 @@
       ['value'=>'3','suffix'=>'M+','label'=>'Sq. Ft. Designed'],
     ];
   @endphp
-  <div class="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-3">
+  <div class="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-3" id="stats-grid">
     @foreach($stats as $stat)
-      @php
-        $col = $loop->index % 3;
-        $row = intdiv($loop->index, 3);
-      @endphp
-      <div class="px-8 lg:px-14 py-14 md:py-16
-                  {{ $col > 0 ? 'border-l border-white/[0.07]' : '' }}
-                  {{ $row > 0 ? 'border-t border-white/[0.07]' : '' }}"
-           data-reveal>
+      <div class="px-5 sm:px-8 lg:px-14 py-10 md:py-16" data-reveal>
         <div class="flex items-baseline gap-1 mb-3">
-          <span class="font-display font-light text-display-xl text-[#FAF7F3] leading-none" data-counter data-target="{{ $stat['value'] }}">0</span>
-          <span class="font-display font-light text-display-md text-[#B5451B] leading-none">{{ $stat['suffix'] }}</span>
+          <span class="font-display font-light text-display-xl text-[#FAF7F3] leading-none stat-num" data-counter data-target="{{ $stat['value'] }}">0</span>
+          <span class="font-display font-light text-display-md text-[#B5451B] leading-none stat-suf">{{ $stat['suffix'] }}</span>
         </div>
         <p class="text-[#5C5652] text-[9px] uppercase tracking-[0.22em]">{{ $stat['label'] }}</p>
       </div>
     @endforeach
   </div>
+  <style>
+    #stats-grid > div:nth-child(2n)   { border-left:  1px solid rgba(255,255,255,0.07); }
+    #stats-grid > div:nth-child(n+3)  { border-top:   1px solid rgba(255,255,255,0.07); }
+    @media (min-width: 768px) {
+      #stats-grid > div                             { border: none; }
+      #stats-grid > div:not(:nth-child(3n+1))       { border-left:  1px solid rgba(255,255,255,0.07); }
+      #stats-grid > div:nth-child(n+4)              { border-top:   1px solid rgba(255,255,255,0.07); }
+    }
+    @media (max-width: 479px) {
+      .stat-num { font-size: clamp(1.8rem, 9vw, 3rem) !important; letter-spacing: -0.02em; }
+      .stat-suf { font-size: clamp(1.2rem, 5vw, 2rem) !important; }
+    }
+  </style>
 </section>
 
 {{-- spacer --}}
@@ -237,7 +243,7 @@
       </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
       @foreach($svcList as $svc)
         @php
           $isArr   = is_array($svc);
@@ -308,7 +314,7 @@
         <div class="w-full h-full bg-[#E8E0D4]"></div>
       @endif
     </div>
-    <div class="flex flex-col justify-center px-10 lg:px-16 py-16" data-reveal>
+    <div class="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-12 sm:py-16" data-reveal>
       <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-6">Featured Project</p>
       <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-tight mb-6">{{ $featuredProject->title }}</h2>
       @if($featuredProject->location)
@@ -347,7 +353,7 @@
         All Articles
       </a>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
       @forelse($articles ?? [] as $article)
         <a href="{{ url('/journal/'.$article->slug) }}" class="group block" data-reveal>
           <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4] mb-5 ">

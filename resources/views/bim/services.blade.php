@@ -6,7 +6,7 @@
 @section('content')
 
 {{-- ── PAGE HEADER ──────────────────────────────────────────────────────────── --}}
-<section style="background:var(--bim-base);padding-top:140px;padding-bottom:80px;position:relative;overflow:hidden;">
+<section class="pt-[100px] md:pt-[140px] pb-14 md:pb-20" style="background:var(--bim-base);position:relative;overflow:hidden;">
   {{-- Left lime rail --}}
   <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EC8E8;"></div>
   {{-- Engineering grid --}}
@@ -46,7 +46,7 @@
   $serviceList = $bimServices->count() ? $bimServices : $fallbackServices;
 @endphp
 
-<section style="background:var(--bim-surface);padding:80px 0 100px;" class="px-6 lg:px-12">
+<section class="px-6 lg:px-12 py-12 md:py-16 lg:py-[80px]" style="background:var(--bim-surface);">
   <div class="max-w-screen-xl mx-auto">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
 

@@ -22,7 +22,7 @@
     <div class="pt-32 pb-0">
       <div class="inline-flex items-center gap-3">
         <span class="w-2 h-2 rounded-full" style="background:#7EC8E8;"></span>
-        <span class="dm text-[9px] uppercase tracking-[0.38em]" style="color:var(--bim-muted);">Suncon Engineers — BIM Division</span>
+        <span class="dm text-[9px] uppercase tracking-[0.2em] sm:tracking-[0.38em]" style="color:var(--bim-muted);">Suncon Engineers — BIM Division</span>
       </div>
     </div>
 
@@ -54,10 +54,11 @@
 
   {{-- LOD badge strip --}}
   <div style="border-top:1px solid var(--bim-border-sm);">
-    <div class="max-w-screen-xl mx-auto px-8 lg:px-16 py-4 flex gap-2 overflow-x-auto">
+    <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-4 flex gap-2 overflow-x-auto">
       @foreach(['LOD 100 — Concept','LOD 200 — Schematic','LOD 300 — Detailed','LOD 400 — Fabrication','LOD 500 — As-Built'] as $lod)
         <span class="shrink-0 dm text-[8px] uppercase tracking-[0.28em] px-4 py-1.5" style="border:1px solid rgba(126,200,232,0.12);color:#3A4050;">{{ $lod }}</span>
       @endforeach
+      <span class="shrink-0 w-6"></span>
     </div>
   </div>
 </section>
@@ -91,7 +92,7 @@
 </section>
 
 {{-- ── SERVICES (editorial list) ────────────────────────────────────────────── --}}
-<section style="background:var(--bim-base);padding:100px 0;">
+<section class="py-16 md:py-20 lg:py-[100px]" style="background:var(--bim-base);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
 
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
@@ -191,9 +192,9 @@
 </style>
 
 {{-- ── SOFTWARE & TOOLS ─────────────────────────────────────────────────────── --}}
-<section style="background:var(--bim-surface);padding:100px 0;border-top:1px solid var(--bim-border-sm);border-bottom:1px solid var(--bim-border-sm);">
+<section class="py-16 md:py-20 lg:py-[100px]" style="background:var(--bim-surface);border-top:1px solid var(--bim-border-sm);border-bottom:1px solid var(--bim-border-sm);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-20">
+    <div class="grid grid-cols-1 md:grid-cols-[220px_1fr] lg:grid-cols-[260px_1fr] gap-10 md:gap-16 lg:gap-20">
 
       <div>
         <div class="flex items-center gap-4 mb-5">
@@ -238,10 +239,10 @@
 </section>
 
 {{-- ── LOD FRAMEWORK ────────────────────────────────────────────────────────── --}}
-<section style="background:var(--bim-base);padding:100px 0;">
+<section class="py-16 md:py-20 lg:py-[100px]" style="background:var(--bim-base);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
 
-    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-16 items-center mb-16">
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-10 md:gap-16 items-center mb-16">
       <div>
         <div class="flex items-center gap-4 mb-5">
           <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
@@ -290,14 +291,14 @@
   <div class="flex flex-col lg:flex-row">
 
     {{-- Image panel --}}
-    <div class="lg:w-[42%] shrink-0 overflow-hidden" style="min-height:500px;">
+    <div class="lg:w-[42%] shrink-0 overflow-hidden aspect-[4/3] lg:aspect-auto min-h-0 lg:min-h-[500px]">
       <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=900&q=85&auto=format&fit=crop"
            alt="Architecture studio interior"
            class="w-full h-full object-cover" loading="lazy">
     </div>
 
     {{-- Pillars --}}
-    <div class="flex-1 px-8 lg:px-16 py-20">
+    <div class="flex-1 px-6 sm:px-8 lg:px-16 py-12 md:py-20">
       <div class="max-w-xl">
         <div class="flex items-center gap-4 mb-5">
           <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
@@ -333,7 +334,7 @@
 
 {{-- ── PROJECTS ─────────────────────────────────────────────────────────────── --}}
 @if(isset($projects) && $projects->count())
-<section style="background:var(--bim-base);padding:100px 0;border-top:1px solid var(--bim-border-sm);">
+<section class="py-16 md:py-20 lg:py-[100px]" style="background:var(--bim-base);border-top:1px solid var(--bim-border-sm);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
       <div>
@@ -366,7 +367,7 @@
   </div>
 </section>
 @else
-<section style="background:var(--bim-base);padding:80px 0;border-top:1px solid var(--bim-border-sm);">
+<section class="py-12 md:py-16 lg:py-20" style="background:var(--bim-base);border-top:1px solid var(--bim-border-sm);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
     <div>
       <div class="flex items-center gap-4 mb-5">
@@ -387,7 +388,7 @@
 @endif
 
 {{-- ── PROCESS ──────────────────────────────────────────────────────────────── --}}
-<section style="background:var(--bim-surface);padding:100px 0;border-top:1px solid var(--bim-border-sm);">
+<section class="py-16 md:py-20 lg:py-[100px]" style="background:var(--bim-surface);border-top:1px solid var(--bim-border-sm);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
     <div class="mb-16">
       <div class="flex items-center gap-4 mb-5">
@@ -407,7 +408,7 @@
       @endphp
       @foreach($steps as $i => $step)
         @php
-          $cls = 'px-8 lg:px-10 py-12 border-t';
+          $cls = 'px-6 md:px-8 lg:px-10 py-10 md:py-12 border-t';
           if ($i === 0) $cls .= ' md:border-t-0';
           if ($i === 1) $cls .= ' md:border-t-0 md:border-l lg:border-l';
           if ($i === 2) $cls .= ' md:border-l-0 lg:border-l';

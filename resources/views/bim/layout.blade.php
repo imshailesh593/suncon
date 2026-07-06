@@ -82,7 +82,7 @@
       </a>
 
       {{-- Desktop nav --}}
-      <nav class="hidden md:flex items-center gap-4 lg:gap-6">
+      <nav class="hidden lg:flex items-center gap-4 lg:gap-6">
         {{-- Back to architecture --}}
         <a href="{{ url('/') }}"
            class="bim-back dm text-[10px] uppercase tracking-[0.22em] transition-colors duration-200 shrink-0"
@@ -113,7 +113,7 @@
       </nav>
 
       {{-- Hamburger --}}
-      <button id="bim-menu-toggle" class="md:hidden flex flex-col gap-[5px] p-2" aria-label="Toggle menu">
+      <button id="bim-menu-toggle" class="lg:hidden flex flex-col gap-[5px] p-2" aria-label="Toggle menu">
         <span class="bim-bar block w-5 h-px transition-all duration-300" style="background:var(--bim-text);"></span>
         <span class="bim-bar block w-5 h-px transition-all duration-300" style="background:var(--bim-text);"></span>
       </button>
@@ -148,7 +148,7 @@
 
     {{-- CTA band --}}
     <div style="border-bottom:1px solid var(--bim-border);">
-      <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-20 flex flex-col md:flex-row items-start md:items-end justify-between gap-10">
+      <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-12 md:py-20 flex flex-col md:flex-row items-start md:items-end justify-between gap-10">
         <div>
           <p class="dm text-[9px] uppercase tracking-[0.35em] mb-5" style="color:var(--bim-accent);">Ready to start</p>
           <h2 class="sg font-bold leading-tight" style="font-size:clamp(2rem,5vw,3.5rem);color:var(--bim-text);">
@@ -166,7 +166,7 @@
 
     {{-- Links grid --}}
     <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-14">
-      <div class="grid grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.5fr] gap-x-10 gap-y-10">
+      <div class="grid grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1.5fr] gap-x-6 lg:gap-x-10 gap-y-10">
 
         <div class="col-span-2 lg:col-span-1">
           <div class="sg flex items-center gap-2 mb-5">

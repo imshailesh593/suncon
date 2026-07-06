@@ -6,7 +6,7 @@
 @section('content')
 
 {{-- ── HEADER ───────────────────────────────────────────────────────────────── --}}
-<section style="background:var(--bim-base);padding-top:140px;padding-bottom:80px;position:relative;overflow:hidden;">
+<section class="pt-[100px] md:pt-[140px] pb-14 md:pb-20" style="background:var(--bim-base);position:relative;overflow:hidden;">
   {{-- Left lime rail --}}
   <div class="absolute left-0 top-0 bottom-0 w-[3px]" style="background:#7EC8E8;"></div>
   {{-- Engineering grid --}}
@@ -26,9 +26,9 @@
 </section>
 
 {{-- ── FORM + INFO ─────────────────────────────────────────────────────────── --}}
-<section style="background:var(--bim-surface);padding:80px 0;border-top:1px solid var(--bim-border-sm);">
+<section class="py-12 md:py-[80px]" style="background:var(--bim-surface);border-top:1px solid var(--bim-border-sm);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-16">
+    <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10 lg:gap-16">
 
       {{-- Form --}}
       <div>
@@ -116,7 +116,7 @@
 
           <div class="pt-2">
             <button type="submit"
-                    class="sg font-bold text-[10px] uppercase tracking-[0.2em] px-10 py-4 transition-opacity duration-200"
+                    class="sg font-bold text-[10px] uppercase tracking-[0.2em] w-full sm:w-auto px-10 py-4 transition-opacity duration-200"
                     style="background:#7EC8E8;color:var(--bim-text);"
                     onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">
               Send Enquiry
