@@ -18,3 +18,7 @@ yarn-error.log
 *.zip
 .DS_Store
 .gitignore.bak
+
+# Next.js local build artifact (legacy app)
+/.next
+postcss.config.js.next-disabled

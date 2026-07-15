@@ -58,17 +58,30 @@
     body          { font-family: var(--ff-dm); background: var(--bim-base); color: var(--bim-text); transition: background 0.3s, color 0.3s; }
     .sg { font-family: var(--ff-sg); }
     .dm { font-family: var(--ff-dm); }
-    /* Theme pill toggle */
-    .bim-theme-pill { display:flex; align-items:center; border-radius:999px; overflow:hidden; border:1px solid var(--bim-border); background:var(--bim-surface); transition:border-color 0.3s, background 0.3s; }
-    .bim-theme-btn  { background:transparent; border:0; cursor:pointer; padding:5px 11px; font-family:var(--ff-dm); font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--bim-muted); transition:background 0.2s, color 0.2s; white-space:nowrap; line-height:1; }
-    .bim-theme-btn.active { background:var(--bim-accent); color:#111827; }
+    /* Theme pill toggle — segmented control */
+    .bim-theme-pill { display:inline-flex; align-items:center; gap:2px; padding:2px; border-radius:999px; border:1px solid var(--bim-border-lg); background:var(--bim-lift); transition:border-color 0.3s, background 0.3s; }
+    .bim-theme-btn  { display:inline-flex; align-items:center; gap:5px; background:transparent; border:0; cursor:pointer; padding:5px 11px; border-radius:999px; font-family:var(--ff-dm); font-size:9px; letter-spacing:0.18em; text-transform:uppercase; line-height:1; white-space:nowrap; color:var(--bim-text); opacity:0.42; transition:opacity 0.2s, background 0.2s, color 0.2s; }
+    .bim-theme-btn:hover  { opacity:0.75; }
+    .bim-theme-btn svg { width:11px; height:11px; }
+    .bim-theme-btn.active { opacity:1; background:var(--bim-accent); color:#0B1220; font-weight:600; }
+    /* Services hover dropdown */
+    .bim-hasdrop { position:relative; }
+    .bim-caret { transition:transform 0.2s; }
+    .bim-hasdrop:hover .bim-caret { transform:rotate(180deg); }
+    .bim-dropdown { position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(4px); padding-top:14px; min-width:300px; opacity:0; visibility:hidden; transition:opacity 0.18s ease, transform 0.18s ease; z-index:60; }
+    .bim-hasdrop:hover .bim-dropdown { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+    .bim-dropdown-inner { background:var(--bim-lift); border:1px solid var(--bim-border-lg); border-radius:14px; padding:8px; box-shadow:0 24px 48px -12px rgba(0,0,0,0.35); }
+    .bim-drop-item { display:flex; align-items:center; gap:12px; padding:9px 11px; border-radius:9px; transition:background 0.16s; }
+    .bim-drop-item:hover { background:var(--bim-surface); }
+    .bim-drop-ic { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:9px; background:var(--bim-adim); color:var(--bim-accent); flex-shrink:0; }
+    .bim-drop-tx { display:flex; flex-direction:column; gap:2px; }
+    .bim-drop-title { font-family:var(--ff-sg); font-weight:600; font-size:12.5px; color:var(--bim-text); letter-spacing:0; text-transform:none; line-height:1.2; }
+    .bim-drop-sub { font-family:var(--ff-dm); font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--bim-muted); }
+    .bim-drop-all { display:block; text-align:center; margin-top:4px; padding:10px; border-top:1px solid var(--bim-border); font-family:var(--ff-dm); font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--bim-accent); transition:opacity 0.16s; }
+    .bim-drop-all:hover { opacity:0.7; }
   </style>
 </head>
 <body class="antialiased overflow-x-hidden">
-
-  {{-- Custom cursor --}}
-  <div id="cursor-dot"  class="fixed top-0 left-0 w-[8px] h-[8px] rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2" style="background:#7EC8E8;"></div>
-  <div id="cursor-ring" class="fixed top-0 left-0 w-[40px] h-[40px] rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2" style="border:1.5px solid var(--bim-ring);"></div>
 
   {{-- ── NAVBAR ──────────────────────────────────────────────────────────────── --}}
   <header id="bim-nav" class="fixed top-0 left-0 right-0 z-50" style="background:var(--bim-nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bim-border);transition:background 0.3s;">
@@ -88,20 +101,43 @@
            class="bim-back dm text-[10px] uppercase tracking-[0.22em] transition-colors duration-200 shrink-0"
            style="color:var(--bim-muted);">← Architecture</a>
         <span class="w-px h-3 shrink-0" style="background:var(--bim-dim);"></span>
-        {{-- Main links --}}
-        @foreach([
-          ['Home',     route('bim.home'),    request()->routeIs('bim.home')],
-          ['Services', route('bim.services'),request()->routeIs('bim.services')],
-          ['Projects', url('/projects?discipline=bim'), false],
-        ] as [$label,$href,$active])
-          <a href="{{ $href }}"
-             class="bim-navlink dm text-[10px] uppercase tracking-[0.22em] transition-colors duration-200 shrink-0"
-             style="color:{{ $active ? 'var(--bim-accent)' : 'var(--bim-muted)' }};">{{ $label }}</a>
-        @endforeach
+        {{-- Home --}}
+        <a href="{{ route('bim.home') }}"
+           class="bim-navlink dm text-[10px] uppercase tracking-[0.22em] py-2 transition-colors duration-200 shrink-0"
+           style="color:{{ request()->routeIs('bim.home') ? 'var(--bim-accent)' : 'var(--bim-muted)' }};">Home</a>
+
+        {{-- Services + hover dropdown --}}
+        <div class="bim-hasdrop shrink-0">
+          <a href="{{ route('bim.services') }}"
+             class="bim-navlink dm text-[10px] uppercase tracking-[0.22em] py-2 inline-flex items-center gap-1 transition-colors duration-200"
+             style="color:{{ request()->routeIs('bim.services*') ? 'var(--bim-accent)' : 'var(--bim-muted)' }};">
+            Services
+            <svg class="bim-caret" viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </a>
+          <div class="bim-dropdown">
+            <div class="bim-dropdown-inner">
+              @foreach(config('bim_services') as $cslug => $cat)
+                <a href="{{ route('bim.services.category', $cslug) }}" class="bim-drop-item">
+                  <span class="bim-drop-ic">@include('bim.partials.service-icon', ['icon' => $cat['icon'], 'class' => 'w-[18px] h-[18px]'])</span>
+                  <span class="bim-drop-tx">
+                    <span class="bim-drop-title">{{ $cat['menu'] ?? $cat['name'] }}</span>
+                    <span class="bim-drop-sub">{{ count($cat['services']) }} services</span>
+                  </span>
+                </a>
+              @endforeach
+              <a href="{{ route('bim.services') }}" class="bim-drop-all">All Services →</a>
+            </div>
+          </div>
+        </div>
+
+        {{-- Projects --}}
+        <a href="{{ url('/projects?discipline=bim') }}"
+           class="bim-navlink dm text-[10px] uppercase tracking-[0.22em] py-2 transition-colors duration-200 shrink-0"
+           style="color:var(--bim-muted);">Projects</a>
         {{-- Theme pill --}}
         <div class="bim-theme-pill shrink-0">
-          <button class="bim-theme-btn" data-theme="light" onclick="setBimTheme('light')">Light</button>
-          <button class="bim-theme-btn" data-theme="dark"  onclick="setBimTheme('dark')">Dark</button>
+          <button class="bim-theme-btn" data-theme="light" onclick="setBimTheme('light')" aria-label="Light mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Light</button>
+          <button class="bim-theme-btn" data-theme="dark"  onclick="setBimTheme('dark')" aria-label="Dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>Dark</button>
         </div>
         {{-- CTA --}}
         <a href="{{ route('bim.contact') }}"
@@ -122,9 +158,15 @@
 
   {{-- Mobile menu --}}
   <div id="bim-mobile-menu" class="fixed inset-0 z-40 flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-300" style="background:var(--bim-base);">
-    <div class="flex flex-col gap-5 mt-16">
+    <div class="flex flex-col gap-4 mt-16">
       <a href="{{ route('bim.home') }}"               class="sg text-4xl font-bold" style="color:var(--bim-text);">Home</a>
       <a href="{{ route('bim.services') }}"            class="sg text-4xl font-bold" style="color:var(--bim-text);">Services</a>
+      {{-- Service categories --}}
+      <div class="flex flex-col gap-2.5 pl-4 -mt-1" style="border-left:1px solid var(--bim-border);">
+        @foreach(config('bim_services') as $cslug => $cat)
+          <a href="{{ route('bim.services.category', $cslug) }}" class="dm text-sm" style="color:var(--bim-muted);">{{ $cat['menu'] ?? $cat['name'] }}</a>
+        @endforeach
+      </div>
       <a href="{{ url('/projects?discipline=bim') }}"  class="sg text-4xl font-bold" style="color:var(--bim-text);">Projects</a>
       <a href="{{ route('bim.contact') }}"             class="sg text-4xl font-bold" style="color:var(--bim-accent);">Get a Quote</a>
     </div>
@@ -132,8 +174,8 @@
       <div class="flex items-center gap-3 mb-5">
         <span class="dm text-[9px] uppercase tracking-[0.22em]" style="color:var(--bim-muted);">Theme</span>
         <div class="bim-theme-pill">
-          <button class="bim-theme-btn" data-theme="light" onclick="setBimTheme('light')">Light</button>
-          <button class="bim-theme-btn" data-theme="dark"  onclick="setBimTheme('dark')">Dark</button>
+          <button class="bim-theme-btn" data-theme="light" onclick="setBimTheme('light')" aria-label="Light mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Light</button>
+          <button class="bim-theme-btn" data-theme="dark"  onclick="setBimTheme('dark')" aria-label="Dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>Dark</button>
         </div>
       </div>
       <a href="{{ url('/') }}" class="dm text-[9px] uppercase tracking-[0.28em] transition-colors duration-200" style="color:var(--bim-muted);">← Architecture Site</a>
@@ -184,12 +226,11 @@
           <p class="dm text-[9px] uppercase tracking-[0.3em] mb-5" style="color:var(--bim-accent);">Services</p>
           <ul class="flex flex-col gap-3">
             @foreach([
-              ['Architectural BIM', route('bim.services').'#arch-bim'],
-              ['Structural BIM',    route('bim.services').'#structural'],
-              ['MEP Coordination',  route('bim.services').'#mep'],
-              ['Scan to BIM',       route('bim.services').'#scan'],
-              ['CAD to BIM',        route('bim.services').'#cad'],
-              ['Shop Drawings',     route('bim.services').'#docs'],
+              ['Building Information Modeling', route('bim.services.category', 'building-information-modeling')],
+              ['Infrastructure BIM',           route('bim.services.category', 'infrastructure-bim')],
+              ['Digital Engineering & BIM',     route('bim.services.category', 'digital-engineering-bim')],
+              ['Reality Capture & Scan-to-BIM', route('bim.services.category', 'reality-capture-scan-to-bim')],
+              ['All Services',                  route('bim.services')],
             ] as $l)
               <li><a href="{{ $l[1] }}" class="dm text-sm transition-colors duration-200" style="color:var(--bim-muted);" onmouseover="this.style.color='var(--bim-text)'" onmouseout="this.style.color='var(--bim-muted)'">{{ $l[0] }}</a></li>
             @endforeach
@@ -269,22 +310,6 @@
         bars[1].style.transform = open ? 'translateY(-5px) rotate(-45deg)' : '';
       });
       menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (open) toggle.click(); }));
-    }
-
-    // ── Custom cursor ─────────────────────────────────────────────────────────
-    const dot  = document.getElementById('cursor-dot');
-    const ring = document.getElementById('cursor-ring');
-    if (dot && ring) {
-      let rx = 0, ry = 0, mx = 0, my = 0;
-      document.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-      });
-      (function animRing() {
-        rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-        requestAnimationFrame(animRing);
-      })();
     }
   })();
   </script>

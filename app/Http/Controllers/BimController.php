@@ -33,11 +33,27 @@ class BimController extends Controller
 
     public function services()
     {
-        $bimServices = Service::where('section', 'bim')
-            ->orderBy('sort_order')
-            ->get();
+        $categories = config('bim_services');
 
-        return view('bim.services', compact('bimServices'));
+        return view('bim.services', compact('categories'));
+    }
+
+    public function serviceCategory(string $category)
+    {
+        $categories = config('bim_services');
+
+        abort_unless(isset($categories[$category]), 404);
+
+        $data = $categories[$category];
+        $slug = $category;
+
+        // Sibling categories for the "explore more" strip at the bottom.
+        $others = collect($categories)
+            ->except($category)
+            ->map(fn ($c, $key) => ['slug' => $key, 'name' => $c['name'], 'icon' => $c['icon']])
+            ->values();
+
+        return view('bim.service-category', compact('data', 'slug', 'others'));
     }
 
     public function contact()

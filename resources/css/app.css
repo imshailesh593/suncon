@@ -92,8 +92,11 @@ body {
 }
 
 /* ---- Cursor ---- */
-* { cursor: none; }
-a, button { cursor: none; }
+/* Scoped: only hide the OS cursor where a JS custom cursor is active
+   (main architecture site adds .hide-cursor). The BIM site keeps the
+   normal OS cursor so links show clear hand-pointer affordance. */
+body.hide-cursor,
+body.hide-cursor * { cursor: none; }
 
 /* ---- Navbar dark-section inversion ---- */
 #navbar.invert-nav #nav-logo,

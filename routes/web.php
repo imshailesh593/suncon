@@ -28,6 +28,7 @@ Route::post('/contact', [ContactController::class, 'submit'])->middleware('throt
 Route::prefix('bim')->name('bim.')->group(function () {
     Route::get('/', [BimController::class, 'home'])->name('home');
     Route::get('/services', [BimController::class, 'services'])->name('services');
+    Route::get('/services/{category}', [BimController::class, 'serviceCategory'])->name('services.category');
     Route::get('/contact', [BimController::class, 'contact'])->name('contact');
     Route::post('/contact', [BimController::class, 'submitContact'])->middleware('throttle:5,1')->name('contact.submit');
 });
