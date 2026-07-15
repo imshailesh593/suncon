@@ -55,9 +55,9 @@
       {{-- BIM site link --}}
       <a href="{{ url('/bim') }}"
          class="font-body font-medium text-[9px] uppercase tracking-[0.22em] px-3 py-1 border transition-all duration-200"
-         style="background:#fff;border-color:#fff;color:#B5451B;"
-         onmouseover="this.style.background='#B5451B';this.style.borderColor='#B5451B';this.style.color='#fff'"
-         onmouseout="this.style.background='#fff';this.style.borderColor='#fff';this.style.color='#B5451B'">
+         style="background:#B5451B;border-color:#B5451B;color:#fff;"
+         onmouseover="this.style.background='#fff';this.style.borderColor='#fff';this.style.color='#B5451B'"
+         onmouseout="this.style.background='#B5451B';this.style.borderColor='#B5451B';this.style.color='#fff'">
         BIM ↗
       </a>
     </nav>
