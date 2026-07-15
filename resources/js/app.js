@@ -124,6 +124,27 @@ gsap.utils.toArray('[data-reveal]').forEach((el) => {
   );
 });
 
+// ─── 4b. STUDIO STATEMENT — word-by-word colour fill on scroll ───────────────
+const scrollFill = document.querySelector('.scroll-fill');
+if (scrollFill) {
+  const fillWords = scrollFill.querySelectorAll('.fill-word');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    gsap.set(fillWords, { color: '#1C1C1C' });
+  } else {
+    gsap.to(fillWords, {
+      color: '#1C1C1C',
+      ease: 'none',
+      stagger: 1,
+      scrollTrigger: {
+        trigger: scrollFill,
+        start: 'top 80%',
+        end: 'bottom 60%',
+        scrub: 0.4,
+      },
+    });
+  }
+}
+
 // ─── 5 & 6. BUTTON CAROUSELS (projects + services) ───────────────────────────
 function initCarousel(trackId, prevId, nextId) {
   const track = document.getElementById(trackId);
