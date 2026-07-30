@@ -22,3 +22,4 @@ yarn-error.log
 # Next.js local build artifact (legacy app)
 /.next
 postcss.config.js.next-disabled
+public/hot

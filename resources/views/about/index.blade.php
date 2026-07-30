@@ -7,17 +7,47 @@
 
 {{-- ─── HERO ─────────────────────────────────────────────────────────────── --}}
 <section class="bg-[#FAF7F3] pt-36 pb-16 px-6 lg:px-12 overflow-hidden">
-  <div class="max-w-screen-xl mx-auto">
-    <div class="max-w-3xl" data-reveal>
-      <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-6">About Suncon</p>
+  <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row lg:items-center gap-10">
+
+    {{-- Text --}}
+    <div class="lg:flex-1 max-w-2xl" data-reveal>
+      <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-6">Est. 1999</p>
       <h1 class="font-display font-light text-display-lg text-[#1C1C1C] leading-none mb-6">
-        {{ $settings['about.hero_line1'] ?? 'Building for' }}<br>
-        <span class="font-bold text-[#B5451B]">{{ $settings['about.hero_line2'] ?? 'People & Place' }}</span>
+        Suncon Engineers<br>
+        <span class="font-bold text-[#B5451B]">Pvt. Ltd.</span>
       </h1>
       <p class="text-[#1C1C1C] text-base leading-relaxed font-light">
-        {{ $settings['about.intro_p1'] ?? 'Founded in 1999, Suncon Engineers Pvt. Ltd. is an ISO-certified multidisciplinary design consultancy headquartered in Pune, India. Over 25 years we have delivered architecture, landscape, interior and infrastructure projects that thoughtfully respond to context, climate and the people who inhabit them.' }}
+        {{ $settings['about.intro_p1'] ?? 'For over 25 years, our Pune-based studio has shaped buildings, landscapes, and interiors that are rooted in place — ISO-certified, people-first, and delivered to last.' }}
       </p>
     </div>
+
+    {{-- Decorative overlapping-circles graphic --}}
+    <div class="hidden lg:block lg:flex-none" aria-hidden="true" style="width:460px;margin-right:-90px;">
+      <svg width="460" height="460" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+        {{-- Terracotta blob in the intersection area --}}
+        <path d="M 244,160 C 318,152 348,192 338,246 C 328,302 294,322 244,316 C 192,310 154,280 160,226 C 167,177 172,168 244,160 Z"
+              fill="#B5451B" opacity="0.88"/>
+
+        {{-- Large circle — long-dash, charcoal --}}
+        <circle cx="165" cy="195" r="162" stroke="#1C1C1C" stroke-width="1.5" stroke-dasharray="10 7" opacity="0.22"/>
+
+        {{-- Medium circle — solid, charcoal --}}
+        <circle cx="320" cy="195" r="148" stroke="#1C1C1C" stroke-width="1.5" opacity="0.32"/>
+
+        {{-- Lower circle — dotted, stone --}}
+        <circle cx="244" cy="322" r="136" stroke="#8B8275" stroke-width="1.5" stroke-dasharray="3 7" opacity="0.40"/>
+
+        {{-- Small inner ring — dash-dot, terracotta --}}
+        <circle cx="244" cy="238" r="52" stroke="#B5451B" stroke-width="1" stroke-dasharray="5 8" opacity="0.55"/>
+
+        {{-- Tiny spiral curl — decorative accent --}}
+        <path d="M 388,108 C 395,98 408,97 414,106 C 421,116 414,130 402,132 C 390,134 381,124 383,114 C 385,106 393,102 400,105"
+              stroke="#B5451B" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.55"/>
+
+      </svg>
+    </div>
+
   </div>
 </section>
 
@@ -25,24 +55,13 @@
 <section class="bg-[#FAF7F3] pb-0 px-6 lg:px-12">
   <div class="max-w-screen-xl mx-auto">
     <div class="relative w-full overflow-hidden bg-[#1C1C1C]" style="aspect-ratio:16/9;" data-reveal>
-      @php $videoId = $settings['about.youtube_id'] ?? ''; @endphp
-      @if($videoId)
-        <iframe class="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/{{ $videoId }}?rel=0&modestbranding=1"
-                title="Suncon Engineers" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen></iframe>
-      @else
-        {{-- Placeholder until video URL is set in CMS --}}
-        <div class="absolute inset-0 bg-gradient-to-br from-[#2A2420] to-[#1C1C1C] flex flex-col items-center justify-center gap-6">
-          <div class="w-16 h-16 rounded-full border-2 border-white/20 flex items-center justify-center">
-            <svg class="w-6 h-6 text-white/40 ml-1" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          </div>
-          <p class="text-white/30 text-[10px] uppercase tracking-[0.3em]">Studio Film — Add YouTube ID in CMS Settings</p>
-        </div>
-      @endif
+      <video autoplay muted loop playsinline
+             poster="{{ asset('images/hero-bg.jpg') }}"
+             class="absolute inset-0 w-full h-full object-cover"
+             preload="auto">
+        <source src="{{ asset('videos/hero.mp4') }}" type="video/mp4">
+      </video>
+      <div class="absolute inset-0 bg-[#1C1C1C]/20 pointer-events-none"></div>
     </div>
 
     {{-- Tagline relocated below video --}}
@@ -83,8 +102,14 @@
 {{-- ─── OUR APPROACH ────────────────────────────────────────────────────── --}}
 <section class="bg-[#F2EDE4] py-24 px-6 lg:px-12">
   <div class="max-w-screen-xl mx-auto grid md:grid-cols-[1fr_1.2fr] gap-16 items-center">
-    <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4]" data-reveal>
-      <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad]"></div>
+    {{-- Left: key numbers --}}
+    <div class="grid grid-cols-2 gap-px bg-[#E8E0D4]" data-reveal>
+      @foreach([['25+','Years of\nPractice'],['500+','Projects\nDelivered'],['50+','Expert\nProfessionals'],['ISO','9001 Certified']] as [$val,$lbl])
+      <div class="bg-[#F2EDE4] p-8 flex flex-col justify-between" style="min-height:140px">
+        <span class="font-display font-light text-[2.8rem] text-[#1C1C1C] leading-none">{{ $val }}</span>
+        <p class="text-[9px] uppercase tracking-[0.22em] text-[#8B8275] mt-4 leading-relaxed">{{ str_replace('\n',' ',$lbl) }}</p>
+      </div>
+      @endforeach
     </div>
     <div data-reveal>
       <div class="flex items-center gap-3 mb-6">
@@ -191,7 +216,7 @@
 </section>
 
 {{-- ─── OUR SECTORS ─────────────────────────────────────────────────────── --}}
-<section class="bg-[#1C1C1C] py-24 px-6 lg:px-12" data-dark>
+<section class="bg-[#1C3016] py-24 px-6 lg:px-12" data-dark>
   <div class="max-w-screen-xl mx-auto">
     <div class="flex items-end justify-between mb-14" data-reveal>
       <div>
@@ -215,9 +240,9 @@
         ['Hospitality','Hotels, resorts, and integrated tourism developments.'],
         ['Public & Infrastructure','Urban spaces, transport corridors, and smart city initiatives.'],
       ] as [$sector,$desc])
-        <div class="bg-[#1C1C1C] p-8 group" data-reveal>
+        <div class="bg-[#1C3016] p-8 group" data-reveal>
           <h3 class="font-display font-light text-lg text-[#FAF7F3] mb-3 group-hover:text-[#B5451B] transition-colors duration-300">{{ $sector }}</h3>
-          <p class="text-[#5C5652] text-sm leading-relaxed mb-5">{{ $desc }}</p>
+          <p class="text-white/45 text-sm leading-relaxed mb-5">{{ $desc }}</p>
           <a href="{{ url('/projects') }}" class="text-[9px] uppercase tracking-[0.22em] text-[#B5451B] flex items-center gap-2 hover:gap-3 transition-all duration-300">
             View Projects <span>→</span>
           </a>
@@ -264,39 +289,75 @@
 </section>
 
 {{-- ─── CLIENTS & COLLABORATORS ─────────────────────────────────────────── --}}
-<section class="bg-[#0F0E0C] py-24 overflow-hidden" data-dark>
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 mb-12" data-reveal>
-    <div class="flex items-center gap-3 mb-4">
+@php
+  $aboutClients = [
+    ['file'=>'1.png',   'name'=>'Indian Railways'],
+    ['file'=>'16.png',  'name'=>'Delhi Metro Rail Corporation'],
+    ['file'=>'20.png',  'name'=>'Reliance'],
+    ['file'=>'19.png',  'name'=>'Volkswagen'],
+    ['file'=>'8.png',   'name'=>'Cadbury'],
+    ['file'=>'13.png',  'name'=>'Castrol'],
+    ['file'=>'7.png',   'name'=>'MIDC'],
+    ['file'=>'15.png',  'name'=>'MSRDC'],
+    ['file'=>'22.png',  'name'=>'PMRDA'],
+    ['file'=>'10.png',  'name'=>'Thane Municipal Corporation'],
+    ['file'=>'12.png',  'name'=>'Jalgaon City Municipal Corporation'],
+    ['file'=>'5.png',   'name'=>'Coimbatore City Municipal Corporation'],
+    ['file'=>'4.png',   'name'=>'Thoothukudi Municipal Corporation'],
+    ['file'=>'3.png',   'name'=>'Lonavala Municipal Council'],
+    ['file'=>'2.png',   'name'=>'Talegaon Municipal Council'],
+    ['file'=>'11-1.png','name'=>'Beed Municipal Council'],
+    ['file'=>'18.png',  'name'=>'Shrivardhan Municipal Council'],
+    ['file'=>'14-1.png','name'=>'Kalyan Dombivali Municipal Corporation'],
+    ['file'=>'23.png',  'name'=>'Municipal Corporation Bathinda'],
+    ['file'=>'24.png',  'name'=>'Rural Water Supply & Sanitation Dept., Karnataka'],
+    ['file'=>'17.png',  'name'=>'Public Works Department, Karnataka'],
+    ['file'=>'6.png',   'name'=>'Tamil Nadu Urban Infrastructure Financial Services'],
+    ['file'=>'9.png',   'name'=>'Road Construction Department'],
+    ['file'=>'21.png',  'name'=>'IN-RIMT'],
+  ];
+@endphp
+<section style="background:#fff;padding-top:3.5rem;padding-bottom:3.5rem;border-top:1px solid #E8E0D4;overflow:hidden;">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 mb-10 flex items-center justify-between" data-reveal>
+    <div class="flex items-center gap-3">
       <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
-      <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B]">Trusted By</p>
+      <p class="text-[10px] uppercase tracking-[0.32em] text-[#8B8275]">Trusted By</p>
     </div>
-    <h2 class="font-display font-light text-display-md text-[#FAF7F3] leading-none">Clients & Collaborators</h2>
+    <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">Clients & Collaborators</h2>
   </div>
-  <div class="overflow-hidden mb-6">
-    <div id="marquee-row1" class="flex items-center gap-10 whitespace-nowrap" style="width: max-content">
-      @php
-        $c1 = $clients['row1'] ?? ['Tata Group','Godrej Properties','Mahindra Lifespaces','L&T Realty','Prestige Group','Brigade Group','Shapoorji Pallonji','Oberoi Realty'];
-        $c1 = array_merge($c1, $c1);
-      @endphp
-      @foreach($c1 as $client)
-        <span class="text-[#FAF7F3] text-3xl lg:text-5xl font-display font-light uppercase tracking-[0.1em] shrink-0">{{ $client }}</span>
-        <span class="text-[#B5451B] text-2xl shrink-0">✦</span>
-      @endforeach
-    </div>
-  </div>
-  <div class="overflow-hidden">
-    <div id="marquee-row2" class="flex items-center gap-10 whitespace-nowrap" style="width: max-content">
-      @php
-        $c2 = $clients['row2'] ?? ['MHADA','Smart Cities Mission','NHAI','PWD Maharashtra','CPWD','Municipal Corporation','Kirloskar Group','Bajaj Auto'];
-        $c2 = array_merge($c2, $c2);
-      @endphp
-      @foreach($c2 as $client)
-        <span class="text-[#8B8275] text-xl lg:text-2xl font-display font-light tracking-[0.08em] shrink-0">{{ $client }}</span>
-        <span class="text-[#8B8275] text-lg shrink-0">·</span>
+
+  <div class="relative">
+    <div class="absolute inset-y-0 left-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to right,#fff,transparent)"></div>
+    <div class="absolute inset-y-0 right-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to left,#fff,transparent)"></div>
+
+    <div class="flex gap-14 items-center about-client-marquee" style="background:#fff">
+      @foreach([1,2] as $_)
+        @foreach($aboutClients as $c)
+          <div class="shrink-0 flex items-center justify-center about-client-logo" style="height:110px;min-width:160px;background:#fff;">
+            <img src="{{ asset('images/clients/'.$c['file']) }}"
+                 alt="{{ $c['name'] }}"
+                 title="{{ $c['name'] }}"
+                 style="max-height:96px;max-width:180px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;"
+                 loading="lazy">
+          </div>
+        @endforeach
       @endforeach
     </div>
   </div>
 </section>
+<style>
+  .about-client-marquee {
+    animation: aboutClientScroll 55s linear infinite;
+    width: max-content;
+  }
+  .about-client-marquee:hover { animation-play-state: paused; }
+  .about-client-logo img { opacity: 0.8; transition: opacity 0.3s ease; }
+  .about-client-logo:hover img { opacity: 1; }
+  @keyframes aboutClientScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+</style>
 
 {{-- ─── TESTIMONIALS ───────────────────────────────────────────────────── --}}
 @if(isset($testimonials) && $testimonials->count())

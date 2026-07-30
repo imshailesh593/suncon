@@ -13,84 +13,16 @@
   </div>
 @endif
 
-{{-- Split layout: Map left / Form right --}}
-<div class="flex flex-col lg:flex-row min-h-screen pt-[60px]">
+{{-- Split layout: Image left / Form right --}}
+<div class="flex flex-col lg:flex-row" style="padding-top:60px">
 
-  {{-- LEFT: Google Maps background + address overlay --}}
-  <div class="relative lg:w-1/2 min-h-[60vh] lg:min-h-full overflow-hidden bg-[#1C1C1C]">
+  {{-- LEFT: Image with address overlay --}}
+  <div class="relative lg:w-1/2 overflow-hidden bg-[#1C1C1C]" style="min-height:clamp(280px,60vw,100vh)">
+    <img src="{{ asset('images/contact-bg.jpg') }}"
+         class="absolute inset-0 w-full h-full object-cover"
+         alt="Suncon Engineers">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#1C1C1C] via-[#1C1C1C]/50 to-[#1C1C1C]/10 pointer-events-none"></div>
 
-    {{-- Map iframe --}}
-    @if(!empty($settings['contact.map_embed']))
-      <div class="absolute inset-0 w-full h-full">
-        {!! strip_tags($settings['contact.map_embed'], '<iframe>') !!}
-      </div>
-    @else
-      <iframe
-        src="https://maps.google.com/maps?q=Bhusari+Colony+Paud+Road+Kothrud+Pune+411038+Maharashtra&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        class="absolute inset-0 w-full h-full border-0"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Suncon Engineers Office Location">
-      </iframe>
-    @endif
-
-    {{-- Dark gradient over map so text is readable --}}
-    <div class="absolute inset-0 bg-gradient-to-t from-[#1C1C1C] via-[#1C1C1C]/60 to-[#1C1C1C]/10 pointer-events-none"></div>
-
-    {{-- Address details pinned to bottom --}}
-    <div class="absolute bottom-0 left-0 right-0 p-10 lg:p-14">
-      <p class="text-[9px] uppercase tracking-[0.3em] text-[#B5451B] mb-6">Get in Touch</p>
-      <h1 class="font-display font-light text-[clamp(2rem,4vw,3.2rem)] text-white leading-none mb-10">
-        Let's build<br><em class="italic text-[#B5451B]">something great.</em>
-      </h1>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-
-        <div>
-          <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Head Office — Pune</p>
-          <address class="not-italic text-sm text-white/90 leading-relaxed">
-            {!! nl2br(e($settings['contact.address'] ?? "P1/9, Sai Palace, Near Lohia-Jain IT Park,\nBhusari Colony (Right Side),\nPaud Road, Kothrud,\nPune – 411038, Maharashtra.")) !!}
-          </address>
-        </div>
-
-        @if(!empty($settings['contact.address2']))
-        <div>
-          <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Branch — Coimbatore</p>
-          <address class="not-italic text-sm text-white/90 leading-relaxed">
-            {!! nl2br(e($settings['contact.address2'])) !!}
-          </address>
-        </div>
-        @endif
-
-        <div>
-          <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Phone</p>
-          <div class="flex flex-col gap-1">
-            @foreach(array_filter([$settings['site.phone'] ?? '+91 93716 54387', $settings['site.phone2'] ?? '']) as $phone)
-              <a href="tel:{{ preg_replace('/\s+/', '', $phone) }}"
-                 class="text-sm text-white/90 hover:text-[#B5451B] transition-colors duration-200">{{ $phone }}</a>
-            @endforeach
-          </div>
-        </div>
-
-        <div>
-          <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Email</p>
-          <div class="flex flex-col gap-1">
-            @foreach(array_filter([$settings['site.email'] ?? 'bd@sunconengineers.com', $settings['site.email_hr'] ?? '']) as $email)
-              <a href="mailto:{{ $email }}"
-                 class="text-sm text-white/90 hover:text-[#B5451B] transition-colors duration-200 break-all">{{ $email }}</a>
-            @endforeach
-          </div>
-        </div>
-
-      </div>
-
-      @if(!empty($settings['contact.office_hours']))
-        <p class="mt-8 text-[8px] uppercase tracking-[0.25em] text-white/40">
-          {{ $settings['contact.office_hours'] }}
-        </p>
-      @endif
-    </div>
   </div>
 
   {{-- RIGHT: Contact form --}}
@@ -157,6 +89,84 @@
     </form>
 
   </div>
+</div>
+
+{{-- Map + Contact Details row --}}
+<div class="flex flex-col lg:flex-row bg-[#1C1C1C]">
+
+  {{-- Left: Map --}}
+  <div class="lg:w-1/2" style="height:480px">
+    @if(!empty($settings['contact.map_embed']))
+      {!! strip_tags($settings['contact.map_embed'], '<iframe>') !!}
+    @else
+      <iframe
+        src="https://maps.google.com/maps?q=Bhusari+Colony+Paud+Road+Kothrud+Pune+411038+Maharashtra&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        class="w-full h-full border-0"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Suncon Engineers Office Location">
+      </iframe>
+    @endif
+  </div>
+
+  {{-- Right: Contact details --}}
+  <div class="lg:w-1/2 flex flex-col justify-center px-10 lg:px-16 py-14">
+    <p class="text-[9px] uppercase tracking-[0.3em] text-[#B5451B] mb-5">Get in Touch</p>
+    <h2 class="font-display font-light text-[clamp(1.8rem,3vw,2.8rem)] text-white leading-none mb-10">
+      Let's build<br><em class="italic text-[#B5451B]">something great.</em>
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <div>
+        <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Head Office — Pune</p>
+        <address class="not-italic text-sm text-white/80 leading-relaxed">
+          {!! nl2br(e($settings['contact.address'] ?? "P1/9, Sai Palace, Near Lohia-Jain IT Park,\nBhusari Colony (Right Side),\nPaud Road, Kothrud,\nPune – 411038, Maharashtra, India.")) !!}
+        </address>
+      </div>
+
+      @if(!empty($settings['contact.address2']))
+      <div>
+        <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Branch — Coimbatore</p>
+        <address class="not-italic text-sm text-white/80 leading-relaxed">
+          {!! nl2br(e($settings['contact.address2'])) !!}
+        </address>
+      </div>
+      @else
+      <div>
+        <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Branch — Coimbatore</p>
+        <address class="not-italic text-sm text-white/80 leading-relaxed">
+          D.No.26, 3rd Street, 2nd Cross<br>Alamu Nagar, Sathy Road,<br>Coimbatore, Tamil Nadu 641 012.
+        </address>
+      </div>
+      @endif
+
+      <div>
+        <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Phone</p>
+        <div class="flex flex-col gap-1">
+          @foreach(array_filter([$settings['site.phone'] ?? '+91 93716 54387', $settings['site.phone2'] ?? '+91 74200 02915']) as $phone)
+            <a href="tel:{{ preg_replace('/\s+/', '', $phone) }}"
+               class="text-sm text-white/80 hover:text-[#B5451B] transition-colors duration-200">{{ $phone }}</a>
+          @endforeach
+        </div>
+      </div>
+
+      <div>
+        <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Email</p>
+        <div class="flex flex-col gap-1">
+          @foreach(array_filter([$settings['site.email'] ?? 'bd@sunconengineers.com', $settings['site.email_hr'] ?? 'hr@sunconengineers.com']) as $email)
+            <a href="mailto:{{ $email }}"
+               class="text-sm text-white/80 hover:text-[#B5451B] transition-colors duration-200 break-all">{{ $email }}</a>
+          @endforeach
+        </div>
+      </div>
+    </div>
+
+    @if(!empty($settings['contact.office_hours']))
+      <p class="mt-8 text-[8px] uppercase tracking-[0.25em] text-white/40">{{ $settings['contact.office_hours'] }}</p>
+    @endif
+  </div>
+
 </div>
 
 @endsection

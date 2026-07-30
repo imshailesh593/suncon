@@ -13,10 +13,15 @@
 {{-- ─── HERO ─────────────────────────────────────────────────────────────── --}}
 <section class="relative h-screen min-h-[680px] max-h-[1060px] overflow-hidden flex flex-col justify-end" data-dark>
 
-  <div id="hero-bg" class="absolute inset-0 scale-[1.12] will-change-transform">
-    <img src="{{ asset('images/hero-bg.jpg') }}"
-         alt="{{ $settings['site.name'] ?? 'Suncon Engineers' }}"
-         class="w-full h-full object-cover">
+  <div id="hero-bg" class="absolute inset-0 will-change-transform">
+    <video autoplay muted loop playsinline
+           poster="{{ asset('images/hero-bg.jpg') }}"
+           class="w-full h-full object-cover"
+           preload="auto">
+      <source src="{{ asset('videos/hero.mp4') }}" type="video/mp4">
+      {{-- Fallback for browsers without video support --}}
+      <img src="{{ asset('images/hero-bg.jpg') }}" alt="{{ $settings['site.name'] ?? 'Suncon Engineers' }}" class="w-full h-full object-cover">
+    </video>
     <div class="absolute inset-0 bg-gradient-to-b from-[#1C1C1C]/65 via-[#1C1C1C]/30 to-[#1C1C1C]/78"></div>
     <div class="absolute inset-0 bg-gradient-to-r from-[#1C1C1C]/30 to-transparent"></div>
   </div>
@@ -30,20 +35,15 @@
       <span class="block text-display-xl text-white word-split">{{ $settings['homepage.hero_line1'] ?? 'Architecture' }}</span>
       <span class="block text-display-xl font-bold text-[#B5451B] word-split">{{ $settings['homepage.hero_line2'] ?? '& Design.' }}</span>
     </h1>
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-10" data-reveal>
-      <p class="max-w-md text-white/60 text-sm leading-relaxed font-light">
-        {{ $settings['homepage.hero_subtitle'] ?? 'A multidisciplinary consultancy delivering architecture, landscape & interior design across India since 1999.' }}
-      </p>
-      <div class="flex flex-wrap items-center gap-3 sm:gap-6">
-        <a href="{{ url('/projects') }}"
-           class="text-[10px] uppercase tracking-[0.2em] bg-[#B5451B] text-white px-7 py-3.5 hover:bg-[#9a3a17] transition-colors duration-300">
-          {{ $settings['homepage.cta_primary'] ?? 'View Our Work' }} →
-        </a>
-        <a href="{{ url('/services') }}"
-           class="text-[10px] uppercase tracking-[0.2em] border border-white/30 text-white px-7 py-3.5 hover:border-[#B5451B] hover:text-[#B5451B] transition-all duration-300">
-          {{ $settings['homepage.cta_secondary'] ?? 'Our Services' }}
-        </a>
-      </div>
+    <div class="flex flex-wrap items-center gap-3 sm:gap-6" data-reveal>
+      <a href="{{ url('/projects') }}"
+         class="text-[10px] uppercase tracking-[0.2em] bg-[#B5451B] text-white px-7 py-3.5 hover:bg-[#9a3a17] transition-colors duration-300">
+        {{ $settings['homepage.cta_primary'] ?? 'View Our Work' }} →
+      </a>
+      <a href="{{ url('/services') }}"
+         class="text-[10px] uppercase tracking-[0.2em] border border-white/30 text-white px-7 py-3.5 hover:border-[#B5451B] hover:text-[#B5451B] transition-all duration-300">
+        {{ $settings['homepage.cta_secondary'] ?? 'Our Services' }}
+      </a>
     </div>
   </div>
 
@@ -176,7 +176,7 @@
 <div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
 
 {{-- ─── STATISTICS ──────────────────────────────────────────────────────── --}}
-<section class="bg-[#1C1C1C] relative" data-dark>
+<section class="bg-[#3D4A28] relative" data-dark>
   @php
     $stats = !empty($statistics) ? $statistics : [
       ['value'=>'25','suffix'=>'+','label'=>'Years of Practice'],
@@ -194,18 +194,11 @@
           <span class="font-display font-light text-display-xl text-[#FAF7F3] leading-none stat-num" data-counter data-target="{{ $stat['value'] }}">0</span>
           <span class="font-display font-light text-display-md text-[#B5451B] leading-none stat-suf">{{ $stat['suffix'] }}</span>
         </div>
-        <p class="text-[#5C5652] text-[9px] uppercase tracking-[0.22em]">{{ $stat['label'] }}</p>
+        <p class="text-[#A8B898] text-[9px] uppercase tracking-[0.22em]">{{ $stat['label'] }}</p>
       </div>
     @endforeach
   </div>
   <style>
-    #stats-grid > div:nth-child(2n)   { border-left:  1px solid rgba(255,255,255,0.07); }
-    #stats-grid > div:nth-child(n+3)  { border-top:   1px solid rgba(255,255,255,0.07); }
-    @media (min-width: 768px) {
-      #stats-grid > div                             { border: none; }
-      #stats-grid > div:not(:nth-child(3n+1))       { border-left:  1px solid rgba(255,255,255,0.07); }
-      #stats-grid > div:nth-child(n+4)              { border-top:   1px solid rgba(255,255,255,0.07); }
-    }
     @media (max-width: 479px) {
       .stat-num { font-size: clamp(1.8rem, 9vw, 3rem) !important; letter-spacing: -0.02em; }
       .stat-suf { font-size: clamp(1.2rem, 5vw, 2rem) !important; }
@@ -215,6 +208,77 @@
 
 {{-- spacer --}}
 <div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
+
+{{-- ─── CLIENT LOGOS MARQUEE ────────────────────────────────────────────── --}}
+@php
+  $clients = [
+    ['file'=>'1.png',   'name'=>'Indian Railways'],
+    ['file'=>'16.png',  'name'=>'Delhi Metro Rail Corporation'],
+    ['file'=>'20.png',  'name'=>'Reliance'],
+    ['file'=>'19.png',  'name'=>'Volkswagen'],
+    ['file'=>'8.png',   'name'=>'Cadbury'],
+    ['file'=>'13.png',  'name'=>'Castrol'],
+    ['file'=>'7.png',   'name'=>'MIDC'],
+    ['file'=>'15.png',  'name'=>'MSRDC'],
+    ['file'=>'22.png',  'name'=>'PMRDA'],
+    ['file'=>'10.png',  'name'=>'Thane Municipal Corporation'],
+    ['file'=>'12.png',  'name'=>'Jalgaon City Municipal Corporation'],
+    ['file'=>'5.png',   'name'=>'Coimbatore City Municipal Corporation'],
+    ['file'=>'4.png',   'name'=>'Thoothukudi Municipal Corporation'],
+    ['file'=>'3.png',   'name'=>'Lonavala Municipal Council'],
+    ['file'=>'2.png',   'name'=>'Talegaon Municipal Council'],
+    ['file'=>'11-1.png','name'=>'Beed Municipal Council'],
+    ['file'=>'18.png',  'name'=>'Shrivardhan Municipal Council'],
+    ['file'=>'14-1.png','name'=>'Kalyan Dombivali Municipal Corporation'],
+    ['file'=>'23.png',  'name'=>'Municipal Corporation Bathinda'],
+    ['file'=>'24.png',  'name'=>'Rural Water Supply & Sanitation Dept., Karnataka'],
+    ['file'=>'17.png',  'name'=>'Public Works Department, Karnataka'],
+    ['file'=>'6.png',   'name'=>'Tamil Nadu Urban Infrastructure Financial Services'],
+    ['file'=>'9.png',   'name'=>'Road Construction Department'],
+    ['file'=>'21.png',  'name'=>'IN-RIMT'],
+  ];
+@endphp
+<section style="background:#fff;padding-top:3.5rem;padding-bottom:3.5rem;border-top:1px solid #E8E0D4;overflow:hidden;">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 mb-10 flex items-center justify-between" data-reveal>
+    <div class="flex items-center gap-3">
+      <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
+      <p class="text-[10px] uppercase tracking-[0.32em] text-[#8B8275]">Trusted By</p>
+    </div>
+    <p class="text-[9px] uppercase tracking-[0.2em] text-[#8B8275]/60">{{ count($clients) }}+ Clients Across India</p>
+  </div>
+
+  <div class="relative">
+    <div class="absolute inset-y-0 left-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to right,#fff,transparent)"></div>
+    <div class="absolute inset-y-0 right-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to left,#fff,transparent)"></div>
+
+    <div class="flex gap-14 items-center client-marquee-track" style="background:#fff">
+      @foreach([1,2] as $_)
+        @foreach($clients as $c)
+          <div class="shrink-0 flex items-center justify-center client-logo-item" style="height:110px;min-width:160px;background:#fff;">
+            <img src="{{ asset('images/clients/'.$c['file']) }}"
+                 alt="{{ $c['name'] }}"
+                 title="{{ $c['name'] }}"
+                 style="max-height:96px;max-width:180px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;"
+                 loading="lazy">
+          </div>
+        @endforeach
+      @endforeach
+    </div>
+  </div>
+</section>
+<style>
+  .client-marquee-track {
+    animation: clientScroll 55s linear infinite;
+    width: max-content;
+  }
+  .client-marquee-track:hover { animation-play-state: paused; }
+  .client-logo-item img { opacity: 0.8; transition: opacity 0.3s ease; }
+  .client-logo-item:hover img { opacity: 1; }
+  @keyframes clientScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+</style>
 
 {{-- ─── SERVICES GRID ────────────────────────────────────────────────────── --}}
 @php
@@ -277,7 +341,9 @@
                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                  loading="lazy">
           @else
-            <div class="absolute inset-0 bg-gradient-to-br from-[#2A2420] to-[#1C1C1C]"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-[#2A2420] to-[#1C1C1C]">
+              <div class="arch-grid-light"></div>
+            </div>
           @endif
 
           {{-- Permanent dark gradient from bottom --}}
@@ -298,21 +364,9 @@
 
           {{-- Content — bottom --}}
           <div class="absolute bottom-0 left-0 right-0 p-5">
-            {{-- Sweep line --}}
-            <div class="relative h-px bg-white/15 mb-4 overflow-hidden">
-              <div class="absolute inset-y-0 left-0 bg-[#B5451B] transition-all duration-500 ease-out w-0 group-hover:w-full"></div>
-            </div>
-
-            <h3 class="font-display font-light text-[1.05rem] leading-snug text-white mb-2 group-hover:text-[#F5C4A8] transition-colors duration-300">
+            <h3 class="font-display font-semibold text-[1.45rem] leading-snug text-white tracking-[0.04em] group-hover:text-[#F5C4A8] transition-colors duration-300">
               {{ $title }}
             </h3>
-            @if($tagline)
-              <p class="text-white/55 text-[11px] leading-relaxed line-clamp-2 mb-4">{{ $tagline }}</p>
-            @endif
-            <p class="text-[9px] uppercase tracking-[0.22em] text-[#B5451B] flex items-center gap-2">
-              Explore
-              <span class="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-            </p>
           </div>
         </a>
       @endforeach
@@ -365,7 +419,7 @@
       </div>
 
       {{-- Right: Content --}}
-      <div class="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-10 overflow-y-auto">
+      <div class="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-10 overflow-hidden">
         <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-3">
           {{ $dlabels[$p->discipline] ?? ucfirst($p->discipline ?? 'Project') }}
         </p>
@@ -386,8 +440,8 @@
   </div>
 
   {{-- Horizontal scrollable thumbnail nav (BELOW main display) — fixed height --}}
-  <div class="border-t border-[#1C1C1C]/10 bg-[#EDE6DC] overflow-x-auto shrink-0" id="fp-thumbs-wrap">
-    <div class="flex w-full divide-x divide-[#1C1C1C]/10" id="fp-thumbs">
+  <div class="bg-[#EDE6DC] overflow-hidden shrink-0" id="fp-thumbs-wrap">
+    <div class="flex w-full" id="fp-thumbs">
       @foreach($projects as $i => $p)
       <button
         class="fp-thumb group flex-1 flex items-center gap-3 px-4 py-4 transition-all duration-200 relative

@@ -79,44 +79,25 @@
       <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-20 grid md:grid-cols-2 gap-16 items-center">
 
         {{-- Image --}}
-        <div class="{{ $isEven ? 'order-first' : 'order-first md:order-last' }} overflow-hidden aspect-[4/3] bg-[#E8E0D4]" data-reveal>
+        <div class="{{ $isEven ? 'order-first' : 'order-first md:order-last' }} overflow-hidden bg-[#E8E0D4]" style="height:clamp(200px,32vw,400px)" data-reveal>
           @if(!is_array($svc) && $svc->imageUrl)
             <img src="{{ $svc->imageUrl }}"
                  alt="{{ $svc->title }}"
                  class="w-full h-full object-cover"
                  loading="lazy">
           @else
-            <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad]
-                        flex items-center justify-center">
-              <span class="font-display font-light text-6xl text-[#8B8275] opacity-20">0{{ $i + 1 }}</span>
+            <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad] relative flex items-center justify-center">
+              <div class="arch-grid opacity-30"></div>
+              <span class="font-display font-light text-[#8B8275]/30 select-none" style="font-size:clamp(5rem,12vw,10rem);line-height:1">0{{ $i + 1 }}</span>
             </div>
           @endif
         </div>
 
         {{-- Content --}}
         <div class="{{ $isEven ? '' : 'order-last md:order-first' }}" data-reveal>
-          <p class="text-[9px] uppercase tracking-[0.3em] text-[#8B8275] mb-4">0{{ $i + 1 }}</p>
-          <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none mb-3">
+          <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none mb-8">
             {{ is_array($svc) ? $svc['title'] : $svc->title }}
           </h2>
-          <p class="text-[#B5451B] text-sm font-light mb-6 font-display">
-            {{ is_array($svc) ? $svc['tagline'] : $svc->tagline }}
-          </p>
-          <p class="text-[#8B8275] text-sm leading-relaxed font-light mb-8">
-            {{ is_array($svc) ? $svc['description'] : $svc->description }}
-          </p>
-
-          @php $features = is_array($svc) ? ($svc['features'] ?? []) : ($svc->features ?? []); @endphp
-          @if(count($features))
-            <ul class="flex flex-col gap-2.5 mb-8">
-              @foreach($features as $feat)
-                <li class="flex items-center gap-3 text-[10px] uppercase tracking-[0.15em] text-[#1C1C1C]">
-                  <span class="w-4 h-px bg-[#B5451B] shrink-0"></span>
-                  {{ $feat }}
-                </li>
-              @endforeach
-            </ul>
-          @endif
           @if(!is_array($svc))
             <a href="{{ route('services.show', $svc->slug) }}"
                class="inline-block text-[9px] uppercase tracking-[0.22em] border border-[#1C1C1C]/20 text-[#1C1C1C] px-6 py-3 hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">

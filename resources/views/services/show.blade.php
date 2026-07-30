@@ -14,9 +14,9 @@ $svcBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
 
 @section('content')
 
-{{-- Hero --}}
-<section class="bg-[#FAF7F3] pt-36 pb-20 px-6 lg:px-12 border-b border-[#E8E0D4]">
-  <div class="max-w-screen-xl mx-auto">
+{{-- Hero: two-column, image right --}}
+<section class="bg-[#FAF7F3] pt-36 pb-0 border-b border-[#E8E0D4] overflow-hidden">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
 
     {{-- Breadcrumb --}}
     <nav class="flex items-center gap-2 text-[9px] uppercase tracking-[0.22em] text-[#8B8275] mb-10">
@@ -26,51 +26,29 @@ $svcBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
       <span class="opacity-40">/</span>
       <span class="text-[#1C1C1C]">{{ $service->title }}</span>
     </nav>
-
-    <div class="grid md:grid-cols-2 gap-16 items-end">
-      <div>
-        <h1 class="font-display font-light text-display-lg text-[#1C1C1C] leading-none" data-reveal>
-          {{ $service->title }}
-        </h1>
-      </div>
-      @if($service->tagline)
-        <p class="font-display font-light text-xl text-[#B5451B] leading-snug" data-reveal>
-          {{ $service->tagline }}
-        </p>
-      @endif
-    </div>
   </div>
-</section>
 
-{{-- Hero Image --}}
-@if($service->imageUrl)
-<div class="w-full aspect-[21/7] overflow-hidden bg-[#E8E0D4]">
-  <img src="{{ $service->imageUrl }}" alt="{{ $service->title }}"
-       class="w-full h-full object-cover" loading="eager">
-</div>
-@endif
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 gap-0 items-stretch">
 
-{{-- Description + Features --}}
-<section class="bg-[#FAF7F3] py-24 px-6 lg:px-12">
-  <div class="max-w-screen-xl mx-auto grid md:grid-cols-[1.4fr_1fr] gap-20">
+    {{-- Left: title + description + features --}}
+    <div class="py-10 lg:py-16 pr-0 lg:pr-16 flex flex-col justify-center" data-reveal>
+      <h1 class="font-display font-light text-display-lg text-[#1C1C1C] leading-none mb-10">
+        {{ $service->title }}
+      </h1>
 
-    {{-- Left: description --}}
-    <div data-reveal>
       <p class="text-[#1C1C1C] text-base leading-relaxed font-light mb-8">
         {{ $service->description }}
       </p>
+
       @if($service->long_description)
-        <p class="text-[#8B8275] text-sm leading-relaxed font-light">
+        <p class="text-[#8B8275] text-sm leading-relaxed font-light mb-8">
           {{ $service->long_description }}
         </p>
       @endif
-    </div>
 
-    {{-- Right: features --}}
-    @if($service->features && count($service->features))
-      <div data-reveal>
-        <p class="text-[9px] uppercase tracking-[0.3em] text-[#8B8275] mb-6">What's Included</p>
-        <ul class="flex flex-col gap-4">
+      @if($service->features && count($service->features))
+        <p class="text-[9px] uppercase tracking-[0.3em] text-[#8B8275] mb-5">What's Included</p>
+        <ul class="flex flex-col gap-3">
           @foreach($service->features as $feat)
             <li class="flex items-start gap-4 text-sm text-[#1C1C1C] font-light">
               <span class="w-5 h-px bg-[#B5451B] shrink-0 mt-2.5"></span>
@@ -78,8 +56,21 @@ $svcBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
             </li>
           @endforeach
         </ul>
-      </div>
-    @endif
+      @endif
+    </div>
+
+    {{-- Right: image --}}
+    <div class="relative overflow-hidden bg-[#E8E0D4]" style="min-height:clamp(280px,50vw,560px);" data-reveal>
+      @if($service->imageUrl)
+        <img src="{{ $service->imageUrl }}" alt="{{ $service->title }}"
+             class="absolute inset-0 w-full h-full object-cover" loading="eager">
+      @else
+        <div class="absolute inset-0 bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad] flex items-center justify-center">
+          <span class="font-display font-light text-8xl text-[#8B8275] opacity-15">{{ substr($service->title, 0, 1) }}</span>
+        </div>
+      @endif
+    </div>
+
   </div>
 </section>
 
