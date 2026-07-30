@@ -5,176 +5,158 @@
 
 @section('content')
 
-{{-- Page Header --}}
-<section class="bg-[#FAF7F3] pt-36 pb-16 px-6 lg:px-12 border-b border-[#E8E0D4]">
-  <div class="max-w-screen-xl mx-auto">
-    <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-5" data-reveal>Get in Touch</p>
-    <h1 class="font-display font-light text-display-lg text-[#1C1C1C] leading-none" data-reveal>
-      {{ $settings['contact.hero_title'] ?? 'Contact' }}
-    </h1>
-  </div>
-</section>
-
 @if(session('success'))
-  <div class="bg-[#B5451B] text-white px-6 lg:px-12 py-5">
-    <div class="max-w-screen-xl mx-auto">
-      <span class="text-sm">{{ session('success') }}</span>
+  <div class="bg-[#B5451B] text-white px-6 lg:px-12 py-5 fixed top-[60px] left-0 right-0 z-40">
+    <div class="max-w-screen-xl mx-auto flex items-center justify-between">
+      <span class="text-sm font-medium">{{ session('success') }}</span>
     </div>
   </div>
 @endif
 
-{{-- Main Content --}}
-<section class="bg-[#FAF7F3] py-20 px-6 lg:px-12">
-  <div class="max-w-screen-xl mx-auto grid md:grid-cols-[1fr_1.4fr] gap-20">
+{{-- Split layout: Map left / Form right --}}
+<div class="flex flex-col lg:flex-row min-h-screen pt-[60px]">
 
-    {{-- Left: offices + info --}}
-    <div data-reveal>
-      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none mb-12">
+  {{-- LEFT: Google Maps background + address overlay --}}
+  <div class="relative lg:w-1/2 min-h-[60vh] lg:min-h-full overflow-hidden bg-[#1C1C1C]">
+
+    {{-- Map iframe --}}
+    @if(!empty($settings['contact.map_embed']))
+      <div class="absolute inset-0 w-full h-full">
+        {!! strip_tags($settings['contact.map_embed'], '<iframe>') !!}
+      </div>
+    @else
+      <iframe
+        src="https://maps.google.com/maps?q=Bhusari+Colony+Paud+Road+Kothrud+Pune+411038+Maharashtra&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        class="absolute inset-0 w-full h-full border-0"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Suncon Engineers Office Location">
+      </iframe>
+    @endif
+
+    {{-- Dark gradient over map so text is readable --}}
+    <div class="absolute inset-0 bg-gradient-to-t from-[#1C1C1C] via-[#1C1C1C]/60 to-[#1C1C1C]/10 pointer-events-none"></div>
+
+    {{-- Address details pinned to bottom --}}
+    <div class="absolute bottom-0 left-0 right-0 p-10 lg:p-14">
+      <p class="text-[9px] uppercase tracking-[0.3em] text-[#B5451B] mb-6">Get in Touch</p>
+      <h1 class="font-display font-light text-[clamp(2rem,4vw,3.2rem)] text-white leading-none mb-10">
         Let's build<br><em class="italic text-[#B5451B]">something great.</em>
-      </h2>
+      </h1>
 
-      <div class="mb-10">
-        <p class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-4">Head Office — Pune</p>
-        <address class="not-italic text-sm text-[#1C1C1C] leading-relaxed font-light">
-          {!! nl2br(e($settings['contact.address'] ?? "P1/9, Sai Palace, Near Lohia-Jain IT Park, Bhusari Colony (Right Side), Paud Road, Kothrud, Pune – 411038, Maharashtra, India.")) !!}
-        </address>
-      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
 
-      @if(!empty($settings['contact.address2']))
-      <div class="mb-10">
-        <p class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-4">Branch Office — Coimbatore</p>
-        <address class="not-italic text-sm text-[#1C1C1C] leading-relaxed font-light">
-          {!! nl2br(e($settings['contact.address2'])) !!}
-        </address>
+        <div>
+          <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Head Office — Pune</p>
+          <address class="not-italic text-sm text-white/90 leading-relaxed">
+            {!! nl2br(e($settings['contact.address'] ?? "P1/9, Sai Palace, Near Lohia-Jain IT Park,\nBhusari Colony (Right Side),\nPaud Road, Kothrud,\nPune – 411038, Maharashtra.")) !!}
+          </address>
+        </div>
+
+        @if(!empty($settings['contact.address2']))
+        <div>
+          <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Branch — Coimbatore</p>
+          <address class="not-italic text-sm text-white/90 leading-relaxed">
+            {!! nl2br(e($settings['contact.address2'])) !!}
+          </address>
+        </div>
+        @endif
+
+        <div>
+          <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Phone</p>
+          <div class="flex flex-col gap-1">
+            @foreach(array_filter([$settings['site.phone'] ?? '+91 93716 54387', $settings['site.phone2'] ?? '']) as $phone)
+              <a href="tel:{{ preg_replace('/\s+/', '', $phone) }}"
+                 class="text-sm text-white/90 hover:text-[#B5451B] transition-colors duration-200">{{ $phone }}</a>
+            @endforeach
+          </div>
+        </div>
+
+        <div>
+          <p class="text-[8px] uppercase tracking-[0.3em] text-white/40 mb-2">Email</p>
+          <div class="flex flex-col gap-1">
+            @foreach(array_filter([$settings['site.email'] ?? 'bd@sunconengineers.com', $settings['site.email_hr'] ?? '']) as $email)
+              <a href="mailto:{{ $email }}"
+                 class="text-sm text-white/90 hover:text-[#B5451B] transition-colors duration-200 break-all">{{ $email }}</a>
+            @endforeach
+          </div>
+        </div>
+
       </div>
-      @endif
 
       @if(!empty($settings['contact.office_hours']))
-      <div class="mb-10">
-        <p class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-4">Office Hours</p>
-        <p class="text-sm text-[#1C1C1C] font-light">{{ $settings['contact.office_hours'] }}</p>
-      </div>
-      @endif
-
-      <div class="mb-10">
-        <p class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-4">Phone</p>
-        <div class="flex flex-col gap-1">
-          @foreach(array_filter([$settings['site.phone'] ?? '+91 93716 54387', $settings['site.phone2'] ?? '+91 74200 02915']) as $phone)
-            <a href="tel:{{ preg_replace('/\s+/', '', $phone) }}"
-               class="text-sm text-[#1C1C1C] hover:text-[#B5451B] transition-colors duration-200 font-light">{{ $phone }}</a>
-          @endforeach
-        </div>
-      </div>
-
-      <div class="mb-10">
-        <p class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-4">Email</p>
-        <div class="flex flex-col gap-1">
-          @foreach(array_filter([$settings['site.email'] ?? 'bd@sunconengineers.com', $settings['site.email_hr'] ?? 'hr@sunconengineers.com']) as $email)
-            <a href="mailto:{{ $email }}"
-               class="text-sm text-[#1C1C1C] hover:text-[#B5451B] transition-colors duration-200 font-light break-all">{{ $email }}</a>
-          @endforeach
-        </div>
-      </div>
-
-      @php
-        $socials = array_filter([
-          'Instagram' => $settings['site.social_instagram'] ?? '',
-          'LinkedIn'  => $settings['site.social_linkedin']  ?? '',
-          'Facebook'  => $settings['site.social_facebook']  ?? '',
-          'YouTube'   => $settings['site.social_youtube']   ?? '',
-          'Twitter'   => $settings['site.social_twitter']   ?? '',
-          'Behance'   => $settings['site.social_behance']   ?? '',
-        ]);
-      @endphp
-      @if(count($socials))
-      <div>
-        <p class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-4">Follow Us</p>
-        <div class="flex flex-wrap gap-4">
-          @foreach($socials as $label => $url)
-            <a href="{{ $url }}" target="_blank" rel="noopener noreferrer"
-               class="text-[10px] uppercase tracking-[0.15em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-200">
-              {{ $label }}
-            </a>
-          @endforeach
-        </div>
-      </div>
+        <p class="mt-8 text-[8px] uppercase tracking-[0.25em] text-white/40">
+          {{ $settings['contact.office_hours'] }}
+        </p>
       @endif
     </div>
+  </div>
 
-    {{-- Right: form --}}
-    <div data-reveal>
-      <form action="{{ route('contact.submit') }}" method="POST" class="flex flex-col gap-6">
-        @csrf
+  {{-- RIGHT: Contact form --}}
+  <div class="lg:w-1/2 bg-[#FAF7F3] flex flex-col justify-center px-8 sm:px-14 lg:px-16 py-20">
 
+    <p class="text-[9px] uppercase tracking-[0.3em] text-[#8B8275] mb-3">Start a Project</p>
+    <h2 class="font-display font-light text-[clamp(1.8rem,3vw,2.6rem)] text-[#1C1C1C] leading-none mb-10">
+      Tell us about<br>your vision.
+    </h2>
+
+    <form action="{{ route('contact.submit') }}" method="POST" class="flex flex-col gap-7">
+      @csrf
+
+      <div class="grid sm:grid-cols-2 gap-7">
         <div>
-          <label for="name" class="block text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-2">Full Name *</label>
+          <label for="name" class="block text-[9px] uppercase tracking-[0.25em] text-[#1C1C1C] font-medium mb-2.5">Full Name *</label>
           <input type="text" id="name" name="name" value="{{ old('name') }}" required placeholder="Rahul Sharma"
-                 class="w-full bg-transparent border-b border-[#E8E0D4] py-3 text-sm text-[#1C1C1C] placeholder-[#8B8275]/50 focus:outline-none focus:border-[#B5451B] transition-colors duration-200 font-light">
-          @error('name')<p class="text-[#B5451B] text-xs mt-1">{{ $message }}</p>@enderror
+                 class="w-full bg-transparent border-b-2 border-[#1C1C1C]/20 py-3 text-sm text-[#1C1C1C] placeholder-[#8B8275]/60 focus:outline-none focus:border-[#B5451B] transition-colors duration-200">
+          @error('name')<p class="text-[#B5451B] text-xs mt-1.5">{{ $message }}</p>@enderror
         </div>
 
         <div>
-          <label for="email" class="block text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-2">Email Address *</label>
+          <label for="email" class="block text-[9px] uppercase tracking-[0.25em] text-[#1C1C1C] font-medium mb-2.5">Email Address *</label>
           <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="rahul@example.com"
-                 class="w-full bg-transparent border-b border-[#E8E0D4] py-3 text-sm text-[#1C1C1C] placeholder-[#8B8275]/50 focus:outline-none focus:border-[#B5451B] transition-colors duration-200 font-light">
-          @error('email')<p class="text-[#B5451B] text-xs mt-1">{{ $message }}</p>@enderror
+                 class="w-full bg-transparent border-b-2 border-[#1C1C1C]/20 py-3 text-sm text-[#1C1C1C] placeholder-[#8B8275]/60 focus:outline-none focus:border-[#B5451B] transition-colors duration-200">
+          @error('email')<p class="text-[#B5451B] text-xs mt-1.5">{{ $message }}</p>@enderror
         </div>
+      </div>
 
+      <div class="grid sm:grid-cols-2 gap-7">
         <div>
-          <label for="phone" class="block text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-2">Phone Number</label>
+          <label for="phone" class="block text-[9px] uppercase tracking-[0.25em] text-[#1C1C1C] font-medium mb-2.5">Phone Number</label>
           <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" placeholder="+91 98765 43210"
-                 class="w-full bg-transparent border-b border-[#E8E0D4] py-3 text-sm text-[#1C1C1C] placeholder-[#8B8275]/50 focus:outline-none focus:border-[#B5451B] transition-colors duration-200 font-light">
-          @error('phone')<p class="text-[#B5451B] text-xs mt-1">{{ $message }}</p>@enderror
+                 class="w-full bg-transparent border-b-2 border-[#1C1C1C]/20 py-3 text-sm text-[#1C1C1C] placeholder-[#8B8275]/60 focus:outline-none focus:border-[#B5451B] transition-colors duration-200">
+          @error('phone')<p class="text-[#B5451B] text-xs mt-1.5">{{ $message }}</p>@enderror
         </div>
 
         <div>
-          <label for="project_type" class="block text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-2">Project Type</label>
+          <label for="project_type" class="block text-[9px] uppercase tracking-[0.25em] text-[#1C1C1C] font-medium mb-2.5">Project Type</label>
           <select id="project_type" name="project_type"
-                  class="w-full bg-transparent border-b border-[#E8E0D4] py-3 text-sm text-[#1C1C1C] focus:outline-none focus:border-[#B5451B] transition-colors duration-200 font-light appearance-none cursor-pointer">
+                  class="w-full bg-transparent border-b-2 border-[#1C1C1C]/20 py-3 text-sm text-[#1C1C1C] focus:outline-none focus:border-[#B5451B] transition-colors duration-200 appearance-none cursor-pointer">
             <option value="" class="bg-[#FAF7F3]">Select a service…</option>
             @foreach(['Architecture Design','Landscape Design','Interior Design','Urban Design','Architectural BIM','PMC','Other'] as $opt)
               <option value="{{ $opt }}" {{ old('project_type') === $opt ? 'selected' : '' }} class="bg-[#FAF7F3]">{{ $opt }}</option>
             @endforeach
           </select>
         </div>
+      </div>
 
-        <div>
-          <label for="message" class="block text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-2">Message *</label>
-          <textarea id="message" name="message" rows="5" required
-                    placeholder="Tell us about your project — location, scale, timeline…"
-                    class="w-full bg-transparent border-b border-[#E8E0D4] py-3 text-sm text-[#1C1C1C] placeholder-[#8B8275]/50 focus:outline-none focus:border-[#B5451B] transition-colors duration-200 font-light resize-none">{{ old('message') }}</textarea>
-          @error('message')<p class="text-[#B5451B] text-xs mt-1">{{ $message }}</p>@enderror
-        </div>
+      <div>
+        <label for="message" class="block text-[9px] uppercase tracking-[0.25em] text-[#1C1C1C] font-medium mb-2.5">Message *</label>
+        <textarea id="message" name="message" rows="5" required
+                  placeholder="Tell us about your project — location, scale, timeline…"
+                  class="w-full bg-transparent border-b-2 border-[#1C1C1C]/20 py-3 text-sm text-[#1C1C1C] placeholder-[#8B8275]/60 focus:outline-none focus:border-[#B5451B] transition-colors duration-200 resize-none">{{ old('message') }}</textarea>
+        @error('message')<p class="text-[#B5451B] text-xs mt-1.5">{{ $message }}</p>@enderror
+      </div>
 
-        <div class="pt-4">
-          <button type="submit"
-                  class="text-[10px] uppercase tracking-[0.22em] bg-[#B5451B] text-white px-10 py-4 hover:bg-[#9a3a17] transition-colors duration-300 w-full sm:w-auto">
-            Send Message →
-          </button>
-        </div>
-      </form>
-    </div>
+      <div class="pt-2">
+        <button type="submit"
+                class="text-[10px] uppercase tracking-[0.22em] bg-[#B5451B] text-white px-10 py-4 hover:bg-[#9a3a17] transition-colors duration-300 w-full sm:w-auto">
+          Send Message →
+        </button>
+      </div>
+    </form>
+
   </div>
-</section>
-
-{{-- Map --}}
-@if(!empty($settings['contact.map_embed']))
-  <div class="h-80 bg-[#E8E0D4] overflow-hidden">
-    {!! strip_tags($settings['contact.map_embed'], '<iframe>') !!}
-  </div>
-@else
-  <section class="bg-[#E8E0D4] h-64 flex items-center justify-center overflow-hidden">
-    <div class="text-center">
-      <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-2">
-        {{ $settings['site.name'] ?? 'Suncon Engineers' }} — Kothrud, Pune
-      </p>
-      <a href="https://maps.google.com/?q=Bhusari+Colony+Paud+Road+Kothrud+Pune+411038"
-         target="_blank" rel="noopener noreferrer"
-         class="text-[10px] uppercase tracking-[0.2em] text-[#B5451B] border-b border-[#B5451B] pb-0.5">
-        Open in Maps →
-      </a>
-    </div>
-  </section>
-@endif
+</div>
 
 @endsection

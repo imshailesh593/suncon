@@ -37,9 +37,17 @@ if (cursorDot && cursorRing) {
     let ringX = 0, ringY = 0;
     let mouseX = 0, mouseY = 0;
     let onDark = false;
+    let lastSampleTime = 0;
 
-    // Walk up DOM from element under cursor; return true if surface is dark
+    // Apply will-change so the browser composites these on the GPU
+    cursorDot.style.willChange  = 'transform';
+    cursorRing.style.willChange = 'transform';
+
+    // Throttled: walk DOM only every 80 ms, not on every pixel move
     function sampleSurface(x, y) {
+      const now = performance.now();
+      if (now - lastSampleTime < 80) return onDark;
+      lastSampleTime = now;
       const el = document.elementFromPoint(x, y);
       if (!el) return false;
       if (el.closest('[data-dark]')) return true;
@@ -62,21 +70,26 @@ if (cursorDot && cursorRing) {
     function setCursorColor(dark) {
       if (dark === onDark) return;
       onDark = dark;
-      cursorDot.style.background    = dark ? '#ffffff' : '#1C1C1C';
-      cursorRing.style.borderColor  = dark ? 'rgba(255,255,255,0.6)' : 'rgba(28,28,28,0.45)';
+      cursorDot.style.background   = dark ? '#ffffff' : '#1C1C1C';
+      cursorRing.style.borderColor = dark ? 'rgba(255,255,255,0.6)' : 'rgba(28,28,28,0.45)';
     }
 
+    // Only record position on mousemove — no DOM work here
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      gsap.set(cursorDot, { x: mouseX, y: mouseY });
-      setCursorColor(sampleSurface(mouseX, mouseY));
-    });
+    }, { passive: true });
 
+    // All rendering in a single RAF-synced ticker
     gsap.ticker.add(() => {
-      ringX += (mouseX - ringX) * 0.25;
-      ringY += (mouseY - ringY) * 0.25;
+      // Dot snaps instantly
+      gsap.set(cursorDot, { x: mouseX, y: mouseY });
+      // Ring follows with gentle lerp
+      ringX += (mouseX - ringX) * 0.28;
+      ringY += (mouseY - ringY) * 0.28;
       gsap.set(cursorRing, { x: ringX, y: ringY });
+      // Color sample throttled
+      setCursorColor(sampleSurface(mouseX, mouseY));
     });
 
     document.querySelectorAll('a, button, [role="button"]').forEach((el) => {

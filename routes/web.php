@@ -6,6 +6,7 @@ use App\Http\Controllers\BimController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,7 @@ Route::get('/journal', [ArticleController::class, 'index'])->name('journal.index
 Route::get('/journal/{slug}', [ArticleController::class, 'show'])->name('journal.show');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::get('/search', SearchController::class)->name('search')->middleware('throttle:30,1');
 Route::post('/contact', [ContactController::class, 'submit'])->middleware('throttle:5,1')->name('contact.submit');
 
 Route::prefix('bim')->name('bim.')->group(function () {

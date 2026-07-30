@@ -17,13 +17,18 @@ $svcBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
 {{-- Hero --}}
 <section class="bg-[#FAF7F3] pt-36 pb-20 px-6 lg:px-12 border-b border-[#E8E0D4]">
   <div class="max-w-screen-xl mx-auto">
-    <a href="{{ route('services.index') }}"
-       class="inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.25em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-200 mb-8">
-      ← All Services
-    </a>
+
+    {{-- Breadcrumb --}}
+    <nav class="flex items-center gap-2 text-[9px] uppercase tracking-[0.22em] text-[#8B8275] mb-10">
+      <a href="{{ url('/') }}" class="hover:text-[#B5451B] transition-colors duration-200">Home</a>
+      <span class="opacity-40">/</span>
+      <a href="{{ route('services.index') }}" class="hover:text-[#B5451B] transition-colors duration-200">Services</a>
+      <span class="opacity-40">/</span>
+      <span class="text-[#1C1C1C]">{{ $service->title }}</span>
+    </nav>
+
     <div class="grid md:grid-cols-2 gap-16 items-end">
       <div>
-        <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-5" data-reveal>What We Do</p>
         <h1 class="font-display font-light text-display-lg text-[#1C1C1C] leading-none" data-reveal>
           {{ $service->title }}
         </h1>
@@ -121,6 +126,14 @@ $svcBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
           <span class="inline-block mt-4 text-[9px] uppercase tracking-[0.2em] text-[#B5451B]">Learn More →</span>
         </a>
       @endforeach
+
+      {{-- Last cell: View all services CTA --}}
+      <a href="{{ route('services.index') }}"
+         class="group bg-[#B5451B] p-8 flex flex-col justify-between hover:bg-[#9a3a17] transition-colors duration-300" data-reveal>
+        <span class="font-display font-light text-lg text-white leading-snug">View all<br>services</span>
+        <span class="text-[9px] uppercase tracking-[0.22em] text-white/70 group-hover:text-white transition-colors duration-200 mt-6">→ All Services</span>
+      </a>
+
     </div>
   </div>
 </section>

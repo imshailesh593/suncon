@@ -13,7 +13,6 @@
 {{-- ─── HERO ─────────────────────────────────────────────────────────────── --}}
 <section class="relative h-screen min-h-[680px] max-h-[1060px] overflow-hidden flex flex-col justify-end" data-dark>
 
-  <div class="arch-grid-light" style="z-index:1;"></div>
   <div id="hero-bg" class="absolute inset-0 scale-[1.12] will-change-transform">
     <img src="{{ asset('images/hero-bg.jpg') }}"
          alt="{{ $settings['site.name'] ?? 'Suncon Engineers' }}"
@@ -65,16 +64,6 @@
   </div>
 </section>
 
-{{-- ─── DISCIPLINE MARQUEE ──────────────────────────────────────────────── --}}
-@php $mItems = ['Architecture Design', 'Landscape Design', 'Interior Design', 'Urban Design', 'Architectural BIM', 'PMC']; @endphp
-<div class="bg-[#1C1C1C] overflow-hidden py-3" data-dark>
-  <div id="discipline-marquee" class="flex items-center whitespace-nowrap">
-    @foreach(array_merge($mItems, $mItems) as $item)
-      <span class="text-[8px] uppercase tracking-[0.3em] text-white/25 px-7 shrink-0">{{ $item }}</span>
-      <span class="text-[#B5451B]/35 shrink-0">·</span>
-    @endforeach
-  </div>
-</div>
 
 {{-- ─── STUDIO STATEMENT (scroll-fill) ─────────────────────────────────── --}}
 @php
@@ -94,7 +83,7 @@
 {{-- ─── RECENT PROJECTS ─────────────────────────────────────────────────── --}}
 <section id="projects-section" class="bg-white overflow-hidden">
 
-  <div class="px-6 lg:px-12 pt-14 md:pt-20 pb-12 flex items-end justify-between">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-14 md:pt-20 pb-12 flex items-end justify-between">
     <div data-reveal>
       <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
         {{ $settings['homepage.projects_eyebrow'] ?? 'Selected Work' }}
@@ -122,8 +111,8 @@
 
   <div class="pb-20">
     <div id="projects-track"
-         class="flex gap-4 pl-6 lg:pl-12"
-         style="padding-right: 3rem; overflow-x: auto; scroll-snap-type: x mandatory;">
+         class="flex gap-4"
+         style="padding-left: max(1.5rem, calc((100vw - 80rem) / 2 + 3rem)); padding-right: max(1.5rem, calc((100vw - 80rem) / 2 + 3rem)); overflow-x: auto; scroll-snap-type: x mandatory;">
 
       @php
         $disciplineMap = ['architecture'=>'Architecture','interior'=>'Interior Design','landscape'=>'Landscape Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC'];
@@ -172,7 +161,7 @@
     </div>
   </div>
 
-  <div class="px-6 pb-8 flex items-center justify-between md:hidden">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pb-8 flex items-center justify-between md:hidden">
     <a href="{{ url('/projects') }}" class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275]">View All →</a>
     <div class="flex items-center gap-3">
       <button onclick="document.getElementById('projects-prev').click()"
@@ -188,7 +177,6 @@
 
 {{-- ─── STATISTICS ──────────────────────────────────────────────────────── --}}
 <section class="bg-[#1C1C1C] relative" data-dark>
-  <div class="arch-grid-light"></div>
   @php
     $stats = !empty($statistics) ? $statistics : [
       ['value'=>'25','suffix'=>'+','label'=>'Years of Practice'],
@@ -242,7 +230,6 @@
 @endphp
 
 <section class="py-24 bg-[#FAF7F3] px-6 lg:px-12 relative overflow-hidden">
-  <div class="arch-grid"></div>
   <div class="max-w-screen-xl mx-auto relative">
 
     <div class="flex items-end justify-between mb-16" data-reveal>
@@ -261,7 +248,7 @@
       </a>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
       @foreach($svcList as $svc)
         @php
           $isArr   = is_array($svc);
@@ -270,49 +257,66 @@
           $slug    = $isArr ? $svc['slug']    : $svc->slug;
           $imgUrl  = $isArr ? null            : ($svc->imageUrl ?? null);
           $index   = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
+
+          $catLabel = match(true) {
+            str_contains($slug,'architecture') || str_contains($slug,'architectural') => 'Architecture',
+            str_contains($slug,'landscape')    => 'Landscape',
+            str_contains($slug,'interior')     => 'Interior',
+            str_contains($slug,'urban')        => 'Urban',
+            str_contains($slug,'bim')          => 'BIM',
+            default                            => 'PMC',
+          };
         @endphp
-        <a href="{{ route('services.show', $slug) }}" class="group block" data-reveal>
 
-          {{-- Index --}}
-          <p class="text-[9px] uppercase tracking-[0.28em] text-[#8B8275] mb-3">{{ $index }}</p>
+        <a href="{{ route('services.show', $slug) }}"
+           class="group block relative overflow-hidden aspect-[3/4] bg-[#E8E0D4]" data-reveal>
 
-          {{-- Tall portrait image --}}
-          <div class="overflow-hidden aspect-[3/4] bg-[#E8E0D4] relative">
-            @if($imgUrl)
-              <img src="{{ $imgUrl }}" alt="{{ $title }}"
-                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                   loading="lazy">
-            @else
-              <div class="w-full h-full bg-[#E8E0D4]"></div>
-            @endif
-            {{-- Subtle terracotta tint on hover --}}
-            <div class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.07] transition-opacity duration-500"
-                 style="background:#B5451B;"></div>
-          </div>
-
-          {{-- Animated sweep line --}}
-          <div class="relative h-px bg-[#E8E0D4] mt-0 mb-5 overflow-hidden">
-            <div class="absolute inset-y-0 left-0 bg-[#B5451B] transition-all duration-500 ease-out"
-                 style="width:0;" data-sweep></div>
-          </div>
-
-          <h3 class="font-display font-light text-lg text-[#1C1C1C] mb-2 leading-snug group-hover:text-[#B5451B] transition-colors duration-300">
-            {{ $title }}
-          </h3>
-          @if($tagline)
-            <p class="text-[#8B8275] text-xs leading-relaxed mb-4">{{ $tagline }}</p>
+          {{-- Background image --}}
+          @if($imgUrl)
+            <img src="{{ $imgUrl }}" alt="{{ $title }}"
+                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                 loading="lazy">
+          @else
+            <div class="absolute inset-0 bg-gradient-to-br from-[#2A2420] to-[#1C1C1C]"></div>
           @endif
-          <p class="text-[10px] uppercase tracking-[0.18em] text-[#B5451B] flex items-center gap-2">
-            Explore
-            <span class="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-          </p>
+
+          {{-- Permanent dark gradient from bottom --}}
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10"></div>
+
+          {{-- Hover tint overlay --}}
+          <div class="absolute inset-0 bg-[#B5451B]/0 group-hover:bg-[#B5451B]/10 transition-all duration-500"></div>
+
+          {{-- Category label — top left --}}
+          <div class="absolute top-4 left-4">
+            <span class="text-[8px] uppercase tracking-[0.3em] text-white/60 bg-black/20 backdrop-blur-sm px-2.5 py-1 border border-white/10">
+              {{ $catLabel }}
+            </span>
+          </div>
+
+          {{-- Index — top right --}}
+          <span class="absolute top-4 right-4 font-display text-[2.5rem] leading-none text-white/10 select-none">{{ $index }}</span>
+
+          {{-- Content — bottom --}}
+          <div class="absolute bottom-0 left-0 right-0 p-5">
+            {{-- Sweep line --}}
+            <div class="relative h-px bg-white/15 mb-4 overflow-hidden">
+              <div class="absolute inset-y-0 left-0 bg-[#B5451B] transition-all duration-500 ease-out w-0 group-hover:w-full"></div>
+            </div>
+
+            <h3 class="font-display font-light text-[1.05rem] leading-snug text-white mb-2 group-hover:text-[#F5C4A8] transition-colors duration-300">
+              {{ $title }}
+            </h3>
+            @if($tagline)
+              <p class="text-white/55 text-[11px] leading-relaxed line-clamp-2 mb-4">{{ $tagline }}</p>
+            @endif
+            <p class="text-[9px] uppercase tracking-[0.22em] text-[#B5451B] flex items-center gap-2">
+              Explore
+              <span class="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+            </p>
+          </div>
         </a>
       @endforeach
     </div>
-
-    <style>
-      .group:hover [data-sweep] { width: 100% !important; }
-    </style>
 
   </div>
 </section>
@@ -320,35 +324,133 @@
 {{-- spacer --}}
 <div aria-hidden="true" class="h-2 bg-[#D4C9BB]"></div>
 
-{{-- ─── FEATURED PROJECT ────────────────────────────────────────────────── --}}
-@if($featuredProject ?? null)
-<section class="bg-[#F2EDE4] py-0 overflow-hidden relative">
-  <div class="arch-grid"></div>
-  <div class="max-w-screen-xl mx-auto grid md:grid-cols-2 relative">
-    <div class="aspect-[4/3] md:aspect-auto md:min-h-[600px] overflow-hidden bg-[#E8E0D4]">
-      @if($featuredProject->imageUrl)
-        <img src="{{ $featuredProject->imageUrl }}" alt="{{ $featuredProject->title }}"
-             class="w-full h-full object-cover" loading="lazy">
-      @else
-        <div class="w-full h-full bg-[#E8E0D4]"></div>
-      @endif
+{{-- ─── FEATURED PROJECTS SHOWCASE ──────────────────────────────────────── --}}
+@if($projects->count())
+@php
+  $dlabels = ['architecture'=>'Architecture Design','landscape'=>'Landscape Design','interior'=>'Interior Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC'];
+@endphp
+<section class="bg-[#F2EDE4] flex flex-col" id="featured-showcase" style="height:calc(100vh - 60px)">
+
+  {{-- Dual-column main display (TOP) — fills remaining height after strip --}}
+  <div class="relative flex-1 overflow-hidden" id="fp-main">
+
+    {{-- Prev button --}}
+    <button id="fp-prev" aria-label="Previous project"
+            class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-[#FAF7F3]/80 hover:bg-[#FAF7F3] border border-[#1C1C1C]/10 hover:border-[#1C1C1C]/30 transition-all duration-200 backdrop-blur-sm">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 3L5 8l5 5" stroke="#1C1C1C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    {{-- Next button --}}
+    <button id="fp-next" aria-label="Next project"
+            class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-[#FAF7F3]/80 hover:bg-[#FAF7F3] border border-[#1C1C1C]/10 hover:border-[#1C1C1C]/30 transition-all duration-200 backdrop-blur-sm">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M6 3l5 5-5 5" stroke="#1C1C1C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    @foreach($projects as $i => $p)
+    <div class="fp-slide h-full grid grid-cols-1 md:grid-cols-2"
+         style="{{ $i !== 0 ? 'display:none' : '' }}"
+         data-index="{{ $i }}" data-url="{{ url('/projects/'.$p->slug) }}">
+
+      {{-- Left: Image --}}
+      <div class="h-full overflow-hidden bg-[#E8E0D4]">
+        @if($p->imageUrl)
+          <img src="{{ $p->imageUrl }}" alt="{{ $p->title }}"
+               class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy">
+        @else
+          <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad]"></div>
+        @endif
+      </div>
+
+      {{-- Right: Content --}}
+      <div class="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-10 overflow-y-auto">
+        <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-3">
+          {{ $dlabels[$p->discipline] ?? ucfirst($p->discipline ?? 'Project') }}
+        </p>
+        <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-tight mb-5">{{ $p->title }}</h2>
+        @if($p->location)
+          <p class="text-[#8B8275] text-xs uppercase tracking-[0.18em] mb-4">{{ $p->location }}@if($p->year) · {{ $p->year }}@endif</p>
+        @endif
+        @if($p->description)
+          <p class="text-[#8B8275] text-sm leading-relaxed mb-8 max-w-sm">{{ Str::limit($p->description, 200) }}</p>
+        @endif
+        <a href="{{ url('/projects/'.$p->slug) }}"
+           class="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] border border-[#1C1C1C]/30 text-[#1C1C1C] px-7 py-3.5 self-start hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+          View Project →
+        </a>
+      </div>
     </div>
-    <div class="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-12 sm:py-16" data-reveal>
-      <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-6">Featured Project</p>
-      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-tight mb-6">{{ $featuredProject->title }}</h2>
-      @if($featuredProject->location)
-        <p class="text-[#8B8275] text-xs uppercase tracking-[0.18em] mb-4">{{ $featuredProject->location }}</p>
-      @endif
-      @if($featuredProject->description)
-        <p class="text-[#8B8275] text-sm leading-relaxed mb-8 max-w-sm">{{ Str::limit($featuredProject->description, 200) }}</p>
-      @endif
-      <a href="{{ url('/projects/'.$featuredProject->slug) }}"
-         class="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] border border-[#1C1C1C]/30 text-[#1C1C1C] px-7 py-3.5 self-start hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
-        View Project →
-      </a>
+    @endforeach
+  </div>
+
+  {{-- Horizontal scrollable thumbnail nav (BELOW main display) — fixed height --}}
+  <div class="border-t border-[#1C1C1C]/10 bg-[#EDE6DC] overflow-x-auto shrink-0" id="fp-thumbs-wrap">
+    <div class="flex w-full divide-x divide-[#1C1C1C]/10" id="fp-thumbs">
+      @foreach($projects as $i => $p)
+      <button
+        class="fp-thumb group flex-1 flex items-center gap-3 px-4 py-4 transition-all duration-200 relative
+               {{ $i === 0 ? 'bg-[#FAF7F3]' : 'hover:bg-[#E8E0D4]' }}"
+        style="min-width:130px"
+        data-target="{{ $i }}" aria-label="Project {{ $i + 1 }}">
+        {{-- Terracotta top indicator --}}
+        <div class="absolute top-0 left-0 right-0 h-[2px] transition-all duration-300
+                    {{ $i === 0 ? 'bg-[#B5451B]' : 'bg-transparent group-hover:bg-[#B5451B]/30' }}"></div>
+
+        {{-- Thumbnail image --}}
+        <div class="w-12 h-9 overflow-hidden bg-[#E8E0D4] shrink-0">
+          @if($p->imageUrl)
+            <img src="{{ $p->imageUrl }}" alt="{{ $p->title }}"
+                 class="w-full h-full object-cover" loading="lazy">
+          @else
+            <div class="w-full h-full bg-[#D4C9BB]"></div>
+          @endif
+        </div>
+
+        {{-- Label --}}
+        <div class="text-left min-w-0">
+          <p class="text-[8px] uppercase tracking-[0.22em] text-[#B5451B] mb-0.5">P{{ str_pad($i+1,2,'0',STR_PAD_LEFT) }}</p>
+          <p class="text-[10px] text-[#1C1C1C] leading-tight truncate">{{ $p->title }}</p>
+        </div>
+      </button>
+      @endforeach
     </div>
   </div>
+
 </section>
+
+<script>
+(function(){
+  var slides  = document.querySelectorAll('.fp-slide');
+  var thumbs  = document.querySelectorAll('.fp-thumb');
+  var prev    = document.getElementById('fp-prev');
+  var next    = document.getElementById('fp-next');
+  if (!slides.length) return;
+
+  var current = 0;
+
+  function show(idx) {
+    current = (idx + slides.length) % slides.length;
+    slides.forEach(function(s, i) {
+      s.style.display = i === current ? '' : 'none';
+    });
+    thumbs.forEach(function(t, i) {
+      var active = i === current;
+      var bar = t.querySelector('.absolute');
+      t.style.background = active ? '#FAF7F3' : '';
+      if (bar) bar.style.background = active ? '#B5451B' : '';
+    });
+    if (thumbs[current]) thumbs[current].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+  }
+
+  thumbs.forEach(function(t) {
+    t.addEventListener('click', function() { show(parseInt(t.dataset.target)); });
+  });
+  if (prev) prev.addEventListener('click', function() { show(current - 1); });
+  if (next) next.addEventListener('click', function() { show(current + 1); });
+})();
+</script>
 @endif
 
 {{-- spacer --}}

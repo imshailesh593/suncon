@@ -14,103 +14,112 @@ $projBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','i
 
 @section('content')
 
-{{-- Back link --}}
-<div class="bg-[#FAF7F3] pt-28 pb-0 px-6 lg:px-12">
-  <div class="max-w-screen-xl mx-auto">
-    <a href="{{ url('/projects') }}"
-       class="text-[10px] uppercase tracking-[0.2em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-200 inline-flex items-center gap-2">
-      ← Back to Projects
-    </a>
-  </div>
-</div>
+@php
+  $disciplineLabels = ['architecture'=>'Architecture Design','landscape'=>'Landscape Design','interior'=>'Interior Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC'];
+  $gallery = $project->gallery ?? [];
+  $img1 = $gallery[0] ?? null;
+  $img2 = $gallery[1] ?? null;
+  $extraGallery = array_slice($gallery, 2);
+@endphp
 
-{{-- Hero Image --}}
-<section class="bg-[#FAF7F3] pt-8 pb-0">
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
-    <div class="overflow-hidden aspect-[16/7] bg-[#E8E0D4]">
-      @if($project->image)
-        <img src="{{ $project->imageUrl }}"
-             alt="{{ $project->title }}"
-             class="w-full h-full object-cover"
-             loading="lazy">
+{{-- Hero Image — full bleed, below navbar --}}
+<section class="bg-[#1C1C1C] pt-[60px]">
+  <div class="overflow-hidden aspect-[16/7] bg-[#E8E0D4]">
+    @if($project->image)
+      <img src="{{ $project->imageUrl }}" alt="{{ $project->title }}"
+           class="w-full h-full object-cover" loading="lazy">
+    @else
+      <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad]"></div>
+    @endif
+  </div>
+</section>
+
+{{-- 3-Column Layout: Metadata | Image1 | Image2 --}}
+<section class="bg-[#FAF7F3]">
+  <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#E8E0D4]">
+
+    {{-- Col 1: Metadata --}}
+    <div class="px-8 lg:px-12 py-14" data-reveal>
+      @if($project->discipline)
+        <p class="text-[9px] uppercase tracking-[0.3em] text-[#B5451B] mb-4">
+          {{ $disciplineLabels[$project->discipline] ?? ucfirst($project->discipline) }}
+        </p>
+      @endif
+      <h1 class="font-display font-light text-[clamp(1.6rem,3vw,2.4rem)] text-[#1C1C1C] leading-tight mb-10">
+        {{ $project->title }}
+      </h1>
+
+      <dl class="flex flex-col gap-0">
+        @foreach([
+          ['Client',     $project->client    ?? null],
+          ['Location',   $project->location  ?? null],
+          ['Area',       $project->area      ?? null],
+          ['Year',       $project->year      ?? null],
+        ] as [$label, $value])
+          @if($value)
+            <div class="border-t border-[#E8E0D4] py-4">
+              <dt class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-1">{{ $label }}</dt>
+              <dd class="text-sm text-[#1C1C1C]">{{ $value }}</dd>
+            </div>
+          @endif
+        @endforeach
+      </dl>
+
+      @if($project->description)
+        <div class="mt-8 border-t border-[#E8E0D4] pt-6 text-[#8B8275] text-sm leading-relaxed">
+          {!! nl2br(e($project->description)) !!}
+        </div>
+      @endif
+
+      <div class="mt-10">
+        <a href="{{ url('/projects') }}"
+           class="text-[9px] uppercase tracking-[0.22em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-200 inline-flex items-center gap-2">
+          ← All Projects
+        </a>
+      </div>
+    </div>
+
+    {{-- Col 2: First gallery image --}}
+    <div class="overflow-hidden bg-[#E8E0D4] aspect-[3/4] md:aspect-auto">
+      @if($img1)
+        <img src="{{ \App\Models\Project::resolveUrl($img1) }}" alt="{{ $project->title }}"
+             class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy">
+      @elseif($project->image)
+        <img src="{{ $project->imageUrl }}" alt="{{ $project->title }}"
+             class="w-full h-full object-cover" loading="lazy">
       @else
         <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad]"></div>
       @endif
     </div>
-  </div>
-</section>
 
-{{-- Project Info --}}
-<section class="bg-[#FAF7F3] py-16 px-6 lg:px-12">
-  <div class="max-w-screen-xl mx-auto">
-    <div class="grid md:grid-cols-[1fr_2fr] gap-16">
-
-      {{-- Metadata sidebar --}}
-      <div data-reveal>
-        <h1 class="font-display font-light text-display-md text-[#1C1C1C] leading-tight mb-10">
-          {{ $project->title }}
-        </h1>
-
-        <dl class="flex flex-col gap-6">
-          @if($project->client)
-            <div class="border-t border-[#E8E0D4] pt-5">
-              <dt class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-1.5">Client</dt>
-              <dd class="text-sm text-[#1C1C1C]">{{ $project->client }}</dd>
-            </div>
-          @endif
-          @if($project->location)
-            <div class="border-t border-[#E8E0D4] pt-5">
-              <dt class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-1.5">Location</dt>
-              <dd class="text-sm text-[#1C1C1C]">{{ $project->location }}</dd>
-            </div>
-          @endif
-          @if($project->area)
-            <div class="border-t border-[#E8E0D4] pt-5">
-              <dt class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-1.5">Area</dt>
-              <dd class="text-sm text-[#1C1C1C]">{{ $project->area }}</dd>
-            </div>
-          @endif
-          @if($project->year)
-            <div class="border-t border-[#E8E0D4] pt-5">
-              <dt class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-1.5">Year</dt>
-              <dd class="text-sm text-[#1C1C1C]">{{ $project->year }}</dd>
-            </div>
-          @endif
-          @if($project->discipline)
-            @php $disciplineLabels = ['architecture'=>'Architecture Design','landscape'=>'Landscape Design','interior'=>'Interior Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC']; @endphp
-            <div class="border-t border-[#E8E0D4] pt-5">
-              <dt class="text-[9px] uppercase tracking-[0.25em] text-[#8B8275] mb-1.5">Discipline</dt>
-              <dd class="text-sm text-[#1C1C1C]">{{ $disciplineLabels[$project->discipline] ?? ucfirst($project->discipline) }}</dd>
-            </div>
-          @endif
-        </dl>
-      </div>
-
-      {{-- Description --}}
-      <div data-reveal>
-        @if($project->description)
-          <div class="prose prose-stone max-w-none font-light text-[#1C1C1C] leading-relaxed text-base">
-            {!! nl2br(e($project->description)) !!}
-          </div>
-        @endif
-
-        {{-- Gallery --}}
-        @if($project->gallery && count($project->gallery ?? []) > 0)
-          <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-5">
-            @foreach($project->gallery as $img)
-              <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4]">
-                <img src="{{ \App\Models\Project::resolveUrl($img) }}"
-                     alt="{{ $project->title }} — gallery"
-                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                     loading="lazy">
-              </div>
-            @endforeach
-          </div>
-        @endif
-      </div>
+    {{-- Col 3: Second gallery image --}}
+    <div class="overflow-hidden bg-[#E8E0D4] aspect-[3/4] md:aspect-auto">
+      @if($img2)
+        <img src="{{ \App\Models\Project::resolveUrl($img2) }}" alt="{{ $project->title }}"
+             class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy">
+      @else
+        <div class="w-full h-full bg-[#EDE6DC] flex items-center justify-center">
+          <span class="text-[9px] uppercase tracking-[0.25em] text-[#C8C0B8]">More images soon</span>
+        </div>
+      @endif
     </div>
+
   </div>
 </section>
+
+{{-- Extra gallery images (3rd onwards) --}}
+@if(count($extraGallery))
+<section class="bg-[#FAF7F3] px-6 lg:px-12 pb-16">
+  <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#E8E0D4]">
+    @foreach($extraGallery as $img)
+      <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4]">
+        <img src="{{ \App\Models\Project::resolveUrl($img) }}" alt="{{ $project->title }}"
+             class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy">
+      </div>
+    @endforeach
+  </div>
+</section>
+@endif
 
 {{-- Related Projects --}}
 @if(isset($related) && $related->count())
