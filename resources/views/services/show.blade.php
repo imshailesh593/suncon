@@ -130,6 +130,44 @@ $svcBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
 </section>
 @endif
 
+{{-- FAQ --}}
+@php
+  $svcFaqs = [
+    ['What does '.$service->title.' involve?', $service->description],
+    ['Which project types do you handle for '.$service->title.'?', 'We work across residential, commercial, hospitality, healthcare, industrial, institutional, and civic project types. Our multidisciplinary team adapts methodology and detailing to the specific demands of each typology.'],
+    ['How do I start a '.$service->title.' project with Suncon?', 'Get in touch via our contact page with a brief project description — location, scale, and timeline. We will respond within 24 hours to arrange an initial consultation.'],
+    ['Are you ISO certified?', 'Yes. Suncon Engineers is ISO 9001 certified, meaning our processes for design, documentation, and project delivery meet internationally recognised quality management standards.'],
+    ['Do you work across India?', 'Yes. Our head office is in Pune with a branch in Coimbatore. We have delivered projects in 15+ states including Maharashtra, Tamil Nadu, Karnataka, Gujarat, Delhi, and Rajasthan.'],
+  ];
+@endphp
+<section class="bg-[#F2EDE4] py-20 px-6 lg:px-12 border-t border-[#E8E0D4]">
+  <div class="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-12 lg:gap-20">
+    <div data-reveal>
+      <p class="text-[10px] uppercase tracking-[0.3em] text-[#B5451B] mb-4">FAQ</p>
+      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">Questions about<br>this service</h2>
+    </div>
+    <div class="flex flex-col divide-y divide-[#E8E0D4]">
+      @foreach($svcFaqs as $faq)
+        <details class="group py-6" data-reveal>
+          <summary class="flex items-start justify-between gap-6 cursor-pointer list-none">
+            <h3 class="font-display font-light text-lg text-[#1C1C1C] group-open:text-[#B5451B] transition-colors duration-200 pr-4">{{ $faq[0] }}</h3>
+            <span class="shrink-0 w-6 h-6 border border-[#1C1C1C]/20 flex items-center justify-center text-[#8B8275] group-open:border-[#B5451B] group-open:text-[#B5451B] transition-all duration-200 mt-0.5">
+              <span class="group-open:hidden">+</span><span class="hidden group-open:block">−</span>
+            </span>
+          </summary>
+          <p class="mt-4 text-[#8B8275] text-sm leading-relaxed font-light">{{ $faq[1] }}</p>
+        </details>
+      @endforeach
+    </div>
+  </div>
+</section>
+@push('schema')
+@php
+  $svcFaqSchema = ['@context'=>'https://schema.org','@type'=>'FAQPage','mainEntity'=>collect($svcFaqs)->map(fn($f)=>['@type'=>'Question','name'=>$f[0],'acceptedAnswer'=>['@type'=>'Answer','text'=>$f[1]]])->values()->all()];
+@endphp
+<script type="application/ld+json">{!! json_encode($svcFaqSchema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+@endpush
+
 {{-- CTA --}}
 <section class="bg-[#FAF7F3] py-24 px-6 lg:px-12 text-center" data-reveal>
   <div class="max-w-xl mx-auto">

@@ -33,4 +33,21 @@ Route::prefix('bim')->name('bim.')->group(function () {
     Route::get('/services/{category}', [BimController::class, 'serviceCategory'])->name('services.category');
     Route::get('/contact', [BimController::class, 'contact'])->name('contact');
     Route::post('/contact', [BimController::class, 'submitContact'])->middleware('throttle:5,1')->name('contact.submit');
+
+    // Individual service pages
+    Route::get('/architectural-bim',        [BimController::class, 'servicePage'])->name('service.architectural-bim');
+    Route::get('/structural-bim',           [BimController::class, 'servicePage'])->name('service.structural-bim');
+    Route::get('/mep-coordination',         [BimController::class, 'servicePage'])->name('service.mep-coordination');
+    Route::get('/scan-to-bim',              [BimController::class, 'servicePage'])->name('service.scan-to-bim');
+    Route::get('/cad-to-bim',              [BimController::class, 'servicePage'])->name('service.cad-to-bim');
+    Route::get('/construction-documentation',[BimController::class, 'servicePage'])->name('service.construction-documentation');
+
+    // Country pages
+    Route::get('/bim-services-in-uk',        [BimController::class, 'countryPage'])->name('country.uk');
+    Route::get('/bim-services-in-usa',       [BimController::class, 'countryPage'])->name('country.usa');
+    Route::get('/bim-services-in-uae',       [BimController::class, 'countryPage'])->name('country.uae');
+    Route::get('/bim-services-in-russia',    [BimController::class, 'countryPage'])->name('country.russia');
+    Route::get('/bim-services-in-canada',    [BimController::class, 'countryPage'])->name('country.canada');
+    Route::get('/bim-services-in-germany',   [BimController::class, 'countryPage'])->name('country.germany');
+    Route::get('/bim-services-in-australia', [BimController::class, 'countryPage'])->name('country.australia');
 });

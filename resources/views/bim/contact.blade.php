@@ -3,6 +3,20 @@
 @section('title', 'Request a BIM Quote — Suncon BIM')
 @section('description', 'Get a quote for architectural BIM modeling, MEP coordination, scan to BIM, or CAD to BIM services from Suncon Engineers. Response within 24 hours.')
 
+@push('schema')
+@php
+  $contactSchema = [
+    '@context' => 'https://schema.org',
+    '@type'    => 'ContactPage',
+    'name'     => 'Request a BIM Quote — Suncon BIM',
+    'url'      => url()->current(),
+    'description' => 'Contact Suncon Engineers BIM Division for architectural BIM modeling, MEP coordination, scan to BIM, and CAD to BIM services.',
+    'mainEntity' => ['@id' => url('/').'/#organization'],
+  ];
+@endphp
+<script type="application/ld+json">{!! json_encode($contactSchema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+@endpush
+
 @section('content')
 
 {{-- ── HEADER ───────────────────────────────────────────────────────────────── --}}

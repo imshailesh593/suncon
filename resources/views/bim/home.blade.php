@@ -63,34 +63,6 @@
   </div>
 </section>
 
-{{-- ── STATS ────────────────────────────────────────────────────────────────── --}}
-@php
-  $statItems = $stats->count()
-    ? $stats->map(fn($s) => [$s->value.($s->suffix ?? ''), $s->label])->values()->all()
-    : [['25+','Years of practice'],['500+','BIM projects delivered'],['50+','BIM professionals'],['15+','Software platforms']];
-@endphp
-<section style="background:var(--bim-surface);border-top:3px solid #7EC8E8;">
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-2 md:grid-cols-4">
-      @foreach($statItems as $i => [$num,$label])
-        @php
-          $cls = match($i) {
-            0 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16',
-            1 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-l',
-            2 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-t md:border-t-0 md:border-l',
-            3 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-t md:border-t-0 border-l',
-            default => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-l',
-          };
-        @endphp
-        <div class="{{ $cls }}" style="border-color:var(--bim-border-sm);">
-          <div class="sg font-bold leading-none mb-3" style="font-size:clamp(2.2rem,5vw,5rem);color:var(--bim-text);letter-spacing:-0.03em;">{{ $num }}</div>
-          <div class="dm text-[9px] uppercase tracking-[0.28em]" style="color:var(--bim-muted);">{{ $label }}</div>
-        </div>
-      @endforeach
-    </div>
-  </div>
-</section>
-
 {{-- ── SERVICES (editorial list) ────────────────────────────────────────────── --}}
 <section class="py-16 md:py-20 lg:py-[100px]" style="background:var(--bim-base);">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
@@ -286,6 +258,34 @@
   </div>
 </section>
 
+{{-- ── STATS ────────────────────────────────────────────────────────────────── --}}
+@php
+  $statItems = $stats->count()
+    ? $stats->map(fn($s) => [$s->value.($s->suffix ?? ''), $s->label])->values()->all()
+    : [['25+','Years of practice'],['500+','BIM projects delivered'],['50+','BIM professionals'],['15+','Software platforms']];
+@endphp
+<section style="background:var(--bim-surface);border-top:3px solid #7EC8E8;border-bottom:1px solid var(--bim-border-sm);">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+    <div class="grid grid-cols-2 md:grid-cols-4">
+      @foreach($statItems as $i => [$num,$label])
+        @php
+          $cls = match($i) {
+            0 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16',
+            1 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-l',
+            2 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-t md:border-t-0 md:border-l',
+            3 => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-t md:border-t-0 border-l',
+            default => 'px-6 sm:px-10 lg:px-14 py-12 md:py-16 border-l',
+          };
+        @endphp
+        <div class="{{ $cls }}" style="border-color:var(--bim-border-sm);">
+          <div class="sg font-bold leading-none mb-3" style="font-size:clamp(2.2rem,5vw,5rem);color:var(--bim-text);letter-spacing:-0.03em;">{{ $num }}</div>
+          <div class="dm text-[9px] uppercase tracking-[0.28em]" style="color:var(--bim-muted);">{{ $label }}</div>
+        </div>
+      @endforeach
+    </div>
+  </div>
+</section>
+
 {{-- ── WHY SUNCON BIM ────────────────────────────────────────────────────────── --}}
 <section style="background:var(--bim-surface);border-top:1px solid var(--bim-border-sm);">
   <div class="flex flex-col lg:flex-row">
@@ -423,6 +423,60 @@
     </div>
   </div>
 </section>
+
+{{-- ── FAQ ────────────────────────────────────────────────────────────────────── --}}
+@php
+  $homeFaqs = [
+    ['What is Building Information Modeling (BIM)?', 'BIM is a digital process for creating and managing intelligent 3D models of buildings and infrastructure. It embeds geometry, material data, cost, and schedule information into a single coordinated model, enabling all project stakeholders to collaborate more effectively and reduce errors throughout the project lifecycle.'],
+    ['What LOD levels does Suncon BIM deliver?', 'We deliver models across the full LOD spectrum — from LOD 100 (conceptual massing) through LOD 500 (as-built, verified in-place conditions ready for facility management handover). The LOD is agreed in the BIM Execution Plan at the start of each project.'],
+    ['Which software platforms do you use?', 'Our primary BIM authoring tool is Autodesk Revit. We also use Navisworks for clash detection, AutoCAD for 2D output, BIM 360/ACC for cloud collaboration, Civil 3D for infrastructure, and Dynamo for parametric automation. We deliver in Revit, IFC, and DWG formats.'],
+    ['How long does a typical BIM project take?', 'Timelines depend on project scale and LOD. A single-discipline architectural model for a mid-size building typically takes 2–4 weeks. Full multi-discipline coordination packages (Architectural + Structural + MEP) for large projects run 8–16 weeks. We provide a project-specific schedule in the BEP.'],
+    ['Can you work with existing 2D CAD drawings?', 'Yes — our CAD to BIM service converts legacy AutoCAD drawings into accurate, coordinated 3D Revit models. We also accept PDF drawings, hand sketches, and point cloud data (Scan to BIM). All source data is reviewed before modeling begins.'],
+    ['Do you offer Scan to BIM services?', 'Yes. We process point cloud data from laser scans or photogrammetry surveys and convert them into accurate as-is Revit models at the required LOD. This is particularly valuable for renovation, heritage documentation, and facility management projects.'],
+    ['What file formats do you deliver?', 'We deliver Revit project files (.rvt), IFC (open standard for interoperability), DWG (AutoCAD), PDF (construction documents), and NWD/NWF (Navisworks for clash review). COBie data for FM handover is available on request.'],
+    ['Is my project data kept confidential?', 'Absolutely. All project data is handled under strict NDA. Files are stored on secure servers with access restricted to the project team. We are happy to sign client-specific NDAs before project commencement.'],
+  ];
+@endphp
+<section class="py-16 md:py-20 lg:py-[100px]" style="background:var(--bim-base);border-top:1px solid var(--bim-border-sm);">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+    <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-12 lg:gap-20">
+      <div>
+        <div class="flex items-center gap-4 mb-5">
+          <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
+          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:var(--bim-muted);">FAQ</span>
+        </div>
+        <h2 class="sg font-bold leading-none mb-6" style="font-size:clamp(2rem,4vw,3rem);color:var(--bim-text);letter-spacing:-0.02em;">Common<br>Questions</h2>
+        <p class="dm text-sm leading-relaxed" style="color:var(--bim-muted);">Everything you need to know about our BIM services.</p>
+        <a href="{{ route('bim.contact') }}" class="inline-block mt-8 dm text-[9px] uppercase tracking-[0.25em]" style="color:var(--bim-accent);">Ask us directly →</a>
+      </div>
+      <div class="flex flex-col divide-y" style="border-top:1px solid var(--bim-border-sm);">
+        @foreach($homeFaqs as $faq)
+          <details class="group py-6" style="border-color:var(--bim-border-sm);">
+            <summary class="flex items-start justify-between gap-6 cursor-pointer list-none">
+              <span class="sg font-semibold text-base leading-snug" style="color:var(--bim-text);">{{ $faq[0] }}</span>
+              <span class="shrink-0 w-5 h-5 flex items-center justify-center mt-0.5" style="border:1px solid var(--bim-border-lg);color:var(--bim-muted);">
+                <span class="group-open:hidden text-sm leading-none">+</span>
+                <span class="hidden group-open:block text-sm leading-none">−</span>
+              </span>
+            </summary>
+            <p class="dm text-sm leading-relaxed mt-4" style="color:var(--bim-muted);">{{ $faq[1] }}</p>
+          </details>
+        @endforeach
+      </div>
+    </div>
+  </div>
+</section>
+
+@push('schema')
+@php
+  $faqSchema = [
+    '@context'   => 'https://schema.org',
+    '@type'      => 'FAQPage',
+    'mainEntity' => collect($homeFaqs)->map(fn($f) => ['@type'=>'Question','name'=>$f[0],'acceptedAnswer'=>['@type'=>'Answer','text'=>$f[1]]])->values()->all(),
+  ];
+@endphp
+<script type="application/ld+json">{!! json_encode($faqSchema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+@endpush
 
 <style>
 .bim-svc-row:hover { border-top-color: rgba(126,200,232,0.35) !important; }

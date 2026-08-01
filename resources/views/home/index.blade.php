@@ -191,80 +191,6 @@
   </style>
 </section>
 
-{{-- spacer --}}
-<div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
-
-{{-- ─── CLIENT LOGOS MARQUEE ────────────────────────────────────────────── --}}
-@php
-  $clients = [
-    ['file'=>'1.png',   'name'=>'Indian Railways'],
-    ['file'=>'16.png',  'name'=>'Delhi Metro Rail Corporation'],
-    ['file'=>'20.png',  'name'=>'Reliance'],
-    ['file'=>'19.png',  'name'=>'Volkswagen'],
-    ['file'=>'8.png',   'name'=>'Cadbury'],
-    ['file'=>'13.png',  'name'=>'Castrol'],
-    ['file'=>'7.png',   'name'=>'MIDC'],
-    ['file'=>'15.png',  'name'=>'MSRDC'],
-    ['file'=>'22.png',  'name'=>'PMRDA'],
-    ['file'=>'10.png',  'name'=>'Thane Municipal Corporation'],
-    ['file'=>'12.png',  'name'=>'Jalgaon City Municipal Corporation'],
-    ['file'=>'5.png',   'name'=>'Coimbatore City Municipal Corporation'],
-    ['file'=>'4.png',   'name'=>'Thoothukudi Municipal Corporation'],
-    ['file'=>'3.png',   'name'=>'Lonavala Municipal Council'],
-    ['file'=>'2.png',   'name'=>'Talegaon Municipal Council'],
-    ['file'=>'11-1.png','name'=>'Beed Municipal Council'],
-    ['file'=>'18.png',  'name'=>'Shrivardhan Municipal Council'],
-    ['file'=>'14-1.png','name'=>'Kalyan Dombivali Municipal Corporation'],
-    ['file'=>'23.png',  'name'=>'Municipal Corporation Bathinda'],
-    ['file'=>'24.png',  'name'=>'Rural Water Supply & Sanitation Dept., Karnataka'],
-    ['file'=>'17.png',  'name'=>'Public Works Department, Karnataka'],
-    ['file'=>'6.png',   'name'=>'Tamil Nadu Urban Infrastructure Financial Services'],
-    ['file'=>'9.png',   'name'=>'Road Construction Department'],
-    ['file'=>'21.png',  'name'=>'IN-RIMT'],
-  ];
-@endphp
-<section style="background:#fff;padding-top:3.5rem;padding-bottom:3.5rem;border-top:1px solid #E8E0D4;overflow:hidden;">
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 mb-10 flex items-center justify-between" data-reveal>
-    <div class="flex items-center gap-3">
-      <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
-      <p class="text-[10px] uppercase tracking-[0.32em] text-[#8B8275]">Trusted By</p>
-    </div>
-    <p class="text-[9px] uppercase tracking-[0.2em] text-[#8B8275]/60">{{ count($clients) }}+ Clients Across India</p>
-  </div>
-
-  <div class="relative">
-    <div class="absolute inset-y-0 left-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to right,#fff,transparent)"></div>
-    <div class="absolute inset-y-0 right-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to left,#fff,transparent)"></div>
-
-    <div class="flex gap-14 items-center client-marquee-track" style="background:#fff">
-      @foreach([1,2] as $_)
-        @foreach($clients as $c)
-          <div class="shrink-0 flex items-center justify-center client-logo-item" style="height:110px;min-width:160px;background:#fff;">
-            <img src="{{ asset('images/clients/'.$c['file']) }}"
-                 alt="{{ $c['name'] }}"
-                 title="{{ $c['name'] }}"
-                 style="max-height:96px;max-width:180px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;"
-                 loading="lazy">
-          </div>
-        @endforeach
-      @endforeach
-    </div>
-  </div>
-</section>
-<style>
-  .client-marquee-track {
-    animation: clientScroll 55s linear infinite;
-    width: max-content;
-  }
-  .client-marquee-track:hover { animation-play-state: paused; }
-  .client-logo-item img { opacity: 0.8; transition: opacity 0.3s ease; }
-  .client-logo-item:hover img { opacity: 1; }
-  @keyframes clientScroll {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-</style>
-
 {{-- ─── SERVICES GRID ────────────────────────────────────────────────────── --}}
 @php
   $fallbackServices = [
@@ -349,7 +275,7 @@
 
           {{-- Content — bottom --}}
           <div class="absolute bottom-0 left-0 right-0 p-5">
-            <h3 class="font-display font-semibold text-[1.45rem] leading-snug text-white tracking-[0.04em] group-hover:text-[#F5C4A8] transition-colors duration-300">
+            <h3 class="font-display font-semibold text-[2rem] leading-snug text-white tracking-[0.04em] group-hover:text-[#F5C4A8] transition-colors duration-300">
               {{ $title }}
             </h3>
           </div>
@@ -492,6 +418,77 @@
 </script>
 @endif
 
+{{-- ─── CLIENT LOGOS MARQUEE ────────────────────────────────────────────── --}}
+@php
+  $clients = [
+    ['file'=>'1.png',   'name'=>'Indian Railways'],
+    ['file'=>'16.png',  'name'=>'Delhi Metro Rail Corporation'],
+    ['file'=>'20.png',  'name'=>'Reliance'],
+    ['file'=>'19.png',  'name'=>'Volkswagen'],
+    ['file'=>'8.png',   'name'=>'Cadbury'],
+    ['file'=>'13.png',  'name'=>'Castrol'],
+    ['file'=>'7.png',   'name'=>'MIDC'],
+    ['file'=>'15.png',  'name'=>'MSRDC'],
+    ['file'=>'22.png',  'name'=>'PMRDA'],
+    ['file'=>'10.png',  'name'=>'Thane Municipal Corporation'],
+    ['file'=>'12.png',  'name'=>'Jalgaon City Municipal Corporation'],
+    ['file'=>'5.png',   'name'=>'Coimbatore City Municipal Corporation'],
+    ['file'=>'4.png',   'name'=>'Thoothukudi Municipal Corporation'],
+    ['file'=>'3.png',   'name'=>'Lonavala Municipal Council'],
+    ['file'=>'2.png',   'name'=>'Talegaon Municipal Council'],
+    ['file'=>'11-1.png','name'=>'Beed Municipal Council'],
+    ['file'=>'18.png',  'name'=>'Shrivardhan Municipal Council'],
+    ['file'=>'14-1.png','name'=>'Kalyan Dombivali Municipal Corporation'],
+    ['file'=>'23.png',  'name'=>'Municipal Corporation Bathinda'],
+    ['file'=>'24.png',  'name'=>'Rural Water Supply & Sanitation Dept., Karnataka'],
+    ['file'=>'17.png',  'name'=>'Public Works Department, Karnataka'],
+    ['file'=>'6.png',   'name'=>'Tamil Nadu Urban Infrastructure Financial Services'],
+    ['file'=>'9.png',   'name'=>'Road Construction Department'],
+    ['file'=>'21.png',  'name'=>'IN-RIMT'],
+  ];
+@endphp
+<section style="background:#fff;padding-top:3.5rem;padding-bottom:3.5rem;border-top:1px solid #E8E0D4;overflow:hidden;">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 mb-10 flex items-center justify-between" data-reveal>
+    <div class="flex items-center gap-3">
+      <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
+      <p class="text-[10px] uppercase tracking-[0.32em] text-[#8B8275]">Trusted By</p>
+    </div>
+    <p class="text-[9px] uppercase tracking-[0.2em] text-[#8B8275]/60">{{ count($clients) }}+ Clients Across India</p>
+  </div>
+
+  <div class="relative">
+    <div class="absolute inset-y-0 left-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to right,#fff,transparent)"></div>
+    <div class="absolute inset-y-0 right-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to left,#fff,transparent)"></div>
+
+    <div class="flex gap-14 items-center client-marquee-track" style="background:#fff">
+      @foreach([1,2] as $_)
+        @foreach($clients as $c)
+          <div class="shrink-0 flex items-center justify-center client-logo-item" style="height:180px;min-width:240px;background:#fff;">
+            <img src="{{ asset('images/clients/'.$c['file']) }}"
+                 alt="{{ $c['name'] }}"
+                 title="{{ $c['name'] }}"
+                 style="max-height:150px;max-width:260px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;"
+                 loading="lazy">
+          </div>
+        @endforeach
+      @endforeach
+    </div>
+  </div>
+</section>
+<style>
+  .client-marquee-track {
+    animation: clientScroll 55s linear infinite;
+    width: max-content;
+  }
+  .client-marquee-track:hover { animation-play-state: paused; }
+  .client-logo-item img { opacity: 0.8; transition: opacity 0.3s ease; }
+  .client-logo-item:hover img { opacity: 1; }
+  @keyframes clientScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+</style>
+
 {{-- spacer --}}
 <div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
 
@@ -546,5 +543,46 @@
     </div>
   </div>
 </section>
+
+{{-- ─── FAQ ─────────────────────────────────────────────────────────────────── --}}
+@php
+  $archFaqs = [
+    ['What architectural services does Suncon Engineers offer?', 'Suncon Engineers provides a full suite of architectural services including conceptual and schematic design, working drawings, town planning and layout approvals, structural coordination, and construction administration. We serve residential, commercial, hospitality, healthcare, industrial, and educational project types.'],
+    ['How long has Suncon Engineers been in practice?', 'Suncon Engineers was established in 1999 and has over 25 years of architectural practice across India. We are ISO 9001 certified and have delivered more than 500 projects across 15+ states.'],
+    ['Do you offer BIM services alongside architectural design?', 'Yes. Our dedicated BIM division delivers Revit-based modeling, MEP coordination, clash detection, and LOD 100–500 documentation. Architecture and BIM are resolved under one roof, enabling seamless coordination from concept to construction.'],
+    ['Which cities and states do you operate in?', 'Our head office is in Pune, Maharashtra with a branch in Coimbatore, Tamil Nadu. We have delivered projects across 15+ states including Maharashtra, Tamil Nadu, Karnataka, Delhi, Gujarat, Rajasthan, Telangana, and more.'],
+    ['Do you take on residential design projects?', 'Yes. We handle the full range of residential typologies — individual villas, row houses, apartment towers, and large gated community masterplans. Our residential work spans affordable housing through premium developments.'],
+    ['What is your process for a new project?', 'We begin with a site visit and brief review, followed by feasibility and concept design. After client approval, we proceed through schematic design, design development, working drawings, and construction administration. An ISO-certified QA process governs every stage.'],
+  ];
+@endphp
+<section class="bg-[#F2EDE4] py-24 px-6 lg:px-12 border-t border-[#E8E0D4]">
+  <div class="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12 lg:gap-20">
+    <div data-reveal>
+      <p class="text-[10px] uppercase tracking-[0.3em] text-[#B5451B] mb-4">FAQ</p>
+      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none mb-5">Common<br>Questions</h2>
+      <a href="{{ url('/contact') }}" class="text-[9px] uppercase tracking-[0.22em] text-[#B5451B]">Ask us directly →</a>
+    </div>
+    <div class="flex flex-col divide-y divide-[#E8E0D4]">
+      @foreach($archFaqs as $faq)
+        <details class="group py-6" data-reveal>
+          <summary class="flex items-start justify-between gap-6 cursor-pointer list-none">
+            <h3 class="font-display font-light text-lg text-[#1C1C1C] group-open:text-[#B5451B] transition-colors duration-200 pr-4">{{ $faq[0] }}</h3>
+            <span class="shrink-0 w-6 h-6 border border-[#1C1C1C]/20 flex items-center justify-center text-[#8B8275] group-open:border-[#B5451B] group-open:text-[#B5451B] transition-all duration-200 mt-0.5">
+              <span class="group-open:hidden">+</span><span class="hidden group-open:block">−</span>
+            </span>
+          </summary>
+          <p class="mt-4 text-[#8B8275] text-sm leading-relaxed font-light">{{ $faq[1] }}</p>
+        </details>
+      @endforeach
+    </div>
+  </div>
+</section>
+
+@push('schema')
+@php
+  $archFaqSchema = ['@context'=>'https://schema.org','@type'=>'FAQPage','mainEntity'=>collect($archFaqs)->map(fn($f)=>['@type'=>'Question','name'=>$f[0],'acceptedAnswer'=>['@type'=>'Answer','text'=>$f[1]]])->values()->all()];
+@endphp
+<script type="application/ld+json">{!! json_encode($archFaqSchema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+@endpush
 
 @endsection

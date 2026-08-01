@@ -3,6 +3,40 @@
 @section('title', $data['name'].' — BIM Services | Suncon BIM')
 @section('description', \Illuminate\Support\Str::limit(strip_tags($data['description']), 155))
 
+@push('schema')
+@php
+  $svcSchema = [
+    '@context'    => 'https://schema.org',
+    '@type'       => 'Service',
+    'name'        => $data['name'],
+    'description' => $data['description'],
+    'url'         => url()->current(),
+    'provider'    => ['@id' => url('/').'/#organization'],
+    'areaServed'  => 'IN',
+    'serviceType' => 'BIM Modeling & Coordination',
+  ];
+  $breadcrumbSchema = [
+    '@context'        => 'https://schema.org',
+    '@type'           => 'BreadcrumbList',
+    'itemListElement' => [
+      ['@type'=>'ListItem','position'=>1,'name'=>'Home','item'=>route('bim.home')],
+      ['@type'=>'ListItem','position'=>2,'name'=>'Services','item'=>route('bim.services')],
+      ['@type'=>'ListItem','position'=>3,'name'=>$data['name'],'item'=>url()->current()],
+    ],
+  ];
+  $catFaqs = [
+    ['What is '.$data['name'].'?', $data['description']],
+    ['What deliverables do I receive?', 'Deliverables include Revit project files, IFC exports, coordinated DWG drawings, clash detection reports, and PDF construction documents. Specific outputs are agreed in the BIM Execution Plan before modeling begins.'],
+    ['Which software is used for '.$data['name'].'?', 'We primarily use Autodesk Revit for BIM authoring, Navisworks for multi-discipline coordination and clash detection, and AutoCAD for 2D output. All files are delivered in client-specified formats including IFC and DWG.'],
+    ['How long will my project take?', 'Project timelines depend on scope, complexity, and LOD. After reviewing your drawings or source data we provide a fixed schedule in the BIM Execution Plan. Most packages are delivered in 2–8 weeks with phased milestone reviews.'],
+    ['Do you sign an NDA?', 'Yes. We sign client-specific NDAs before any project data is shared. All files are stored on secure servers with access restricted to the assigned project team.'],
+  ];
+@endphp
+<script type="application/ld+json">{!! json_encode($svcSchema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+<script type="application/ld+json">{!! json_encode($breadcrumbSchema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+<script type="application/ld+json">{!! json_encode(['@context'=>'https://schema.org','@type'=>'FAQPage','mainEntity'=>collect($catFaqs)->map(fn($f)=>['@type'=>'Question','name'=>$f[0],'acceptedAnswer'=>['@type'=>'Answer','text'=>$f[1]]])->values()->all()], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+@endpush
+
 @php
   // Rotate through the known-good image pool; offset per category so grids differ.
   $pool = [
@@ -126,6 +160,35 @@
             <span style="color:var(--bim-accent);">@include('bim.partials.service-icon', ['icon' => $w['icon'], 'class' => 'w-7 h-7'])</span>
             <p class="dm text-xs leading-snug" style="color:var(--bim-text);">{{ $w['text'] }}</p>
           </div>
+        @endforeach
+      </div>
+    </div>
+  </div>
+</section>
+
+{{-- ── FAQ ────────────────────────────────────────────────────────────────────── --}}
+<section class="py-16 md:py-20 lg:py-[80px]" style="background:var(--bim-surface);border-top:1px solid var(--bim-border-sm);">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+    <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-10 lg:gap-20">
+      <div>
+        <div class="flex items-center gap-4 mb-5">
+          <span class="w-[3px] h-4 shrink-0" style="background:#7EC8E8;"></span>
+          <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:var(--bim-muted);">FAQ</span>
+        </div>
+        <h2 class="sg font-bold leading-none" style="font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--bim-text);letter-spacing:-0.02em;">Questions about<br>{{ $data['name'] }}</h2>
+      </div>
+      <div class="flex flex-col divide-y" style="border-top:1px solid var(--bim-border-sm);">
+        @foreach($catFaqs as $faq)
+          <details class="group py-6" style="border-color:var(--bim-border-sm);">
+            <summary class="flex items-start justify-between gap-6 cursor-pointer list-none">
+              <span class="sg font-semibold text-base leading-snug" style="color:var(--bim-text);">{{ $faq[0] }}</span>
+              <span class="shrink-0 w-5 h-5 flex items-center justify-center mt-0.5" style="border:1px solid var(--bim-border-lg);color:var(--bim-muted);">
+                <span class="group-open:hidden text-sm leading-none">+</span>
+                <span class="hidden group-open:block text-sm leading-none">−</span>
+              </span>
+            </summary>
+            <p class="dm text-sm leading-relaxed mt-4" style="color:var(--bim-muted);">{{ $faq[1] }}</p>
+          </details>
         @endforeach
       </div>
     </div>

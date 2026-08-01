@@ -6,6 +6,40 @@
   <title>@yield('title', 'Suncon BIM — Architectural BIM Services India')</title>
   <meta name="description" content="@yield('description', 'Suncon BIM delivers architectural BIM modeling, Revit coordination, clash detection, and LOD 100–500 documentation across India. Part of Suncon Engineers Pvt. Ltd.')">
   <link rel="canonical" href="{{ url()->current() }}" />
+
+  {{-- ── Global Schema: Organization + LocalBusiness + WebSite ── --}}
+  @php
+    $orgSchema = [
+      '@context'  => 'https://schema.org',
+      '@graph'    => [
+        [
+          '@type'       => ['Organization','LocalBusiness'],
+          '@id'         => url('/').'/#organization',
+          'name'        => 'Suncon Engineers Pvt. Ltd. — BIM Division',
+          'url'         => route('bim.home'),
+          'logo'        => ['@type'=>'ImageObject','url'=>asset('images/logo.png')],
+          'description' => 'Architectural BIM modeling, Revit coordination, MEP clash detection, Scan to BIM, and LOD 100–500 documentation services across India.',
+          'address'     => ['@type'=>'PostalAddress','streetAddress'=>'P1/9, Sai Palace, Near Lohia-Jain IT Park, Bhusari Colony, Paud Road, Kothrud','addressLocality'=>'Pune','addressRegion'=>'Maharashtra','postalCode'=>'411038','addressCountry'=>'IN'],
+          'telephone'   => '+91-93716-54387',
+          'email'       => 'bd@sunconengineers.com',
+          'areaServed'  => 'IN',
+          'knowsAbout'  => ['Building Information Modeling','Revit','BIM Coordination','Scan to BIM','MEP BIM','Architectural BIM'],
+        ],
+        [
+          '@type'           => 'WebSite',
+          '@id'             => route('bim.home').'#website',
+          'url'             => route('bim.home'),
+          'name'            => 'Suncon BIM',
+          'description'     => 'BIM modeling and coordination services by Suncon Engineers',
+          'publisher'       => ['@id' => url('/').'/#organization'],
+          'inLanguage'      => 'en-IN',
+        ],
+      ],
+    ];
+  @endphp
+  <script type="application/ld+json">{!! json_encode($orgSchema, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT) !!}</script>
+  @stack('schema')
+
   @if(!empty($globalSettings['site.ga_id']))
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ $globalSettings['site.ga_id'] }}"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ $globalSettings['site.ga_id'] }}');</script>
@@ -116,16 +150,17 @@
           </a>
           <div class="bim-dropdown">
             <div class="bim-dropdown-inner">
-              @foreach(config('bim_services') as $cslug => $cat)
-                <a href="{{ route('bim.services.category', $cslug) }}" class="bim-drop-item">
-                  <span class="bim-drop-ic">@include('bim.partials.service-icon', ['icon' => $cat['icon'], 'class' => 'w-[18px] h-[18px]'])</span>
+              {{-- Individual service pages --}}
+              @foreach(config('bim_individual_services') as $islug => $isvc)
+                <a href="{{ route('bim.service.'.$islug) }}" class="bim-drop-item">
+                  <span class="bim-drop-ic">@include('bim.partials.service-icon', ['icon' => $isvc['icon'], 'class' => 'w-[18px] h-[18px]'])</span>
                   <span class="bim-drop-tx">
-                    <span class="bim-drop-title">{{ $cat['menu'] ?? $cat['name'] }}</span>
-                    <span class="bim-drop-sub">{{ count($cat['services']) }} services</span>
+                    <span class="bim-drop-title">{{ $isvc['title'] }}</span>
+                    <span class="bim-drop-sub">{{ Str::limit($isvc['tagline'], 50) }}</span>
                   </span>
                 </a>
               @endforeach
-              <a href="{{ route('bim.services') }}" class="bim-drop-all">All Services →</a>
+              <a href="{{ route('bim.services') }}" class="bim-drop-all">All Services & Categories →</a>
             </div>
           </div>
         </div>
@@ -184,6 +219,94 @@
   </div>
 
   <main>@yield('content')</main>
+
+  {{-- ── INLINE ENQUIRY FORM (appears on every page above footer) ───────────── --}}
+  <section id="bim-enquiry" style="background:var(--bim-surface);border-top:3px solid var(--bim-accent);">
+    <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 md:py-20">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20 items-start">
+
+        {{-- Left: copy --}}
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-[3px] h-4 shrink-0" style="background:var(--bim-accent);"></span>
+            <span class="dm text-[9px] uppercase tracking-[0.35em]" style="color:var(--bim-muted);">Free Consultation</span>
+          </div>
+          <h2 class="sg font-bold leading-none mb-5" style="font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--bim-text);letter-spacing:-0.02em;">
+            Got a project?<br><span style="color:var(--bim-accent);">Let's talk BIM.</span>
+          </h2>
+          <p class="dm text-sm leading-relaxed mb-8" style="color:var(--bim-muted);">
+            Share your project details and we'll get back within 24 hours with a tailored BIM solution and quote.
+          </p>
+          <ul class="flex flex-col gap-3">
+            @foreach(['LOD 100–500 Deliverables','Revit / IFC / DWG Outputs','Clash Detection & Coordination','Scan to BIM from Point Cloud','24-hr Response Guarantee'] as $pt)
+              <li class="flex items-center gap-3 dm text-sm" style="color:var(--bim-muted);">
+                <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background:var(--bim-accent);"></span>
+                {{ $pt }}
+              </li>
+            @endforeach
+          </ul>
+        </div>
+
+        {{-- Right: form --}}
+        <div>
+          @if(session('bim_enquiry_success'))
+            <div class="p-6 mb-6" style="background:rgba(126,200,232,0.08);border:1px solid rgba(126,200,232,0.2);">
+              <p class="sg font-semibold text-sm" style="color:var(--bim-accent);">{{ session('bim_enquiry_success') }}</p>
+            </div>
+          @endif
+          <form action="{{ route('bim.contact.submit') }}" method="POST" class="flex flex-col gap-5">
+            @csrf
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label class="dm text-[9px] uppercase tracking-[0.25em] block mb-2" style="color:var(--bim-muted);">Full Name *</label>
+                <input type="text" name="name" required placeholder="Your name"
+                       class="w-full bg-transparent py-3 text-sm focus:outline-none"
+                       style="border-bottom:1px solid var(--bim-border-lg);color:var(--bim-text);">
+              </div>
+              <div>
+                <label class="dm text-[9px] uppercase tracking-[0.25em] block mb-2" style="color:var(--bim-muted);">Email *</label>
+                <input type="email" name="email" required placeholder="you@company.com"
+                       class="w-full bg-transparent py-3 text-sm focus:outline-none"
+                       style="border-bottom:1px solid var(--bim-border-lg);color:var(--bim-text);">
+              </div>
+              <div>
+                <label class="dm text-[9px] uppercase tracking-[0.25em] block mb-2" style="color:var(--bim-muted);">Phone</label>
+                <input type="tel" name="phone" placeholder="+91 XXXXX XXXXX"
+                       class="w-full bg-transparent py-3 text-sm focus:outline-none"
+                       style="border-bottom:1px solid var(--bim-border-lg);color:var(--bim-text);">
+              </div>
+              <div>
+                <label class="dm text-[9px] uppercase tracking-[0.25em] block mb-2" style="color:var(--bim-muted);">Service Required</label>
+                <select name="service"
+                        class="w-full bg-transparent py-3 text-sm focus:outline-none appearance-none cursor-pointer"
+                        style="border-bottom:1px solid var(--bim-border-lg);color:var(--bim-muted);background:transparent;">
+                  <option value="" style="background:var(--bim-surface);">Select a service…</option>
+                  @foreach(['Architectural BIM','Structural BIM','MEP Coordination','Scan to BIM','CAD to BIM','Construction Documentation','Infrastructure BIM','Other'] as $opt)
+                    <option value="{{ $opt }}" style="background:var(--bim-surface);">{{ $opt }}</option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="dm text-[9px] uppercase tracking-[0.25em] block mb-2" style="color:var(--bim-muted);">Project Details *</label>
+              <textarea name="message" rows="4" required placeholder="Describe your project — scale, software, LOD required, timeline…"
+                        class="w-full bg-transparent py-3 text-sm focus:outline-none resize-none"
+                        style="border-bottom:1px solid var(--bim-border-lg);color:var(--bim-text);"></textarea>
+            </div>
+            <div>
+              <button type="submit"
+                      class="sg font-bold text-[10px] uppercase tracking-[0.2em] px-10 py-4 transition-opacity duration-200"
+                      style="background:var(--bim-accent);color:#111827;"
+                      onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">
+                Send Enquiry →
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   {{-- ── FOOTER ──────────────────────────────────────────────────────────────── --}}
   <footer style="background:var(--bim-surface);border-top:3px solid var(--bim-accent);">

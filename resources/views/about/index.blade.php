@@ -73,6 +73,80 @@
   </div>
 </section>
 
+{{-- ─── SERVICES / DISCIPLINES ─────────────────────────────────────────── --}}
+<section class="bg-[#FAF7F3] py-20 px-6 lg:px-12 border-b border-[#E8E0D4]">
+  <div class="max-w-screen-xl mx-auto">
+    <div class="flex items-center gap-3 mb-14" data-reveal>
+      <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
+      <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B]">What We Do</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#E8E0D4]">
+      @foreach([
+        ['Architecture & Design', [
+          'Concept & Schematic Design',
+          'Working Drawings & Documentation',
+          'Town Planning & Layout Approvals',
+          'Structural Coordination',
+          'Construction Administration',
+          'Residential, Commercial & Civic',
+        ]],
+        ['Landscape Architecture', [
+          'Landscape Master Planning',
+          'Site Analysis & Ecology',
+          'Planting Design & Species Selection',
+          'Hardscape, Water Features & Pathways',
+          'Township & Campus Landscapes',
+          'Resort & Hospitality Grounds',
+        ]],
+        ['Interior Design', [
+          'Interior Architecture & Space Planning',
+          'Furniture, Joinery & Fixture Design',
+          'Material & Finish Specification',
+          'Lighting Design & Mood',
+          'Healthcare & Specialised Interiors',
+          'Hospitality & Residential Interiors',
+        ]],
+        ['Urban Design', [
+          'Urban Master Planning',
+          'Integrated Storm Water DPRs',
+          'Topographic Survey & Hydrological Modelling',
+          'Streetscape & Public Realm',
+          'Environmental Impact Analysis',
+          'Municipal & Civic Infrastructure',
+        ]],
+        ['Architectural BIM', [
+          '3D Architectural & Structural Modelling',
+          'Clash Detection & Coordination',
+          '4D Construction Sequencing',
+          '5D Cost Estimation & BOQ Extraction',
+          'Scan to BIM (Laser to Digital Twin)',
+          'BIM Drafting & Shop Drawings',
+        ]],
+        ['Project Management', [
+          'Tender Document Preparation & Review',
+          'Design & Cost Analysis',
+          'Layout Survey & Lineout',
+          'Contract Administration',
+          'Quality Assurance & Site Monitoring',
+          'Running Bills & As-Built Drawings',
+        ]],
+      ] as [$discipline, $items])
+      <div class="bg-[#FAF7F3] p-8 lg:p-10" data-reveal>
+        <h3 class="font-display font-light text-xl text-[#1C1C1C] mb-6 leading-snug">{{ $discipline }}</h3>
+        <ul class="flex flex-col gap-2.5">
+          @foreach($items as $item)
+            <li class="flex items-start gap-3 text-sm text-[#8B8275] font-light">
+              <span class="w-3 h-px bg-[#B5451B] shrink-0 mt-2.5"></span>
+              {{ $item }}
+            </li>
+          @endforeach
+        </ul>
+      </div>
+      @endforeach
+    </div>
+  </div>
+</section>
+
 {{-- ─── SUNCON FRAMEWORK (directly below video) ────────────────────────── --}}
 <section class="bg-[#FAF7F3] py-20 px-6 lg:px-12">
   <div class="max-w-screen-xl mx-auto">
@@ -151,70 +225,6 @@
   </div>
 </section>
 
-{{-- ─── TEAM ───────────────────────────────────────────────────────────── --}}
-<section id="team" class="py-24 bg-[#FAF7F3] px-6 lg:px-12">
-  <div class="max-w-screen-xl mx-auto">
-    <div class="flex items-end justify-between mb-14" data-reveal>
-      <div>
-        <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-4">The People</p>
-        <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">Our Team</h2>
-      </div>
-      {{-- We are hiring CTA --}}
-      <a href="{{ url('/contact') }}?subject=careers"
-         class="hidden md:flex items-center gap-3 text-[10px] uppercase tracking-[0.22em] border border-[#B5451B] text-[#B5451B] px-6 py-3 hover:bg-[#B5451B] hover:text-white transition-all duration-300">
-        We are hiring →
-      </a>
-    </div>
-
-    {{-- Reduced photo size: aspect-square instead of 3/4 portrait --}}
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
-      @forelse($team as $member)
-        <div class="group" data-reveal>
-          <div class="overflow-hidden aspect-square bg-[#E8E0D4] mb-4">
-            @if($member->imageUrl)
-              <img src="{{ $member->imageUrl }}" alt="{{ $member->name }}"
-                   class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" loading="lazy">
-            @else
-              <div class="w-full h-full bg-gradient-to-b from-[#E8E0D4] to-[#c8bcad] flex items-end p-4">
-                <span class="font-display font-light text-2xl text-[#8B8275] opacity-30">{{ substr($member->name, 0, 1) }}</span>
-              </div>
-            @endif
-          </div>
-          <h3 class="font-display font-light text-base text-[#1C1C1C] mb-0.5 leading-snug">{{ $member->name }}</h3>
-          <p class="text-[9px] uppercase tracking-[0.18em] text-[#B5451B] mb-2">{{ $member->role }}</p>
-          @if($member->linkedin)
-            <a href="{{ $member->linkedin }}" target="_blank" rel="noopener noreferrer"
-               class="inline-block text-[9px] uppercase tracking-[0.18em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-200">
-              LinkedIn →
-            </a>
-          @endif
-        </div>
-      @empty
-        @foreach([
-          ['Ar. Sunita Wagh','Principal Architect'],
-          ['Ar. Rahul Deshpande','Associate Director — Interiors'],
-          ['Ar. Priya Kulkarni','Landscape Lead'],
-          ['Ar. Vikram Joshi','Senior Architect'],
-        ] as [$name,$role])
-          <div class="group" data-reveal>
-            <div class="overflow-hidden aspect-square bg-gradient-to-b from-[#E8E0D4] to-[#c8bcad] mb-4"></div>
-            <h3 class="font-display font-light text-base text-[#1C1C1C] mb-0.5">{{ $name }}</h3>
-            <p class="text-[9px] uppercase tracking-[0.18em] text-[#B5451B]">{{ $role }}</p>
-          </div>
-        @endforeach
-      @endforelse
-    </div>
-
-    {{-- Mobile We are hiring --}}
-    <div class="mt-12 md:hidden" data-reveal>
-      <a href="{{ url('/contact') }}?subject=careers"
-         class="flex items-center justify-center gap-3 text-[10px] uppercase tracking-[0.22em] border border-[#B5451B] text-[#B5451B] px-6 py-4 hover:bg-[#B5451B] hover:text-white transition-all duration-300 w-full">
-        We are hiring →
-      </a>
-    </div>
-  </div>
-</section>
-
 {{-- ─── OUR SECTORS ─────────────────────────────────────────────────────── --}}
 <section class="bg-[#1C3016] py-24 px-6 lg:px-12" data-dark>
   <div class="max-w-screen-xl mx-auto">
@@ -233,12 +243,18 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
       @foreach([
+        ['Healthcare','Hospitals, clinics, diagnostic centres, and medical campuses.'],
+        ['Commercial','Office parks, business districts, and commercial complexes.'],
         ['Residential','Villas, row houses, apartment towers, and gated community masterplans.'],
-        ['Commercial','Office campuses, retail environments, and mixed-use developments.'],
-        ['Institutional','Schools, colleges, healthcare facilities, and civic buildings.'],
-        ['Industrial','Manufacturing complexes, logistics parks, and warehousing.'],
+        ['Industrial','Manufacturing complexes, logistics parks, and warehousing facilities.'],
         ['Hospitality','Hotels, resorts, and integrated tourism developments.'],
-        ['Public & Infrastructure','Urban spaces, transport corridors, and smart city initiatives.'],
+        ['Education','Schools, colleges, universities, and research campuses.'],
+        ['Retail','Shopping centres, high-street retail, and experiential spaces.'],
+        ['Corporate','Headquarters, campuses, and workplace environments.'],
+        ['Institutional','Civic buildings, cultural centres, and government facilities.'],
+        ['Public Infrastructure','Urban spaces, transport corridors, and smart city initiatives.'],
+        ['Mixed-Use','Integrated developments combining retail, residential, and commercial uses.'],
+        ['Township Development','Large-scale masterplanned communities and township projects.'],
       ] as [$sector,$desc])
         <div class="bg-[#1C3016] p-8 group" data-reveal>
           <h3 class="font-display font-light text-lg text-[#FAF7F3] mb-3 group-hover:text-[#B5451B] transition-colors duration-300">{{ $sector }}</h3>
@@ -268,20 +284,22 @@
     </div>
     @php
       $values = [
-        ['Contextual Design','We root every project in its physical and cultural environment — reading the land, the climate, and the community before drawing a line.'],
-        ['Sustainability','We integrate passive strategies, material efficiency, and lifecycle thinking into the core of every design, not as an afterthought.'],
-        ['Client Partnership','We treat every client relationship as a long-term collaboration — transparent in communication, rigorous in delivery, and responsive to evolving needs.'],
-        ['Integrated Delivery','Architecture, landscape, interiors, and infrastructure resolved under one roof, eliminating coordination gaps and elevating design coherence.'],
+        ['Contextual','We root every project in its physical and cultural environment — reading the land, the climate, and the community before drawing a line.'],
+        ['Visionary','We push past the obvious solution, bringing creative thinking and evidence-based research together to arrive at something worth building.'],
+        ['Integrated','Architecture, landscape, interiors, and infrastructure resolved under one roof — eliminating coordination gaps and elevating coherence.'],
+        ['Sustainable','Passive strategies, material efficiency, and lifecycle thinking woven into the core of every design, not bolted on at the end.'],
+        ['Rigorous','ISO-certified processes and an in-house BIM workflow ensure quality, traceability, and on-time delivery at every scale.'],
+        ['Collaborative','We work as true partners — with clients, consultants, and communities — because the best outcomes emerge from genuine dialogue.'],
+        ['Responsive','We listen before we draw. Every brief is read carefully and revisited often, so the design evolves with the client\'s needs.'],
+        ['Authentic','We do not chase trends. Our work is grounded in place, material, and purpose — honest architecture that earns its context.'],
+        ['Inclusive','We design for all users and all scales, from the individual room to the city block, always keeping people at the centre.'],
       ];
     @endphp
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#E8E0D4]">
       @foreach($values as $i => [$title, $desc])
-        <div class="flex gap-8 items-start" data-reveal>
-          <span class="font-display font-light text-5xl text-[#E8E0D4] leading-none shrink-0 w-12">0{{ $i+1 }}</span>
-          <div>
-            <h3 class="font-display font-light text-xl text-[#1C1C1C] mb-3">{{ $title }}</h3>
-            <p class="text-[#8B8275] text-sm leading-relaxed">{{ $desc }}</p>
-          </div>
+        <div class="bg-[#FAF7F3] p-8 lg:p-10" data-reveal>
+          <h3 class="font-display font-light text-xl text-[#1C1C1C] mb-4">{{ $title }}</h3>
+          <p class="text-[#8B8275] text-sm leading-relaxed">{{ $desc }}</p>
         </div>
       @endforeach
     </div>
@@ -333,11 +351,11 @@
     <div class="flex gap-14 items-center about-client-marquee" style="background:#fff">
       @foreach([1,2] as $_)
         @foreach($aboutClients as $c)
-          <div class="shrink-0 flex items-center justify-center about-client-logo" style="height:110px;min-width:160px;background:#fff;">
+          <div class="shrink-0 flex items-center justify-center about-client-logo" style="height:180px;min-width:240px;background:#fff;">
             <img src="{{ asset('images/clients/'.$c['file']) }}"
                  alt="{{ $c['name'] }}"
                  title="{{ $c['name'] }}"
-                 style="max-height:96px;max-width:180px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;"
+                 style="max-height:150px;max-width:260px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;"
                  loading="lazy">
           </div>
         @endforeach
@@ -358,6 +376,65 @@
     to   { transform: translateX(-50%); }
   }
 </style>
+
+{{-- ─── TEAM ───────────────────────────────────────────────────────────── --}}
+<section id="team" class="py-24 bg-[#FAF7F3] px-6 lg:px-12">
+  <div class="max-w-screen-xl mx-auto">
+    <div class="flex items-end justify-between mb-14" data-reveal>
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-4">The People</p>
+        <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">Our Team</h2>
+      </div>
+      <a href="{{ url('/contact') }}?subject=careers"
+         class="hidden md:flex items-center gap-3 text-[10px] uppercase tracking-[0.22em] border border-[#B5451B] text-[#B5451B] px-6 py-3 hover:bg-[#B5451B] hover:text-white transition-all duration-300">
+        We are hiring →
+      </a>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10">
+      @forelse($team as $member)
+        <div class="group" data-reveal>
+          <div class="overflow-hidden aspect-square bg-[#E8E0D4] mb-4">
+            @if($member->imageUrl)
+              <img src="{{ $member->imageUrl }}" alt="{{ $member->name }}"
+                   class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" loading="lazy">
+            @else
+              <div class="w-full h-full bg-gradient-to-b from-[#E8E0D4] to-[#c8bcad] flex items-end p-4">
+                <span class="font-display font-light text-2xl text-[#8B8275] opacity-30">{{ substr($member->name, 0, 1) }}</span>
+              </div>
+            @endif
+          </div>
+          <h3 class="font-display font-light text-base text-[#1C1C1C] mb-0.5 leading-snug">{{ $member->name }}</h3>
+          <p class="text-[9px] uppercase tracking-[0.18em] text-[#B5451B] mb-2">{{ $member->role }}</p>
+          @if($member->linkedin)
+            <a href="{{ $member->linkedin }}" target="_blank" rel="noopener noreferrer"
+               class="inline-block text-[9px] uppercase tracking-[0.18em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-200">
+              LinkedIn →
+            </a>
+          @endif
+        </div>
+      @empty
+        @foreach([
+          ['Ar. Sunita Wagh','Principal Architect'],
+          ['Ar. Rahul Deshpande','Associate Director — Interiors'],
+          ['Ar. Priya Kulkarni','Landscape Lead'],
+          ['Ar. Vikram Joshi','Senior Architect'],
+        ] as [$name,$role])
+          <div class="group" data-reveal>
+            <div class="overflow-hidden aspect-square bg-gradient-to-b from-[#E8E0D4] to-[#c8bcad] mb-4"></div>
+            <h3 class="font-display font-light text-base text-[#1C1C1C] mb-0.5">{{ $name }}</h3>
+            <p class="text-[9px] uppercase tracking-[0.18em] text-[#B5451B]">{{ $role }}</p>
+          </div>
+        @endforeach
+      @endforelse
+    </div>
+    <div class="mt-12 md:hidden" data-reveal>
+      <a href="{{ url('/contact') }}?subject=careers"
+         class="flex items-center justify-center gap-3 text-[10px] uppercase tracking-[0.22em] border border-[#B5451B] text-[#B5451B] px-6 py-4 hover:bg-[#B5451B] hover:text-white transition-all duration-300 w-full">
+        We are hiring →
+      </a>
+    </div>
+  </div>
+</section>
 
 {{-- ─── TESTIMONIALS ───────────────────────────────────────────────────── --}}
 @if(isset($testimonials) && $testimonials->count())
@@ -425,5 +502,24 @@
   </div>
 </section>
 @endif
+
+{{-- ─── JOIN THE TEAM ───────────────────────────────────────────────────── --}}
+<section class="bg-[#1C1C1C] py-24 px-6 lg:px-12" data-dark>
+  <div class="max-w-screen-xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-10" data-reveal>
+    <div>
+      <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">Join Our Studio</p>
+      <h2 class="font-display font-light text-display-md text-[#FAF7F3] leading-none mb-5">
+        Build the future<br><em class="italic text-[#B5451B]">with us.</em>
+      </h2>
+      <p class="text-white/50 text-sm leading-relaxed max-w-lg">
+        We are always looking for talented architects, designers, landscape architects, and BIM specialists to join our Pune studio. If you are passionate about design that makes a difference, we would love to hear from you.
+      </p>
+    </div>
+    <a href="{{ url('/contact') }}?subject=careers"
+       class="shrink-0 inline-block text-[10px] uppercase tracking-[0.22em] border border-white/30 text-white px-10 py-5 hover:bg-[#B5451B] hover:border-[#B5451B] transition-all duration-300">
+      Join the Team →
+    </a>
+  </div>
+</section>
 
 @endsection

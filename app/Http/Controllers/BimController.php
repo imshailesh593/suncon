@@ -56,6 +56,45 @@ class BimController extends Controller
         return view('bim.service-category', compact('data', 'slug', 'others'));
     }
 
+    public function servicePage(Request $request)
+    {
+        $slug = last(explode('/', trim($request->path(), '/')));
+        $services = config('bim_individual_services');
+
+        abort_unless(isset($services[$slug]), 404);
+
+        $service = $services[$slug];
+
+        $allSlugs = array_keys($services);
+        $idx = array_search($slug, $allSlugs);
+        $others = collect($services)
+            ->except($slug)
+            ->map(fn($s, $k) => ['slug' => $k, 'title' => $s['title']])
+            ->values()
+            ->take(3);
+
+        return view('bim.service-page', compact('service', 'slug', 'others'));
+    }
+
+    public function countryPage(Request $request)
+    {
+        $path = last(explode('/', trim($request->path(), '/')));
+        // strip "bim-services-in-"
+        $countryKey = str_replace('bim-services-in-', '', $path);
+        $countries = config('bim_countries');
+
+        abort_unless(isset($countries[$countryKey]), 404);
+
+        $country = $countries[$countryKey];
+
+        $otherCountries = collect($countries)
+            ->except($countryKey)
+            ->map(fn($c, $k) => ['slug' => $k, 'name' => $c['name']])
+            ->values();
+
+        return view('bim.country-page', compact('country', 'countryKey', 'otherCountries'));
+    }
+
     public function contact()
     {
         return view('bim.contact');
@@ -106,6 +145,7 @@ class BimController extends Controller
 
         return redirect()
             ->route('bim.contact')
-            ->with('success', 'Thank you, ' . $validated['name'] . '. We\'ve received your BIM enquiry and will respond within 24 hours.');
+            ->with('success', 'Thank you, ' . $validated['name'] . '. We\'ve received your BIM enquiry and will respond within 24 hours.')
+            ->with('bim_enquiry_success', 'Thank you, ' . $validated['name'] . '. We\'ll respond within 24 hours.');
     }
 }
