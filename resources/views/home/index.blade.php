@@ -47,21 +47,6 @@
     </div>
   </div>
 
-  {{-- Bottom info strip --}}
-  <div class="absolute bottom-0 left-0 right-0 border-t border-white/[0.08] hidden md:grid grid-cols-3">
-    <div class="border-r border-white/[0.08] px-6 lg:px-12 py-3.5 flex items-center gap-2.5">
-      <span class="w-1 h-1 rounded-full bg-[#B5451B] shrink-0"></span>
-      <span class="text-[8px] uppercase tracking-[0.28em] text-white/35">Pune, Maharashtra</span>
-    </div>
-    <div class="border-r border-white/[0.08] px-6 py-3.5 flex items-center gap-2.5">
-      <span class="w-1 h-1 rounded-full bg-[#B5451B] shrink-0"></span>
-      <span class="text-[8px] uppercase tracking-[0.28em] text-white/35">Est. {{ $settings['site.founded'] ?? '1999' }}</span>
-    </div>
-    <div class="px-6 py-3.5 flex items-center gap-2.5">
-      <span class="w-1 h-1 rounded-full bg-[#B5451B] shrink-0"></span>
-      <span class="text-[8px] uppercase tracking-[0.28em] text-white/35">500+ Projects Delivered</span>
-    </div>
-  </div>
 </section>
 
 
