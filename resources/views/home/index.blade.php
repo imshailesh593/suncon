@@ -525,10 +525,10 @@
   ];
 @endphp
 <section class="bg-[#F2EDE4] py-24 px-6 lg:px-12 border-t border-[#E8E0D4]">
-  <div class="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12 lg:gap-20">
+  <div class="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:gap-20">
     <div data-reveal>
       <p class="text-[10px] uppercase tracking-[0.3em] text-[#B5451B] mb-4">FAQ</p>
-      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none mb-5">FAQ</h2>
+      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-tight mb-4">Frequently<br>Asked<br>Questions</h2>
       <a href="{{ url('/contact') }}" class="text-[9px] uppercase tracking-[0.22em] text-[#B5451B]">Ask us directly →</a>
     </div>
     <div class="flex flex-col divide-y divide-[#E8E0D4]">
