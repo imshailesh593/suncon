@@ -284,6 +284,48 @@
   </div>
 </section>
 
+{{-- ─── DESIGN EXPERTISE ────────────────────────────────────────────────── --}}
+<section class="bg-[#FAF7F3] py-24 px-6 lg:px-12 border-t border-[#E8E0D4]">
+  <div class="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+    {{-- Left: diagram --}}
+    <div class="flex items-center justify-center" data-reveal>
+      <img src="{{ asset('images/design-expertise.svg') }}" alt="Design Expertise Diagram"
+           class="w-full max-w-lg" loading="lazy">
+    </div>
+
+    {{-- Right: content --}}
+    <div data-reveal>
+      <div class="flex items-center gap-3 mb-6">
+        <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
+        <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B]">Design Expertise</p>
+      </div>
+      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-tight mb-8">
+        Where disciplines<br>converge.
+      </h2>
+      <p class="text-[#8B8275] text-sm leading-relaxed mb-10 max-w-md">
+        Our strength lies in the overlap. Architecture, landscape, and interiors are resolved together — not handed off in sequence. This integrated approach eliminates conflict, reduces cost, and produces environments that feel whole.
+      </p>
+      <div class="flex flex-col gap-5">
+        @foreach([
+          ['Architecture Design',  'Buildings that respond to site, climate, and culture — from concept through construction documentation.'],
+          ['Landscape Design',     'Ground-plane strategies that connect people to place, extend the brief, and sustain biodiversity.'],
+          ['Interior Design',      'Material, light, and spatial sequences that make every internal environment purposeful and human.'],
+        ] as [$disc, $desc])
+        <div class="flex gap-4 border-t border-[#E8E0D4] pt-5">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#B5451B] shrink-0 mt-2"></span>
+          <div>
+            <p class="text-sm font-medium text-[#1C1C1C] mb-1">{{ $disc }}</p>
+            <p class="text-xs text-[#8B8275] leading-relaxed">{{ $desc }}</p>
+          </div>
+        </div>
+        @endforeach
+      </div>
+    </div>
+
+  </div>
+</section>
+
 {{-- spacer --}}
 <div aria-hidden="true" class="h-2 bg-[#D4C9BB]"></div>
 
