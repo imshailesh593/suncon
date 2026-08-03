@@ -272,7 +272,7 @@
 
           {{-- Content — bottom --}}
           <div class="absolute bottom-0 left-0 right-0 p-5">
-            <h3 class="font-display font-semibold text-[2rem] leading-snug text-white tracking-[0.04em] group-hover:text-[#F5C4A8] transition-colors duration-300">
+            <h3 class="font-display font-semibold text-[clamp(1.6rem,2.8vw,2.6rem)] leading-snug text-white tracking-[0.04em] group-hover:text-[#F5C4A8] transition-colors duration-300">
               {{ $title }}
             </h3>
           </div>
@@ -556,7 +556,7 @@
   <div class="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12 lg:gap-20">
     <div data-reveal>
       <p class="text-[10px] uppercase tracking-[0.3em] text-[#B5451B] mb-4">FAQ</p>
-      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none mb-5">Common<br>Questions</h2>
+      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none mb-5">FAQ</h2>
       <a href="{{ url('/contact') }}" class="text-[9px] uppercase tracking-[0.22em] text-[#B5451B]">Ask us directly →</a>
     </div>
     <div class="flex flex-col divide-y divide-[#E8E0D4]">

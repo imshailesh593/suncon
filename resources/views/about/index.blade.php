@@ -169,6 +169,13 @@
   </div>
 </section>
 
+{{-- ─── ARCHIPELAGO LOGO STRIP ─────────────────────────────────────────── --}}
+<div class="bg-[#FAF7F3] pb-16 px-6 lg:px-12">
+  <div class="max-w-screen-xl mx-auto flex justify-center">
+    <img src="{{ asset('images/archipelago.svg') }}" alt="Archipelago" class="h-14 opacity-60" loading="lazy">
+  </div>
+</div>
+
 {{-- spacer --}}
 <div aria-hidden="true" class="h-px bg-[#E8E0D4]"></div>
 
