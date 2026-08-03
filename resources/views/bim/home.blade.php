@@ -91,12 +91,12 @@
         'docs'       => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&auto=format&fit=crop',
       ];
       $fallbackServices = [
-        ['01','Architectural BIM Modeling','Revit-based 3D models from concept through construction documentation. LOD 100–400.','#arch-bim','arch-bim'],
-        ['02','Structural BIM','RC and steel structure modeling with precise detailing for coordination and fabrication.','#structural','structural'],
-        ['03','MEP Coordination','Mechanical, Electrical, and Plumbing modeling with multi-discipline clash detection.','#mep','mep'],
-        ['04','Scan to BIM','Point cloud data converted to accurate as-is Revit models for renovation and heritage.','#scan','scan'],
-        ['05','CAD to BIM Migration','Legacy 2D AutoCAD drawings upgraded to coordinated, data-rich 3D BIM models.','#cad','cad'],
-        ['06','Construction Documentation','Shop drawings, as-built documentation, and coordination packages for site.','#docs','docs'],
+        ['01','Architectural BIM Modeling','Revit-based 3D models from concept through construction documentation. LOD 100–400.','architectural-bim','arch-bim'],
+        ['02','Structural BIM','RC and steel structure modeling with precise detailing for coordination and fabrication.','structural-bim','structural'],
+        ['03','MEP Coordination','Mechanical, Electrical, and Plumbing modeling with multi-discipline clash detection.','mep-coordination','mep'],
+        ['04','Scan to BIM','Point cloud data converted to accurate as-is Revit models for renovation and heritage.','scan-to-bim','scan'],
+        ['05','CAD to BIM Migration','Legacy 2D AutoCAD drawings upgraded to coordinated, data-rich 3D BIM models.','cad-to-bim','cad'],
+        ['06','Construction Documentation','Shop drawings, as-built documentation, and coordination packages for site.','construction-documentation','docs'],
       ];
     @endphp
 
@@ -108,7 +108,7 @@
             $num    = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
             $imgSrc = $svc->image ? $svc->imageUrl : ($defaultImages[$svc->slug] ?? null);
           @endphp
-          <a href="{{ route('bim.services').'#'.$svc->slug }}" class="bim-home-svc-card group block">
+          <a href="{{ url('/bim/'.$svc->slug) }}" class="bim-home-svc-card group block">
             <p class="dm text-[9px] uppercase tracking-[0.3em] mb-3" style="color:var(--bim-muted);">{{ $num }}</p>
             <div class="overflow-hidden aspect-[3/4] relative" style="background:var(--bim-lift);">
               @if($imgSrc)
@@ -132,7 +132,7 @@
       @else
         @foreach($fallbackServices as $svc)
           @php $imgSrc = $defaultImages[$svc[4]] ?? null; @endphp
-          <a href="{{ route('bim.services').$svc[3] }}" class="bim-home-svc-card group block">
+          <a href="{{ route('bim.service.'.$svc[3]) }}" class="bim-home-svc-card group block">
             <p class="dm text-[9px] uppercase tracking-[0.3em] mb-3" style="color:var(--bim-muted);">{{ $svc[0] }}</p>
             <div class="overflow-hidden aspect-[3/4] relative" style="background:var(--bim-lift);">
               @if($imgSrc)
