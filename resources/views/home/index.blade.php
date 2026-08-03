@@ -157,9 +157,6 @@
   </div>
 </section>
 
-{{-- spacer --}}
-<div aria-hidden="true" class="h-2 bg-[#E8E0D4]"></div>
-
 {{-- ─── STATISTICS ──────────────────────────────────────────────────────── --}}
 <section class="bg-[#3D4A28] relative" data-dark>
   @php

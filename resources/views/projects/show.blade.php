@@ -34,9 +34,16 @@ $projBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','i
   </div>
 </section>
 
-{{-- 3-Column Layout: Metadata | Image1 | Image2 --}}
+{{-- 2-Column Layout: Metadata | Auto-scroll Gallery --}}
+@php
+  $allImages = array_filter([
+    $project->image ? $project->imageUrl : null,
+    ...array_map(fn($i) => \App\Models\Project::resolveUrl($i), $gallery),
+  ]);
+  $allImages = array_values(array_unique($allImages));
+@endphp
 <section class="bg-[#FAF7F3]">
-  <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#E8E0D4]">
+  <div class="grid grid-cols-1 md:grid-cols-[1fr_2fr]">
 
     {{-- Col 1: Metadata --}}
     <div class="px-8 lg:px-12 py-14" data-reveal>
@@ -79,47 +86,72 @@ $projBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','i
       </div>
     </div>
 
-    {{-- Col 2: First gallery image --}}
-    <div class="overflow-hidden bg-[#E8E0D4] aspect-[3/4] md:aspect-auto">
-      @if($img1)
-        <img src="{{ \App\Models\Project::resolveUrl($img1) }}" alt="{{ $project->title }}"
-             class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy">
-      @elseif($project->image)
-        <img src="{{ $project->imageUrl }}" alt="{{ $project->title }}"
-             class="w-full h-full object-cover" loading="lazy">
+    {{-- Col 2: Auto-scrolling gallery --}}
+    <div class="relative overflow-hidden bg-[#E8E0D4]" style="min-height:clamp(340px,55vw,640px);" id="proj-gallery">
+      @if(count($allImages))
+        <div id="proj-slides" class="flex h-full" style="will-change:transform;">
+          @foreach($allImages as $src)
+            <div class="shrink-0 w-full h-full" style="min-height:clamp(340px,55vw,640px);">
+              <img src="{{ $src }}" alt="{{ $project->title }}"
+                   class="w-full h-full object-cover" loading="lazy">
+            </div>
+          @endforeach
+        </div>
+        {{-- Dot indicators --}}
+        @if(count($allImages) > 1)
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10" id="proj-dots">
+            @foreach($allImages as $i => $src)
+              <button class="w-1.5 h-1.5 rounded-full transition-all duration-300 proj-dot {{ $i === 0 ? 'bg-white scale-125' : 'bg-white/40' }}"
+                      data-idx="{{ $i }}" aria-label="Slide {{ $i + 1 }}"></button>
+            @endforeach
+          </div>
+        @endif
       @else
         <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad]"></div>
       @endif
     </div>
 
-    {{-- Col 3: Second gallery image --}}
-    <div class="overflow-hidden bg-[#E8E0D4] aspect-[3/4] md:aspect-auto">
-      @if($img2)
-        <img src="{{ \App\Models\Project::resolveUrl($img2) }}" alt="{{ $project->title }}"
-             class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy">
-      @else
-        <div class="w-full h-full bg-[#EDE6DC] flex items-center justify-center">
-          <span class="text-[9px] uppercase tracking-[0.25em] text-[#C8C0B8]">More images soon</span>
-        </div>
-      @endif
-    </div>
-
   </div>
 </section>
 
-{{-- Extra gallery images (3rd onwards) --}}
-@if(count($extraGallery))
-<section class="bg-[#FAF7F3] px-6 lg:px-12 pb-16">
-  <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#E8E0D4]">
-    @foreach($extraGallery as $img)
-      <div class="overflow-hidden aspect-[4/3] bg-[#E8E0D4]">
-        <img src="{{ \App\Models\Project::resolveUrl($img) }}" alt="{{ $project->title }}"
-             class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" loading="lazy">
-      </div>
-    @endforeach
-  </div>
-</section>
-@endif
+<script>
+(function(){
+  var slides = document.getElementById('proj-slides');
+  if (!slides) return;
+  var items = slides.children;
+  var total  = items.length;
+  if (total < 2) return;
+  var dots   = document.querySelectorAll('.proj-dot');
+  var current = 0;
+  var timer;
+
+  function goTo(n) {
+    current = (n + total) % total;
+    slides.style.transition = 'transform 0.7s cubic-bezier(0.4,0,0.2,1)';
+    slides.style.transform  = 'translateX(-' + (current * 100) + '%)';
+    dots.forEach(function(d, i) {
+      d.classList.toggle('bg-white', i === current);
+      d.classList.toggle('scale-125', i === current);
+      d.classList.toggle('bg-white/40', i !== current);
+    });
+  }
+
+  function next() { goTo(current + 1); }
+
+  function startAuto() { timer = setInterval(next, 3500); }
+  function stopAuto()  { clearInterval(timer); }
+
+  dots.forEach(function(d) {
+    d.addEventListener('click', function() {
+      stopAuto();
+      goTo(parseInt(this.dataset.idx));
+      startAuto();
+    });
+  });
+
+  startAuto();
+})();
+</script>
 
 {{-- Related Projects --}}
 @if(isset($related) && $related->count())

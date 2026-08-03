@@ -13,8 +13,7 @@
     <div class="lg:flex-1 max-w-2xl" data-reveal>
       <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-6">Est. 1999</p>
       <h1 class="font-display font-light text-display-lg text-[#1C1C1C] leading-none mb-6">
-        Suncon Engineers<br>
-        <span class="font-bold text-[#B5451B]">Pvt. Ltd.</span>
+        About Us
       </h1>
       <p class="text-[#1C1C1C] text-base leading-relaxed font-light">
         {{ $settings['about.intro_p1'] ?? 'For over 25 years, our Pune-based studio has shaped buildings, landscapes, and interiors that are rooted in place — ISO-certified, people-first, and delivered to last.' }}
