@@ -169,12 +169,41 @@
   </div>
 </section>
 
-{{-- ─── ARCHIPELAGO LOGO STRIP ─────────────────────────────────────────── --}}
-<div class="bg-[#FAF7F3] pb-16 px-6 lg:px-12">
-  <div class="max-w-screen-xl mx-auto flex justify-center">
-    <img src="{{ asset('images/archipelago.svg') }}" alt="Archipelago" class="h-14 opacity-60" loading="lazy">
+{{-- ─── SCALE DIAGRAM ───────────────────────────────────────────────────── --}}
+<section class="bg-[#3D4A28] py-16 px-6 lg:px-12 overflow-hidden">
+  <div class="max-w-screen-xl mx-auto">
+
+    {{-- Illustrations row --}}
+    <div class="grid grid-cols-5 gap-4 mb-0 items-end">
+      @foreach([
+        ['images/archipelago-room.svg',          'Room'],
+        ['images/archipelago-site.svg',          'Site'],
+        ['images/archipelago-neighbourhood.svg', 'Neighbourhood'],
+        ['images/archipelago-city.svg',          'City'],
+        ['images/archipelago-region.svg',        'Region'],
+      ] as [$src, $label])
+      <div class="flex flex-col items-center gap-0">
+        <img src="{{ asset($src) }}" alt="{{ $label }}"
+             class="w-full max-h-28 object-contain object-bottom" loading="lazy">
+      </div>
+      @endforeach
+    </div>
+
+    {{-- Connecting line --}}
+    <div class="w-full my-0">
+      <img src="{{ asset('images/archipelago-framework-line.webp') }}" alt=""
+           class="w-full h-auto" loading="lazy" aria-hidden="true">
+    </div>
+
+    {{-- Labels row --}}
+    <div class="grid grid-cols-5 gap-4 mt-3">
+      @foreach(['Room','Site','Neighbourhood','City','Region'] as $label)
+      <p class="text-center text-white/70 text-sm font-light tracking-wide">{{ $label }}</p>
+      @endforeach
+    </div>
+
   </div>
-</div>
+</section>
 
 {{-- spacer --}}
 <div aria-hidden="true" class="h-px bg-[#E8E0D4]"></div>
