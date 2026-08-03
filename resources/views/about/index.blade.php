@@ -291,7 +291,7 @@
       ] as [$sector,$desc])
         <div class="bg-[#1C3016] p-8 group" data-reveal>
           <h3 class="font-display font-light text-lg text-[#FAF7F3] mb-3 group-hover:text-[#B5451B] transition-colors duration-300">{{ $sector }}</h3>
-          <p class="text-white/75 text-sm leading-relaxed mb-5">{{ $desc }}</p>
+          <p class="text-sm leading-relaxed mb-5" style="color:rgba(255,255,255,0.82);">{{ $desc }}</p>
           <a href="{{ url('/projects') }}" class="text-[9px] uppercase tracking-[0.22em] text-[#B5451B] flex items-center gap-2 hover:gap-3 transition-all duration-300">
             View Projects <span>→</span>
           </a>
