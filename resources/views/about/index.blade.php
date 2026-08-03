@@ -170,11 +170,11 @@
 </section>
 
 {{-- ─── SCALE DIAGRAM ───────────────────────────────────────────────────── --}}
-<section class="bg-[#3D4A28] py-16 px-6 lg:px-12 overflow-hidden">
+<section class="bg-[#3D4A28] py-16 px-6 lg:px-16 overflow-hidden">
   <div class="max-w-screen-xl mx-auto">
 
-    {{-- Illustrations row --}}
-    <div class="grid grid-cols-5 gap-4 mb-0 items-end">
+    {{-- Illustrations row — all 5 in one horizontal line --}}
+    <div class="flex items-end justify-between gap-2">
       @foreach([
         ['images/archipelago-room.svg',          'Room'],
         ['images/archipelago-site.svg',          'Site'],
@@ -182,23 +182,21 @@
         ['images/archipelago-city.svg',          'City'],
         ['images/archipelago-region.svg',        'Region'],
       ] as [$src, $label])
-      <div class="flex flex-col items-center gap-0">
+      <div class="flex-1 flex items-end justify-center" style="height:140px;">
         <img src="{{ asset($src) }}" alt="{{ $label }}"
-             class="w-full max-h-28 object-contain object-bottom" loading="lazy">
+             style="max-height:140px;width:100%;object-fit:contain;object-position:bottom;" loading="lazy">
       </div>
       @endforeach
     </div>
 
     {{-- Connecting line --}}
-    <div class="w-full my-0">
-      <img src="{{ asset('images/archipelago-framework-line.webp') }}" alt=""
-           class="w-full h-auto" loading="lazy" aria-hidden="true">
-    </div>
+    <img src="{{ asset('images/archipelago-framework-line.webp') }}" alt=""
+         class="w-full block" style="height:32px;object-fit:fill;" loading="lazy" aria-hidden="true">
 
     {{-- Labels row --}}
-    <div class="grid grid-cols-5 gap-4 mt-3">
+    <div class="flex justify-between gap-2 mt-3">
       @foreach(['Room','Site','Neighbourhood','City','Region'] as $label)
-      <p class="text-center text-white/70 text-sm font-light tracking-wide">{{ $label }}</p>
+      <p class="flex-1 text-center text-white/70 text-sm font-light tracking-wide">{{ $label }}</p>
       @endforeach
     </div>
 
