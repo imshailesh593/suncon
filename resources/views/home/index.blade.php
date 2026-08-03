@@ -272,7 +272,7 @@
 
           {{-- Content — bottom --}}
           <div class="absolute bottom-0 left-0 right-0 p-5">
-            <h3 class="font-display font-semibold text-[clamp(2.8rem,5.5vw,6rem)] leading-tight text-white tracking-[-0.01em] group-hover:text-[#F5C4A8] transition-colors duration-300">
+            <h3 class="font-display font-semibold text-[clamp(3.1rem,5.8vw,6.3rem)] leading-tight text-white tracking-[-0.01em] group-hover:text-[#F5C4A8] transition-colors duration-300">
               {{ $title }}
             </h3>
           </div>
@@ -291,126 +291,97 @@
 @php
   $dlabels = ['architecture'=>'Architecture Design','landscape'=>'Landscape Design','interior'=>'Interior Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC'];
 @endphp
-<section class="bg-[#F2EDE4] flex flex-col" id="featured-showcase" style="height:calc(100vh - 60px)">
+<section class="bg-[#F2EDE4] relative overflow-hidden" id="featured-showcase" style="height:calc(100vh - 60px)">
 
-  {{-- Dual-column main display (TOP) — fills remaining height after strip --}}
-  <div class="relative flex-1 overflow-hidden" id="fp-main">
+  {{-- Prev button --}}
+  <button id="fp-prev" aria-label="Previous project"
+          class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-[#FAF7F3]/80 hover:bg-[#FAF7F3] border border-[#1C1C1C]/10 hover:border-[#1C1C1C]/30 transition-all duration-200 backdrop-blur-sm">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M10 3L5 8l5 5" stroke="#1C1C1C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
-    {{-- Prev button --}}
-    <button id="fp-prev" aria-label="Previous project"
-            class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-[#FAF7F3]/80 hover:bg-[#FAF7F3] border border-[#1C1C1C]/10 hover:border-[#1C1C1C]/30 transition-all duration-200 backdrop-blur-sm">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M10 3L5 8l5 5" stroke="#1C1C1C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
+  {{-- Next button --}}
+  <button id="fp-next" aria-label="Next project"
+          class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-[#FAF7F3]/80 hover:bg-[#FAF7F3] border border-[#1C1C1C]/10 hover:border-[#1C1C1C]/30 transition-all duration-200 backdrop-blur-sm">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M6 3l5 5-5 5" stroke="#1C1C1C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
-    {{-- Next button --}}
-    <button id="fp-next" aria-label="Next project"
-            class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-[#FAF7F3]/80 hover:bg-[#FAF7F3] border border-[#1C1C1C]/10 hover:border-[#1C1C1C]/30 transition-all duration-200 backdrop-blur-sm">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M6 3l5 5-5 5" stroke="#1C1C1C" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    @foreach($projects as $i => $p)
-    <div class="fp-slide h-full grid grid-cols-1 md:grid-cols-2"
-         style="{{ $i !== 0 ? 'display:none' : '' }}"
-         data-index="{{ $i }}" data-url="{{ url('/projects/'.$p->slug) }}">
-
-      {{-- Left: Image --}}
-      <div class="h-full overflow-hidden bg-[#E8E0D4]">
-        @if($p->imageUrl)
-          <img src="{{ $p->imageUrl }}" alt="{{ $p->title }}"
-               class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy">
-        @else
-          <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad]"></div>
-        @endif
-      </div>
-
-      {{-- Right: Content --}}
-      <div class="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-10 overflow-hidden">
-        <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-3">
-          {{ $dlabels[$p->discipline] ?? ucfirst($p->discipline ?? 'Project') }}
-        </p>
-        <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-tight mb-5">{{ $p->title }}</h2>
-        @if($p->location)
-          <p class="text-[#8B8275] text-xs uppercase tracking-[0.18em] mb-4">{{ $p->location }}@if($p->year) · {{ $p->year }}@endif</p>
-        @endif
-        @if($p->description)
-          <p class="text-[#8B8275] text-sm leading-relaxed mb-8 max-w-sm">{{ Str::limit($p->description, 200) }}</p>
-        @endif
-        <a href="{{ url('/projects/'.$p->slug) }}"
-           class="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] border border-[#1C1C1C]/30 text-[#1C1C1C] px-7 py-3.5 self-start hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
-          View Project →
-        </a>
-      </div>
-    </div>
-    @endforeach
+  {{-- Slide counter --}}
+  <div class="absolute bottom-6 right-6 z-10 flex items-center gap-2">
+    <span id="fp-current" class="font-display font-light text-sm text-[#1C1C1C]/40">01</span>
+    <span class="text-[#1C1C1C]/20">/</span>
+    <span class="font-display font-light text-sm text-[#1C1C1C]/25">{{ str_pad($projects->count(), 2, '0', STR_PAD_LEFT) }}</span>
   </div>
 
-  {{-- Horizontal scrollable thumbnail nav (BELOW main display) — fixed height --}}
-  <div class="bg-[#EDE6DC] overflow-hidden shrink-0" id="fp-thumbs-wrap">
-    <div class="flex w-full" id="fp-thumbs">
-      @foreach($projects as $i => $p)
-      <button
-        class="fp-thumb group flex-1 flex items-center gap-3 px-4 py-4 transition-all duration-200 relative
-               {{ $i === 0 ? 'bg-[#FAF7F3]' : 'hover:bg-[#E8E0D4]' }}"
-        style="min-width:130px"
-        data-target="{{ $i }}" aria-label="Project {{ $i + 1 }}">
-        {{-- Terracotta top indicator --}}
-        <div class="absolute top-0 left-0 right-0 h-[2px] transition-all duration-300
-                    {{ $i === 0 ? 'bg-[#B5451B]' : 'bg-transparent group-hover:bg-[#B5451B]/30' }}"></div>
+  @foreach($projects as $i => $p)
+  <div class="fp-slide h-full grid grid-cols-1 md:grid-cols-2"
+       style="{{ $i !== 0 ? 'display:none' : '' }}"
+       data-index="{{ $i }}">
 
-        {{-- Thumbnail image --}}
-        <div class="w-12 h-9 overflow-hidden bg-[#E8E0D4] shrink-0">
-          @if($p->imageUrl)
-            <img src="{{ $p->imageUrl }}" alt="{{ $p->title }}"
-                 class="w-full h-full object-cover" loading="lazy">
-          @else
-            <div class="w-full h-full bg-[#D4C9BB]"></div>
-          @endif
-        </div>
+    {{-- Left: Image --}}
+    <div class="h-full overflow-hidden bg-[#E8E0D4]">
+      @if($p->imageUrl)
+        <img src="{{ $p->imageUrl }}" alt="{{ $p->title }}"
+             class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy">
+      @else
+        <div class="w-full h-full bg-gradient-to-br from-[#E8E0D4] to-[#c8bcad]"></div>
+      @endif
+    </div>
 
-        {{-- Label --}}
-        <div class="text-left min-w-0">
-          <p class="text-[8px] uppercase tracking-[0.22em] text-[#B5451B] mb-0.5">P{{ str_pad($i+1,2,'0',STR_PAD_LEFT) }}</p>
-          <p class="text-[10px] text-[#1C1C1C] leading-tight truncate">{{ $p->title }}</p>
-        </div>
-      </button>
-      @endforeach
+    {{-- Right: Content --}}
+    <div class="flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-10 overflow-hidden">
+      <p class="text-[10px] uppercase tracking-[0.3em] text-[#8B8275] mb-3">
+        {{ $dlabels[$p->discipline] ?? ucfirst($p->discipline ?? 'Project') }}
+      </p>
+      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-tight mb-5">{{ $p->title }}</h2>
+      @if($p->location)
+        <p class="text-[#8B8275] text-xs uppercase tracking-[0.18em] mb-4">{{ $p->location }}@if($p->year) · {{ $p->year }}@endif</p>
+      @endif
+      @if($p->description)
+        <p class="text-[#8B8275] text-sm leading-relaxed mb-8 max-w-sm">{{ Str::limit($p->description, 200) }}</p>
+      @endif
+      <a href="{{ url('/projects/'.$p->slug) }}"
+         class="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] border border-[#1C1C1C]/30 text-[#1C1C1C] px-7 py-3.5 self-start hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+        View Project →
+      </a>
     </div>
   </div>
+  @endforeach
 
 </section>
 
 <script>
 (function(){
   var slides  = document.querySelectorAll('.fp-slide');
-  var thumbs  = document.querySelectorAll('.fp-thumb');
   var prev    = document.getElementById('fp-prev');
   var next    = document.getElementById('fp-next');
+  var counter = document.getElementById('fp-current');
+  var section = document.getElementById('featured-showcase');
   if (!slides.length) return;
 
   var current = 0;
+  var timer;
 
   function show(idx) {
     current = (idx + slides.length) % slides.length;
-    slides.forEach(function(s, i) {
-      s.style.display = i === current ? '' : 'none';
-    });
-    thumbs.forEach(function(t, i) {
-      var active = i === current;
-      var bar = t.querySelector('.absolute');
-      t.style.background = active ? '#FAF7F3' : '';
-      if (bar) bar.style.background = active ? '#B5451B' : '';
-    });
-    if (thumbs[current]) thumbs[current].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+    slides.forEach(function(s, i) { s.style.display = i === current ? '' : 'none'; });
+    if (counter) counter.textContent = String(current + 1).padStart(2, '0');
   }
 
-  thumbs.forEach(function(t) {
-    t.addEventListener('click', function() { show(parseInt(t.dataset.target)); });
-  });
-  if (prev) prev.addEventListener('click', function() { show(current - 1); });
-  if (next) next.addEventListener('click', function() { show(current + 1); });
+  function startAuto() { timer = setInterval(function(){ show(current + 1); }, 5000); }
+  function stopAuto()  { clearInterval(timer); }
+
+  if (prev) prev.addEventListener('click', function() { stopAuto(); show(current - 1); startAuto(); });
+  if (next) next.addEventListener('click', function() { stopAuto(); show(current + 1); startAuto(); });
+  if (section) {
+    section.addEventListener('mouseenter', stopAuto);
+    section.addEventListener('mouseleave', startAuto);
+  }
+
+  startAuto();
 })();
 </script>
 @endif
