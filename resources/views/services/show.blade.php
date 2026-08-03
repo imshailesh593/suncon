@@ -15,7 +15,7 @@ $svcBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
 @section('content')
 
 {{-- Hero: two-column, image right --}}
-<section class="bg-[#FAF7F3] pt-36 pb-0 border-b border-[#E8E0D4] overflow-hidden">
+<section class="bg-[#FAF7F3] pt-[calc(60px+3rem)] pb-0 border-b border-[#E8E0D4] overflow-hidden">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
 
     {{-- Breadcrumb --}}
@@ -31,17 +31,17 @@ $svcBreadcrumb = ['@context'=>'https://schema.org','@type'=>'BreadcrumbList','it
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 gap-0 items-stretch">
 
     {{-- Left: title + description + features --}}
-    <div class="py-10 lg:py-16 pr-0 lg:pr-16 flex flex-col justify-center" data-reveal>
+    <div class="py-10 lg:py-16 pr-0 lg:pr-20 flex flex-col justify-center" data-reveal>
       <h1 class="font-display font-light text-display-lg text-[#1C1C1C] leading-none mb-10">
         {{ $service->title }}
       </h1>
 
-      <p class="text-[#1C1C1C] text-base leading-relaxed font-light mb-8">
+      <p class="text-[#1C1C1C] text-base leading-relaxed font-light mb-8" style="max-width:480px;">
         {{ $service->description }}
       </p>
 
       @if($service->long_description)
-        <p class="text-[#8B8275] text-sm leading-relaxed font-light mb-8">
+        <p class="text-[#8B8275] text-sm leading-relaxed font-light mb-8" style="max-width:480px;">
           {{ $service->long_description }}
         </p>
       @endif
