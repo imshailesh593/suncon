@@ -272,7 +272,8 @@
 
           {{-- Content — bottom --}}
           <div class="absolute bottom-0 left-0 right-0 p-5">
-            <h3 class="font-display font-semibold text-[clamp(3.1rem,5.8vw,6.3rem)] leading-tight text-white tracking-[-0.01em] group-hover:text-[#F5C4A8] transition-colors duration-300">
+            <h3 class="font-display font-semibold leading-tight text-white group-hover:text-[#F5C4A8] transition-colors duration-300"
+                style="font-size:clamp(2.4rem,5vw,5rem);letter-spacing:-0.01em;">
               {{ $title }}
             </h3>
           </div>
