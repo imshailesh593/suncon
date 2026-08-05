@@ -298,7 +298,7 @@
     <div data-reveal>
       <div class="flex items-center gap-3 mb-6">
         <span class="w-6 h-px bg-[#B5451B] shrink-0"></span>
-        <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B]">Design Expertise</p>
+        <p class="text-[10px] uppercase tracking-[0.32em] text-[#8B8275]">Suncon Architecture</p>
       </div>
       <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-tight mb-8">
         Design<br>Expertise.
