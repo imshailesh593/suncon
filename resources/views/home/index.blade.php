@@ -27,7 +27,6 @@
   </div>
 
   <div class="relative z-10 max-w-screen-xl mx-auto w-full px-6 lg:px-12 pb-16 md:pb-20">
-    <div class="w-10 h-px bg-[#B5451B] mb-8 origin-left" data-reveal></div>
     <p class="text-[10px] uppercase tracking-[0.3em] text-white/60 mb-8" data-reveal>
       Selected Work — {{ $settings['site.founded'] ?? '1999' }} to Present
     </p>
