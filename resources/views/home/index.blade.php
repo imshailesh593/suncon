@@ -53,7 +53,7 @@
     ?? 'Suncon Engineers is an ISO-certified multidisciplinary design practice, founded in Pune in 1999. For over 25 years we have shaped architecture, landscape, interiors and infrastructure that respond to context, climate, and the people who inhabit them.';
   $fillWords = preg_split('/\s+/', trim($statement));
 @endphp
-<section class="scroll-fill-section bg-[#FAF7F3] px-6 lg:px-12 py-28 md:py-44">
+<section class="scroll-fill-section bg-[#FAF7F3] px-6 lg:px-12 flex items-center justify-center" style="min-height:100vh;">
   <div class="max-w-[1040px] mx-auto">
     <p class="scroll-fill font-display font-light text-center" style="font-size:clamp(1.55rem,3.7vw,3rem);line-height:1.3;">
       @foreach($fillWords as $w)<span class="fill-word">{{ $w }}</span>{{ ' ' }}@endforeach
