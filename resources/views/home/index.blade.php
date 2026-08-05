@@ -65,26 +65,34 @@
 {{-- ─── RECENT PROJECTS ─────────────────────────────────────────────────── --}}
 <section id="projects-section" class="bg-white overflow-hidden flex flex-col justify-center" style="min-height:100vh;">
 
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-14 md:pt-20 pb-12 flex items-end justify-between">
-    <div data-reveal>
-      <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-14 md:pt-20 pb-10">
+    <div class="flex items-end justify-between gap-8">
+
+      {{-- Title --}}
+      <h2 class="font-display font-light text-[#1C1C1C] leading-none shrink-0" data-reveal
+          style="font-size:clamp(2rem,4vw,3.6rem);letter-spacing:-0.02em;">
         {{ $settings['homepage.projects_title'] ?? 'Recent Projects' }}
       </h2>
-    </div>
-    <div class="hidden md:flex items-center gap-4">
-      <a href="{{ url('/projects') }}"
-         class="flex items-center gap-3 text-[9px] uppercase tracking-[0.24em] text-[#1C1C1C]/40 hover:text-[#1C1C1C] transition-colors duration-300 group pb-1 mr-4">
-        <span>View All</span>
-        <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
-      </a>
-      <button id="projects-prev" aria-label="Previous"
-              class="w-10 h-10 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
-        ←
-      </button>
-      <button id="projects-next" aria-label="Next"
-              class="w-10 h-10 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
-        →
-      </button>
+
+      {{-- Controls --}}
+      <div class="hidden md:flex flex-col items-end gap-3 shrink-0 pb-0.5">
+        <a href="{{ url('/projects') }}"
+           class="text-[9px] uppercase tracking-[0.28em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-200 flex items-center gap-2 group">
+          View All Projects
+          <span class="w-5 h-px bg-current inline-block group-hover:w-8 transition-all duration-300"></span>
+        </a>
+        <div class="flex items-center gap-2">
+          <button id="projects-prev" aria-label="Previous"
+                  class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+            ←
+          </button>
+          <button id="projects-next" aria-label="Next"
+                  class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
+            →
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 
