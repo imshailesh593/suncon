@@ -301,7 +301,7 @@
         <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B]">Design Expertise</p>
       </div>
       <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-tight mb-8">
-        Where disciplines<br>converge.
+        Design<br>Expertise.
       </h2>
       <p class="text-[#8B8275] text-sm leading-relaxed mb-10 max-w-md">
         Our strength lies in the overlap. Architecture, landscape, and interiors are resolved together — not handed off in sequence. This integrated approach eliminates conflict, reduces cost, and produces environments that feel whole.
