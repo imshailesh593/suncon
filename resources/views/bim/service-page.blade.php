@@ -43,30 +43,27 @@ $faqSchema = [
 @section('content')
 
 {{-- Hero --}}
-<section class="bg-[var(--bim-base)] pt-36 pb-0 border-b border-[#D1D5DB]">
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+<section class="bg-[var(--bim-base)] pb-0 border-b border-[#D1D5DB] overflow-hidden">
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 gap-0 items-stretch">
 
-    {{-- Breadcrumb --}}
-    <nav class="flex items-center gap-2 text-[9px] uppercase tracking-[0.22em] text-[#6B7280] mb-10">
-      <a href="{{ route('bim.home') }}" class="hover:text-[var(--bim-accent)] transition-colors">Home</a>
-      <span class="opacity-40">/</span>
-      <a href="{{ route('bim.services') }}" class="hover:text-[var(--bim-accent)] transition-colors">BIM Services</a>
-      <span class="opacity-40">/</span>
-      <span class="text-[var(--bim-text)]">{{ $service['title'] }}</span>
-    </nav>
+    {{-- Left: breadcrumb + title + tagline + intro --}}
+    <div class="flex flex-col justify-center pr-0 lg:pr-16" style="padding-top:calc(62px + 4rem);padding-bottom:4rem;">
 
-  </div>
+      {{-- Breadcrumb --}}
+      <nav class="flex items-center gap-2 text-[9px] uppercase tracking-[0.22em] text-[#6B7280] mb-10">
+        <a href="{{ route('bim.home') }}" class="hover:text-[var(--bim-accent)] transition-colors">Home</a>
+        <span class="opacity-40">/</span>
+        <a href="{{ route('bim.services') }}" class="hover:text-[var(--bim-accent)] transition-colors">BIM Services</a>
+        <span class="opacity-40">/</span>
+        <span class="text-[var(--bim-text)]">{{ $service['title'] }}</span>
+      </nav>
 
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 grid md:grid-cols-2 gap-0 items-stretch pb-0">
-
-    {{-- Left: title + tagline + intro --}}
-    <div class="py-12 lg:py-20 pr-0 lg:pr-16 flex flex-col justify-center">
       <p class="text-[9px] uppercase tracking-[0.3em] text-[var(--bim-accent)] mb-4">BIM Services</p>
       <h1 class="text-4xl lg:text-5xl font-bold text-[var(--bim-text)] leading-tight mb-5">
         {{ $service['title'] }}
       </h1>
       <p class="text-lg text-[#4B5563] font-medium mb-6 leading-relaxed">{{ $service['tagline'] }}</p>
-      <p class="text-[#6B7280] text-base leading-relaxed mb-10">{{ $service['description'] }}</p>
+      <p class="text-[#6B7280] text-base leading-relaxed mb-10" style="max-width:480px;">{{ $service['description'] }}</p>
       <div class="flex flex-wrap gap-4">
         <a href="#enquiry" class="inline-block bg-[var(--bim-accent)] text-[var(--bim-text)] font-semibold text-sm px-8 py-4 hover:opacity-90 transition-opacity">
           Get a Free Quote →
@@ -77,8 +74,8 @@ $faqSchema = [
       </div>
     </div>
 
-    {{-- Right: hero image --}}
-    <div class="relative overflow-hidden bg-[#D1D5DB]" style="min-height:clamp(300px,45vw,520px);">
+    {{-- Right: hero image — fills full section height from top --}}
+    <div class="relative overflow-hidden bg-[#D1D5DB]" style="min-height:clamp(420px,55vw,680px);">
       <img src="https://images.unsplash.com/{{ $service['hero_image'] }}?auto=format&fit=crop&w=900&q=80"
            alt="{{ $service['title'] }}"
            class="absolute inset-0 w-full h-full object-cover">
