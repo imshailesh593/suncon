@@ -63,7 +63,7 @@
 <style>.scroll-fill .fill-word{color:#DFC7BB;}</style>
 
 {{-- ─── RECENT PROJECTS ─────────────────────────────────────────────────── --}}
-<section id="projects-section" class="bg-white overflow-hidden">
+<section id="projects-section" class="bg-white overflow-hidden flex flex-col justify-center" style="min-height:100vh;">
 
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-14 md:pt-20 pb-12 flex items-end justify-between">
     <div data-reveal>
