@@ -166,11 +166,11 @@
 
   <!-- Cover Archipelago brand letters (x=0-135, y=168-223) -->
   <rect x="0" y="165" width="152" height="60" fill="#FAF7F3"/>
-  <!-- Cover original discipline text (x=200-330, y=280-345) — wider rect to fully hide all glyphs -->
-  <rect x="198" y="280" width="140" height="70" fill="#FAF7F3"/>
+  <!-- Cover original discipline text (x=200-330, y=280-355) — taller for new 21px font -->
+  <rect x="198" y="280" width="145" height="80" fill="#FAF7F3"/>
   <!-- SUNCON brand -->
   <text x="11" y="202" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="300" fill="#272520" letter-spacing="3">SUNCON</text>
-  <!-- landscape design. -->
-  <text x="210" y="309" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="300" fill="#272520">landscape</text>
-  <text x="210" y="332" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="300" fill="#272520">design.</text>
+  <!-- landscape design. — font-size matches original circle label (~21 SVG units) -->
+  <text x="210" y="309" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="21" font-weight="300" fill="#272520">landscape</text>
+  <text x="210" y="337" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="21" font-weight="300" fill="#272520">design.</text>
 </svg>

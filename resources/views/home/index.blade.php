@@ -361,7 +361,7 @@
 
     {{-- Left: intro paragraph --}}
     <div data-reveal>
-      <p style="color:#3D3530;font-size:0.875rem;line-height:1.75;max-width:220px;">
+      <p style="color:#3D3530;font-size:0.9rem;line-height:1.75;max-width:220px;">
         Pushing beyond traditional design boundaries, Suncon crafts buildings, landscapes and interiors centred around people and their wellbeing.
       </p>
     </div>
@@ -371,15 +371,16 @@
 
       {{-- SVG diagram --}}
       <div>
-        <img src="{{ asset('images/design-expertise.svg') }}?v=3"
+        <img src="{{ asset('images/design-expertise.svg') }}?v=4"
              alt="Design Expertise Diagram"
              style="width:100%;max-width:700px;display:block;" loading="lazy">
+
       </div>
 
       {{-- Pull-quote + CTA --}}
       <div style="padding-top:1rem;">
         <p class="font-display font-light"
-           style="color:#1C1C1C;font-size:clamp(0.95rem,1.4vw,1.2rem);line-height:1.6;margin-bottom:1.75rem;max-width:260px;">
+           style="color:#1C1C1C;font-size:0.9rem;line-height:1.75;margin-bottom:1.75rem;max-width:260px;">
           Multi-disciplinary design, cross-sector expertise that delivers buildings, landscapes and interiors built for people.
         </p>
         <a href="{{ url('/about') }}" class="de-cta-link">
