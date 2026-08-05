@@ -321,7 +321,7 @@
 
     {{-- Col 2: SVG diagram --}}
     <div class="flex items-center justify-center" data-reveal>
-      <img src="{{ asset('images/design-expertise.svg') }}" alt="Design Expertise Diagram"
+      <img src="{{ asset('images/design-expertise.svg') }}?v=2" alt="Design Expertise Diagram"
            class="w-full" style="max-width:520px;" loading="lazy">
     </div>
 
