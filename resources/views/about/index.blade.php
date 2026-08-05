@@ -381,7 +381,7 @@
     <div class="absolute inset-y-0 left-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to right,#fff,transparent)"></div>
     <div class="absolute inset-y-0 right-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to left,#fff,transparent)"></div>
 
-    <div class="flex gap-2 items-center about-client-marquee" style="background:#fff">
+    <div class="flex gap-0 items-center about-client-marquee" style="background:#fff">
       @foreach([1,2] as $_)
         @foreach($aboutClients as $c)
           <div class="shrink-0 flex items-center justify-center about-client-logo" style="height:140px;min-width:200px;background:#fff;">
