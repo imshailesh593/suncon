@@ -167,7 +167,8 @@ function initCarousel(trackId, prevId, nextId) {
   track.style.scrollbarWidth   = 'none';
   track.style.msOverflowStyle  = 'none';
   track.style.overflowX        = 'auto';
-  const amount = () => Math.max(track.clientWidth * 0.72, 300);
+  const cardWidth = () => { const c = track.querySelector('a,div'); return c ? (c.offsetWidth + 24) * 2 : track.clientWidth; };
+  const amount = cardWidth;
   prev.addEventListener('click', () => track.scrollBy({ left: -amount(), behavior: 'smooth' }));
   next.addEventListener('click', () => track.scrollBy({ left:  amount(), behavior: 'smooth' }));
   function sync() {
@@ -189,7 +190,7 @@ initCarousel('projects-track', 'projects-prev', 'projects-next');
   const section = document.getElementById('projects-section');
   if (!track) return;
 
-  const step = () => Math.max(track.clientWidth * 0.72, 300);
+  const step = () => { const c = track.querySelector('a,div'); return c ? (c.offsetWidth + 24) * 2 : track.clientWidth; };
   let timer;
 
   function advance() {
