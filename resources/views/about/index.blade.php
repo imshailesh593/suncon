@@ -381,14 +381,14 @@
     <div class="absolute inset-y-0 left-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to right,#fff,transparent)"></div>
     <div class="absolute inset-y-0 right-0 w-28 z-10 pointer-events-none" style="background:linear-gradient(to left,#fff,transparent)"></div>
 
-    <div class="flex gap-14 items-center about-client-marquee" style="background:#fff">
+    <div class="flex gap-6 items-center about-client-marquee" style="background:#fff">
       @foreach([1,2] as $_)
         @foreach($aboutClients as $c)
-          <div class="shrink-0 flex items-center justify-center about-client-logo" style="height:180px;min-width:240px;background:#fff;">
+          <div class="shrink-0 flex items-center justify-center about-client-logo" style="height:120px;min-width:160px;background:#fff;">
             <img src="{{ asset('images/clients/'.$c['file']) }}"
                  alt="{{ $c['name'] }}"
                  title="{{ $c['name'] }}"
-                 style="max-height:150px;max-width:260px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;"
+                 style="max-height:80px;max-width:140px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;filter:grayscale(100%);"
                  loading="lazy">
           </div>
         @endforeach
@@ -402,8 +402,8 @@
     width: max-content;
   }
   .about-client-marquee:hover { animation-play-state: paused; }
-  .about-client-logo img { opacity: 0.8; transition: opacity 0.3s ease; }
-  .about-client-logo:hover img { opacity: 1; }
+  .about-client-logo img { opacity: 0.7; transition: opacity 0.3s ease, filter 0.3s ease; }
+  .about-client-logo:hover img { opacity: 1; filter: grayscale(0%); }
   @keyframes aboutClientScroll {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
