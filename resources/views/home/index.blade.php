@@ -63,43 +63,48 @@
 <style>.scroll-fill .fill-word{color:#DFC7BB;}</style>
 
 {{-- ─── RECENT PROJECTS ─────────────────────────────────────────────────── --}}
-<section id="projects-section" class="bg-white overflow-hidden flex flex-col justify-center" style="min-height:100vh;">
+<section id="projects-section" class="bg-[#FAF7F3] overflow-hidden flex flex-col justify-center" style="min-height:100vh;">
 
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-14 md:pt-20 pb-10">
-    <div class="flex items-end justify-between gap-8">
+  {{-- Section header --}}
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-20 pb-0">
+    <div class="flex items-end justify-between pb-8" style="border-bottom:1px solid rgba(28,28,28,0.1);">
 
-      {{-- Title --}}
-      <h2 class="font-display font-light text-[#1C1C1C] leading-none shrink-0" data-reveal
-          style="font-size:clamp(2rem,4vw,3.6rem);letter-spacing:-0.02em;">
-        {{ $settings['homepage.projects_title'] ?? 'Recent Projects' }}
-      </h2>
+      <div data-reveal>
+        <p class="text-[9px] uppercase tracking-[0.38em] text-[#8B8275] mb-4">Our Work</p>
+        <h2 class="font-display font-light text-[#1C1C1C] leading-none"
+            style="font-size:clamp(2.6rem,5vw,4.5rem);letter-spacing:-0.025em;">
+          {{ $settings['homepage.projects_title'] ?? 'Recent Projects' }}
+        </h2>
+      </div>
 
-      {{-- Controls --}}
-      <div class="hidden md:flex flex-col items-end gap-3 shrink-0 pb-0.5">
+      <div class="hidden md:flex flex-col items-end gap-4 pb-1">
         <a href="{{ url('/projects') }}"
-           class="text-[9px] uppercase tracking-[0.28em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-200 flex items-center gap-2 group">
-          View All Projects
-          <span class="w-5 h-px bg-current inline-block group-hover:w-8 transition-all duration-300"></span>
+           class="group flex items-center gap-3 text-[9px] uppercase tracking-[0.28em] text-[#8B8275] hover:text-[#B5451B] transition-colors duration-300">
+          <span>View All Projects</span>
+          <span class="w-6 h-px bg-current group-hover:w-10 transition-all duration-300"></span>
         </a>
         <div class="flex items-center gap-2">
           <button id="projects-prev" aria-label="Previous"
-                  class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
-            ←
-          </button>
+                  class="w-10 h-10 flex items-center justify-center border text-sm transition-all duration-300"
+                  style="border-color:rgba(28,28,28,0.15);color:#1C1C1C;"
+                  onmouseover="this.style.background='#B5451B';this.style.borderColor='#B5451B';this.style.color='white';"
+                  onmouseout="this.style.background='';this.style.borderColor='rgba(28,28,28,0.15)';this.style.color='#1C1C1C';">←</button>
           <button id="projects-next" aria-label="Next"
-                  class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm hover:bg-[#B5451B] hover:border-[#B5451B] hover:text-white transition-all duration-300">
-            →
-          </button>
+                  class="w-10 h-10 flex items-center justify-center border text-sm transition-all duration-300"
+                  style="border-color:rgba(28,28,28,0.15);color:#1C1C1C;"
+                  onmouseover="this.style.background='#B5451B';this.style.borderColor='#B5451B';this.style.color='white';"
+                  onmouseout="this.style.background='';this.style.borderColor='rgba(28,28,28,0.15)';this.style.color='#1C1C1C';">→</button>
         </div>
       </div>
 
     </div>
   </div>
 
-  <div class="pb-20">
+  {{-- Cards --}}
+  <div class="py-10">
     <div id="projects-track"
-         class="flex gap-4"
-         style="padding-left: max(1.5rem, calc((100vw - 80rem) / 2 + 3rem)); padding-right: max(1.5rem, calc((100vw - 80rem) / 2 + 3rem)); overflow-x: auto; scroll-snap-type: x mandatory;">
+         class="flex gap-6"
+         style="padding-left:max(1.5rem,calc((100vw - 80rem)/2 + 3rem));padding-right:max(1.5rem,calc((100vw - 80rem)/2 + 3rem));overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;">
 
       @php
         $disciplineMap = ['architecture'=>'Architecture','interior'=>'Interior Design','landscape'=>'Landscape Design','urban'=>'Urban Design','bim'=>'Architectural BIM','pmc'=>'PMC'];
@@ -107,56 +112,67 @@
 
       @forelse($projects as $project)
         @php
-          $cardW      = $loop->first ? 'w-[78vw] sm:w-[56vw] lg:w-[42vw]' : 'w-[68vw] sm:w-[44vw] lg:w-[30vw]';
           $discipline = $disciplineMap[$project->discipline] ?? ucfirst($project->discipline ?? 'Architecture');
           $index      = str_pad($loop->iteration, 2, '0', STR_PAD_LEFT);
         @endphp
-        <a href="{{ url('/projects/'.$project->slug) }}" class="group shrink-0 {{ $cardW }}" style="scroll-snap-align: start;">
-          <div class="relative overflow-hidden w-full mb-5" style="height: clamp(220px, 34vw, 480px)">
+        <a href="{{ url('/projects/'.$project->slug) }}"
+           class="group shrink-0 w-[82vw] sm:w-[52vw] lg:w-[36vw]"
+           style="scroll-snap-align:start;">
+
+          {{-- Image box — fixed, consistent --}}
+          <div class="overflow-hidden bg-[#E8E0D4]" style="height:clamp(260px,38vw,480px);">
             @if($project->imageUrl)
               <img src="{{ $project->imageUrl }}" alt="{{ $project->title }}"
-                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                   class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out">
             @else
-              <div class="w-full h-full bg-[#E8E0D4]"></div>
+              <div class="w-full h-full bg-[#E8E0D4] flex items-center justify-center">
+                <span class="font-display text-[#8B8275] text-5xl font-light opacity-30">{{ substr($project->title,0,1) }}</span>
+              </div>
             @endif
-            <span class="absolute bottom-4 left-5 font-display font-light text-[3.5rem] leading-none text-white/[0.12] select-none pointer-events-none">{{ $index }}</span>
           </div>
-          <div class="px-1">
+
+          {{-- Card info --}}
+          <div class="pt-5">
             <div class="flex items-center justify-between mb-3">
-              <span class="text-[9px] uppercase tracking-[0.22em] text-[#8B8275]">{{ $index }} — {{ $discipline }}</span>
-              <span class="text-[9px] font-display text-[#8B8275]">{{ $project->year }}</span>
+              <span class="text-[8px] uppercase tracking-[0.3em] text-[#8B8275]">{{ $discipline }}</span>
+              <span class="text-[8px] tracking-wide text-[#8B8275]">{{ $project->year }}</span>
             </div>
-            <div class="w-full h-px bg-[#1C1C1C]/15 mb-4 group-hover:bg-[#B5451B]/60 transition-colors duration-500"></div>
-            <h3 class="font-display font-light text-[1.2rem] leading-snug text-[#1C1C1C] group-hover:text-[#B5451B] transition-colors duration-300 mb-2">
+            <div class="w-full h-px mb-4 transition-colors duration-500 group-hover:bg-[#B5451B]" style="background:rgba(28,28,28,0.1);"></div>
+            <h3 class="font-display font-light leading-snug text-[#1C1C1C] group-hover:text-[#B5451B] transition-colors duration-300 mb-2"
+                style="font-size:clamp(1.25rem,1.8vw,1.6rem);">
               {{ $project->title }}
             </h3>
             @if($project->location)
-              <p class="text-[9px] uppercase tracking-[0.16em] text-[#8B8275]">{{ $project->location }}</p>
+              <p class="text-[8px] uppercase tracking-[0.22em] text-[#8B8275]">{{ $project->location }}</p>
             @endif
           </div>
         </a>
       @empty
         @for($i = 1; $i <= 4; $i++)
-          <div class="shrink-0 w-[68vw] sm:w-[44vw] lg:w-[30vw]">
-            <div class="bg-[#E8E0D4] animate-pulse mb-5" style="height: clamp(220px, 34vw, 480px)"></div>
-            <div class="h-3 bg-[#E8E0D4] rounded w-1/3 animate-pulse mb-3"></div>
-            <div class="h-px bg-[#E8E0D4] mb-4"></div>
-            <div class="h-5 bg-[#E8E0D4] rounded w-3/4 animate-pulse"></div>
+          <div class="shrink-0 w-[82vw] sm:w-[52vw] lg:w-[36vw]">
+            <div class="bg-[#E8E0D4] animate-pulse" style="height:clamp(260px,38vw,480px);"></div>
+            <div class="pt-5">
+              <div class="h-2 bg-[#E8E0D4] rounded w-1/4 animate-pulse mb-3"></div>
+              <div class="h-px bg-[#E8E0D4] mb-4"></div>
+              <div class="h-5 bg-[#E8E0D4] rounded w-3/4 animate-pulse"></div>
+            </div>
           </div>
         @endfor
       @endforelse
     </div>
   </div>
 
-  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pb-8 flex items-center justify-between md:hidden">
-    <a href="{{ url('/projects') }}" class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275]">View All →</a>
-    <div class="flex items-center gap-3">
+  {{-- Mobile controls --}}
+  <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pb-10 flex items-center justify-between md:hidden">
+    <a href="{{ url('/projects') }}" class="text-[9px] uppercase tracking-[0.24em] text-[#8B8275] hover:text-[#B5451B] transition-colors">View All →</a>
+    <div class="flex items-center gap-2">
       <button onclick="document.getElementById('projects-prev').click()"
-              class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm">←</button>
+              class="w-9 h-9 flex items-center justify-center border text-sm" style="border-color:rgba(28,28,28,0.15);">←</button>
       <button onclick="document.getElementById('projects-next').click()"
-              class="w-9 h-9 flex items-center justify-center border border-[#1C1C1C]/20 text-[#1C1C1C] text-sm">→</button>
+              class="w-9 h-9 flex items-center justify-center border text-sm" style="border-color:rgba(28,28,28,0.15);">→</button>
     </div>
   </div>
+
 </section>
 
 {{-- ─── STATISTICS ──────────────────────────────────────────────────────── --}}
