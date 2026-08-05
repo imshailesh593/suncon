@@ -183,6 +183,46 @@ function initCarousel(trackId, prevId, nextId) {
 }
 initCarousel('projects-track', 'projects-prev', 'projects-next');
 
+// Auto-scroll for projects track
+(function () {
+  const track   = document.getElementById('projects-track');
+  const section = document.getElementById('projects-section');
+  if (!track) return;
+
+  const step = () => Math.max(track.clientWidth * 0.72, 300);
+  let timer;
+
+  function advance() {
+    const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 8;
+    if (atEnd) {
+      track.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      track.scrollBy({ left: step(), behavior: 'smooth' });
+    }
+  }
+
+  function start() { timer = setInterval(advance, 4000); }
+  function stop()  { clearInterval(timer); }
+
+  // Pause on hover/touch
+  if (section) {
+    section.addEventListener('mouseenter', stop);
+    section.addEventListener('mouseleave', start);
+    section.addEventListener('touchstart',  stop,  { passive: true });
+    section.addEventListener('touchend',    start, { passive: true });
+  }
+
+  // Also pause while user manually scrolls
+  let scrollTimer;
+  track.addEventListener('scroll', () => {
+    stop();
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(start, 2000);
+  }, { passive: true });
+
+  start();
+})();
+
 // ─── 5. STAT COUNTERS ────────────────────────────────────────────────────────
 document.querySelectorAll('[data-counter]').forEach((el) => {
   const target = parseFloat(el.dataset.target) || 0;
