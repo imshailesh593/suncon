@@ -296,47 +296,97 @@
 </section>
 
 {{-- ─── DESIGN EXPERTISE ────────────────────────────────────────────────── --}}
-<section class="bg-[#FAF7F3] px-6 lg:px-16 pt-20 pb-24" style="background:linear-gradient(160deg,#E8D5C4 0%,#FAF7F3 38%);">
+<style>
+  .de-outer {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .de-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  @media (min-width: 1024px) {
+    .de-outer {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+    .de-inner {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 3rem;
+      align-items: end;
+    }
+  }
+  .de-cta-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 260px;
+    border-top: 1px solid rgba(28,28,28,0.2);
+    padding-top: 1rem;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: #1C1C1C;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .de-cta-link:hover { color: #B5451B; }
+  .de-cta-link span:last-child { transition: transform 0.3s; }
+  .de-cta-link:hover span:last-child { transform: translateX(4px); }
+  .de-section { padding: 5rem 1.5rem 6rem; }
+  @media (min-width: 1024px) { .de-section { padding: 5rem 4rem 6rem; } }
+</style>
+<section class="de-section" style="background:linear-gradient(160deg,#E8D5C4 0%,#FAF7F3 38%);">
 
-  {{-- Heading row --}}
-  <div class="max-w-screen-xl mx-auto mb-8" data-reveal>
-    <h2 class="font-display font-light text-[#1C1C1C] leading-none"
-        style="font-size:clamp(3rem,7vw,6.5rem);letter-spacing:-0.03em;">
+
+  {{-- Heading --}}
+  <div style="max-width:1280px;margin:0 auto 2rem;" data-reveal>
+    <h2 class="font-display font-light"
+        style="color:#1C1C1C;line-height:1;font-size:clamp(3rem,7vw,6.5rem);letter-spacing:-0.03em;">
       Design Expertise
     </h2>
   </div>
 
-  {{-- Full-width rule --}}
-  <div class="max-w-screen-xl mx-auto mb-16" style="border-top:1px solid rgba(28,28,28,0.18);"></div>
+  {{-- Rule --}}
+  <div style="max-width:1280px;margin:0 auto 3.5rem;border-top:1px solid rgba(28,28,28,0.18);"></div>
 
-  {{-- Three-column body --}}
-  <div class="max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.6fr_1.2fr] gap-12 lg:gap-10 items-start">
+  {{-- Outer grid: intro text | [SVG + quote] --}}
+  <div class="de-outer" style="max-width:1280px;margin:0 auto;">
 
-    {{-- Col 1: intro text --}}
+    {{-- Left: intro paragraph --}}
     <div data-reveal>
-      <p class="text-[#3D3530] text-sm leading-relaxed" style="max-width:320px;">
+      <p style="color:#3D3530;font-size:0.875rem;line-height:1.75;max-width:220px;">
         Pushing beyond traditional design boundaries, Suncon crafts buildings, landscapes and interiors centred around people and their wellbeing.
       </p>
     </div>
 
-    {{-- Col 2: SVG diagram --}}
-    <div class="flex items-center justify-center" data-reveal>
-      <img src="{{ asset('images/design-expertise.svg') }}?v=2" alt="Design Expertise Diagram"
-           class="w-full" style="max-width:520px;" loading="lazy">
-    </div>
+    {{-- Right: inner grid — SVG | pull-quote --}}
+    <div class="de-inner" data-reveal>
 
-    {{-- Col 3: pull-quote + CTA --}}
-    <div class="lg:pt-8 flex flex-col gap-8" data-reveal>
-      <p class="font-display font-light text-[#1C1C1C] leading-snug"
-         style="font-size:clamp(1.35rem,2.2vw,1.75rem);">
-        Multi-disciplinary design, cross-sector expertise that delivers buildings, landscapes and interiors built for people.
-      </p>
-      <a href="{{ url('/about') }}"
-         class="group inline-flex items-center justify-between border-t border-[#1C1C1C]/20 pt-4 text-[10px] uppercase tracking-[0.28em] text-[#1C1C1C] hover:text-[#B5451B] transition-colors duration-300"
-         style="max-width:320px;">
-        <span>About Suncon</span>
-        <span class="group-hover:translate-x-1 transition-transform duration-300">→</span>
-      </a>
+      {{-- SVG diagram --}}
+      <div>
+        <img src="{{ asset('images/design-expertise.svg') }}?v=3"
+             alt="Design Expertise Diagram"
+             style="width:100%;max-width:700px;display:block;" loading="lazy">
+      </div>
+
+      {{-- Pull-quote + CTA --}}
+      <div style="padding-top:1rem;">
+        <p class="font-display font-light"
+           style="color:#1C1C1C;font-size:clamp(0.95rem,1.4vw,1.2rem);line-height:1.6;margin-bottom:1.75rem;max-width:260px;">
+          Multi-disciplinary design, cross-sector expertise that delivers buildings, landscapes and interiors built for people.
+        </p>
+        <a href="{{ url('/about') }}" class="de-cta-link">
+          <span>About Suncon</span>
+          <span>→</span>
+        </a>
+      </div>
     </div>
 
   </div>
