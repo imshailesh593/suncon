@@ -27,9 +27,7 @@
   </div>
 
   <div class="relative z-10 max-w-screen-xl mx-auto w-full px-6 lg:px-12 pb-16 md:pb-20">
-    <p class="text-[10px] uppercase tracking-[0.3em] text-white/60 mb-8" data-reveal>
-      Selected Work — {{ $settings['site.founded'] ?? '1999' }} to Present
-    </p>
+
     <h1 class="font-display font-light leading-[0.9] tracking-tight mb-10" data-reveal>
       <span class="block text-display-xl text-white word-split">{{ $settings['homepage.hero_line1'] ?? 'Architecture' }}</span>
       <span class="block text-display-xl font-bold text-[#B5451B] word-split">{{ $settings['homepage.hero_line2'] ?? '& Design.' }}</span>
