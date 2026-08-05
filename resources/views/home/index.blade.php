@@ -393,9 +393,6 @@
   </div>
 </section>
 
-{{-- spacer --}}
-<div aria-hidden="true" class="h-2 bg-[#D4C9BB]"></div>
-
 {{-- ─── FEATURED PROJECTS SHOWCASE ──────────────────────────────────────── --}}
 @if($projects->count())
 @php
