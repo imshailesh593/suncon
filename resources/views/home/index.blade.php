@@ -260,13 +260,6 @@
           {{-- Hover tint overlay --}}
           <div class="absolute inset-0 bg-[#B5451B]/0 group-hover:bg-[#B5451B]/10 transition-all duration-500"></div>
 
-          {{-- Category label — top left --}}
-          <div class="absolute top-4 left-4">
-            <span class="text-[8px] uppercase tracking-[0.3em] text-white/60 bg-black/20 backdrop-blur-sm px-2.5 py-1 border border-white/10">
-              {{ $catLabel }}
-            </span>
-          </div>
-
           {{-- Index — top right --}}
           <span class="absolute top-4 right-4 font-display text-[2.5rem] leading-none text-white/10 select-none">{{ $index }}</span>
 
