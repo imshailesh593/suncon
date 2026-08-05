@@ -1,6 +1,6 @@
 @php $onHome = request()->routeIs('home'); @endphp
-<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
-        style="{{ $onHome ? '' : 'background:#FAF7F3;border-bottom:1px solid #E8E0D4;' }}">
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50"
+        style="transition:transform 0.45s cubic-bezier(0.4,0,0.2,1),background 0.35s ease,border-color 0.35s ease,backdrop-filter 0.35s ease;{{ $onHome ? '' : 'background:rgba(250,247,243,0.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #E8E0D4;' }}">
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12 flex items-center justify-between h-[60px]">
 
     {{-- Logo --}}
@@ -168,26 +168,64 @@
     wrap.addEventListener('mouseleave', function(){ t = setTimeout(function(){ menu.style.opacity='0'; menu.style.visibility='hidden'; }, 100); });
   }
 
-  // Navbar scroll behaviour (home page only)
-  var onHome = {{ $onHome ? 'true' : 'false' }};
-  if (!onHome) return;
-
+  var onHome  = {{ $onHome ? 'true' : 'false' }};
   var navbar  = document.getElementById('navbar');
   var links   = navbar.querySelectorAll('.nav-link, .nav-logo');
   var bars    = navbar.querySelectorAll('.menu-bar');
+  var lastY   = 0;
+  var ticking = false;
+  var THRESHOLD = 80; // px before hide-on-scroll kicks in
 
-  function update() {
-    var scrolled = window.scrollY > 60;
-    navbar.style.background    = scrolled ? '#FAF7F3' : '';
-    navbar.style.borderBottom  = scrolled ? '1px solid #E8E0D4' : '';
-    links.forEach(function(el) {
-      if (el.style.color === 'rgb(181, 69, 27)') return; // keep active link orange
-      el.style.color = scrolled ? '#1C1C1C' : 'rgba(255,255,255,0.85)';
+  function setLight() {
+    // transparent / white-text mode (home hero)
+    navbar.style.background          = '';
+    navbar.style.backdropFilter      = '';
+    navbar.style.webkitBackdropFilter= '';
+    navbar.style.borderBottom        = '';
+    links.forEach(function(el){
+      if (el.style.color === 'rgb(181, 69, 27)') return;
+      el.style.color = 'rgba(255,255,255,0.85)';
     });
-    bars.forEach(function(el) { el.style.background = scrolled ? '#1C1C1C' : 'white'; });
+    bars.forEach(function(el){ el.style.background = 'white'; });
   }
 
-  window.addEventListener('scroll', update, { passive: true });
+  function setDark() {
+    // frosted cream mode
+    navbar.style.background          = 'rgba(250,247,243,0.96)';
+    navbar.style.backdropFilter      = 'blur(12px)';
+    navbar.style.webkitBackdropFilter= 'blur(12px)';
+    navbar.style.borderBottom        = '1px solid #E8E0D4';
+    links.forEach(function(el){
+      if (el.style.color === 'rgb(181, 69, 27)') return;
+      el.style.color = '#1C1C1C';
+    });
+    bars.forEach(function(el){ el.style.background = '#1C1C1C'; });
+  }
+
+  function update() {
+    var y = window.scrollY;
+    var atTop = y < THRESHOLD;
+
+    if (atTop) {
+      navbar.style.transform = 'translateY(0)';
+      if (onHome) setLight(); else setDark();
+    } else if (y > lastY + 4) {
+      // scrolling DOWN — hide
+      navbar.style.transform = 'translateY(-100%)';
+      setDark();
+    } else if (y < lastY - 4) {
+      // scrolling UP — reveal
+      navbar.style.transform = 'translateY(0)';
+      setDark();
+    }
+
+    lastY = y;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function(){
+    if (!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
   update();
 })();
 
