@@ -67,9 +67,6 @@
 
   <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-14 md:pt-20 pb-12 flex items-end justify-between">
     <div data-reveal>
-      <p class="text-[10px] uppercase tracking-[0.32em] text-[#B5451B] mb-4">
-        {{ $settings['homepage.projects_eyebrow'] ?? 'Selected Work' }}
-      </p>
       <h2 class="font-display font-light text-display-md text-[#1C1C1C] leading-none">
         {{ $settings['homepage.projects_title'] ?? 'Recent Projects' }}
       </h2>
