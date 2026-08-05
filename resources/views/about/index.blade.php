@@ -384,11 +384,11 @@
     <div class="flex gap-6 items-center about-client-marquee" style="background:#fff">
       @foreach([1,2] as $_)
         @foreach($aboutClients as $c)
-          <div class="shrink-0 flex items-center justify-center about-client-logo" style="height:120px;min-width:160px;background:#fff;">
+          <div class="shrink-0 flex items-center justify-center about-client-logo" style="height:140px;min-width:200px;background:#fff;">
             <img src="{{ asset('images/clients/'.$c['file']) }}"
                  alt="{{ $c['name'] }}"
                  title="{{ $c['name'] }}"
-                 style="max-height:80px;max-width:140px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;filter:grayscale(100%);"
+                 style="max-height:110px;max-width:180px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;filter:grayscale(100%);"
                  loading="lazy">
           </div>
         @endforeach
