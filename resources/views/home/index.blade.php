@@ -171,7 +171,7 @@
   @endphp
   <div class="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-3" id="stats-grid">
     @foreach($stats as $stat)
-      <div class="px-5 sm:px-8 lg:px-14 py-10 md:py-16" data-reveal>
+      <div class="px-5 sm:px-8 lg:px-14 py-16 md:py-28" data-reveal>
         <div class="flex items-baseline gap-1 mb-3">
           <span class="font-display font-light text-display-xl text-[#FAF7F3] leading-none stat-num" data-counter data-target="{{ $stat['value'] }}">0</span>
           <span class="font-display font-light text-display-md text-[#B5451B] leading-none stat-suf">{{ $stat['suffix'] }}</span>
